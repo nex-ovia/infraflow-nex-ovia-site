@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+</head>
+<body class="selection:bg-blue-500/30">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-8">
+        <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="logo-box">
+                    <i data-lucide="layers" class="text-white w-5 h-5"></i>
+                </div>
+                <span id="brand-name" class="text-white font-bold text-2xl tracking-tighter"></span>
+            </a>
+            <div id="nav-links" class="hidden md:flex items-center gap-10 text-[11px] font-bold tracking-widest uppercase text-gray-400"></div>
+        </div>
+    </nav>
+
+    <main id="main" tabindex="-1">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-glow"></div>
+            <div class="max-w-7xl mx-auto px-8 relative z-10">
+                <div class="max-w-5xl">
+                    <h1 class="hero-title">NexFlow <br><span id="hero-tagline" class="hero-gradient-text"></span></h1>
+                    <p id="hero-desc" class="hero-subtitle"></p>
+                    <div class="hero-actions">
+                        <button id="cta-primary" class="btn-primary"><span></span> <i data-lucide="arrow-right"></i></button>
+                        <!-- <button id="cta-secondary" class="btn-secondary"></button> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section  -->
+        <section id="value" class="py-32 max-w-7xl mx-auto px-8">
+            <div class="mb-16">
+                <h3 class="section-label">Our Philosophy</h3>
+                <h2 class="section-title">Why NexFLow?</h2>
+            </div>
+            <div id="value-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Content Injected via site.js -->
+            </div>
+        </section>
+
+        <!-- Core Pillars Section -->
+        <section id="solutions" class="py-32 max-w-7xl mx-auto px-8">
+            <div class="mb-16">
+                <h3 class="section-label">Core Pillars</h3>
+                <h2 class="section-title">Managed Simplicity.</h2>
+            </div>
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+        </section>
+
+        <!-- New Contact Section -->
+        <section id="contact" class="py-32 max-w-7xl mx-auto px-8">
+            <div class="glass-card rounded-[2.5rem] p-12 md:p-20 relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h3 class="section-label">Inquiry</h3>
+                        <h2 class="text-5xl font-bold text-white mb-8 tracking-tight">Ready to scale?</h2>
+                        <p class="text-gray-400 text-xl leading-relaxed mb-10">
+                            Our team is ready to audit or support your current cloud architecture. Drop your details, and let’s build a declarative future together.
+                        </p>
+                        <div class="flex flex-col gap-6">
+                            <div class="flex items-center gap-4 text-gray-300">
+                                <i data-lucide="mail" class="text-blue-500"></i>
+                                <span>support@nex-ovia.com</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-gray-300">
+                                <i data-lucide="map-pin" class="text-blue-500"></i>
+                                <span>Global Operations Center</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- <form id="contact-form" class="flex flex-col gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Full Name" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                            <input type="email" placeholder="Work Email" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                        </div>
+                        <textarea rows="4" placeholder="How can we help?" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors"></textarea>
+                        <button type="submit" class="btn-primary w-full justify-center">
+                            Send Request
+                        </button>
+                    </form> -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Chat Widget -->
+    <!-- <div class="fixed bottom-8 right-8 z-[100]">
+        <div id="chat-window" class="hidden mb-4 w-80 bg-zinc-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden transform transition-all translate-y-4 opacity-0">
+            <div class="p-6 bg-blue-600 text-white font-bold flex justify-between items-center">
+                <span>InfraLayer Support</span>
+                <button id="close-chat"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="p-6 h-64 overflow-y-auto flex flex-col gap-4 text-sm" id="chat-messages">
+                <div class="bg-white/5 p-3 rounded-2xl text-gray-300 max-w-[80%]">
+                    Hello! How can we help with your infrastructure today?
+                </div>
+            </div>
+            <div class="p-4 border-t border-white/5 flex gap-2">
+                <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 bg-white/5 rounded-xl px-4 py-2 text-white text-sm focus:outline-none">
+                <button id="send-chat" class="p-2 bg-blue-600 rounded-xl text-white"><i data-lucide="send" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+        <button id="chat-trigger" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform">
+            <i data-lucide="message-square"></i>
+        </button>
+    </div> -->
+
+    <footer class="footer">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-16">
+            <div class="max-w-xs">
+                <div class="flex items-center gap-3 mb-8">
+                    <i data-lucide="layers" class="text-blue-500 w-7 h-7"></i>
+                    <span class="footer-brand text-white font-bold text-xl tracking-tighter"></span>
+                </div>
+                <p id="footer-bio" class="text-gray-500 leading-relaxed font-medium"></p>
+            </div>
+            <div id="footer-links" class="grid grid-cols-2 gap-20"></div>
+        </div>
+        <div id="footer-copy" class="footer-copy"></div>
+    </footer>
+
+    <script src="site.js"></script>
+</body>
+</html>

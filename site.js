@@ -151,93 +151,93 @@ function setupInteractions() {
         nav.classList.toggle('py-8', !scrolled);
     });
 
-    // 2. Email Form Logic
-    const contactForm = qs('#contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
+    // // 2. Email Form Logic
+    // const contactForm = qs('#contact-form');
+    // if (contactForm) {
+    //     contactForm.addEventListener('submit', async (e) => {
+    //         e.preventDefault();
+    //         const btn = contactForm.querySelector('button[type="submit"]');
+    //         const originalText = btn.innerHTML;
             
-            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mr-2"></i> Paging Engineer...';
-            btn.disabled = true;
-            if (window.lucide) window.lucide.createIcons();
+    //         btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mr-2"></i> Paging Engineer...';
+    //         btn.disabled = true;
+    //         if (window.lucide) window.lucide.createIcons();
 
-            setTimeout(() => {
-                btn.innerHTML = 'Success: Email Dispatched';
-                btn.classList.replace('bg-blue-600', 'bg-emerald-600');
-                contactForm.reset();
+    //         setTimeout(() => {
+    //             btn.innerHTML = 'Success: Email Dispatched';
+    //             btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+    //             contactForm.reset();
                 
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    btn.classList.replace('bg-emerald-600', 'bg-blue-600');
-                    if (window.lucide) window.lucide.createIcons();
-                }, 4000);
-            }, 2000);
-        });
-    }
+    //             setTimeout(() => {
+    //                 btn.innerHTML = originalText;
+    //                 btn.disabled = false;
+    //                 btn.classList.replace('bg-emerald-600', 'bg-blue-600');
+    //                 if (window.lucide) window.lucide.createIcons();
+    //             }, 4000);
+    //         }, 2000);
+    //     });
+    // }
 
-    // 3. Chat Interaction Logic
-    const chatTrigger = qs('#chat-trigger');
-    const chatWindow = qs('#chat-window');
-    const closeChat = qs('#close-chat');
-    const sendChat = qs('#send-chat');
-    const chatInput = qs('#chat-input');
-    const chatMessages = qs('#chat-messages');
+    // // 3. Chat Interaction Logic
+    // const chatTrigger = qs('#chat-trigger');
+    // const chatWindow = qs('#chat-window');
+    // const closeChat = qs('#close-chat');
+    // const sendChat = qs('#send-chat');
+    // const chatInput = qs('#chat-input');
+    // const chatMessages = qs('#chat-messages');
 
-    if (chatTrigger && chatWindow) {
-        const toggleChat = (forceOpen = false) => {
-            const isHidden = chatWindow.classList.contains('hidden');
-            if (isHidden || forceOpen) {
-                chatWindow.classList.remove('hidden');
-                requestAnimationFrame(() => {
-                    chatWindow.classList.replace('translate-y-4', 'translate-y-0');
-                    chatWindow.classList.replace('opacity-0', 'opacity-100');
-                });
+    // if (chatTrigger && chatWindow) {
+    //     const toggleChat = (forceOpen = false) => {
+    //         const isHidden = chatWindow.classList.contains('hidden');
+    //         if (isHidden || forceOpen) {
+    //             chatWindow.classList.remove('hidden');
+    //             requestAnimationFrame(() => {
+    //                 chatWindow.classList.replace('translate-y-4', 'translate-y-0');
+    //                 chatWindow.classList.replace('opacity-0', 'opacity-100');
+    //             });
                 
-                if (chatMessages.children.length === 0) {
-                    appendMessage("Hello! We're currently handling requests via GitOps. How can we assist with your deployment?", false);
-                }
+    //             if (chatMessages.children.length === 0) {
+    //                 appendMessage("Hello! We're currently handling requests via GitOps. How can we assist with your deployment?", false);
+    //             }
                 
-                setTimeout(() => chatInput?.focus(), 400);
-            } else {
-                chatWindow.classList.replace('translate-y-0', 'translate-y-4');
-                chatWindow.classList.replace('opacity-100', 'opacity-0');
-                setTimeout(() => chatWindow.classList.add('hidden'), 300);
-            }
-        };
+    //             setTimeout(() => chatInput?.focus(), 400);
+    //         } else {
+    //             chatWindow.classList.replace('translate-y-0', 'translate-y-4');
+    //             chatWindow.classList.replace('opacity-100', 'opacity-0');
+    //             setTimeout(() => chatWindow.classList.add('hidden'), 300);
+    //         }
+    //     };
 
-        chatTrigger.onclick = () => toggleChat();
-        if (closeChat) closeChat.onclick = () => toggleChat();
+    //     chatTrigger.onclick = () => toggleChat();
+    //     if (closeChat) closeChat.onclick = () => toggleChat();
 
-        const appendMessage = (text, isUser = false) => {
-            const msg = document.createElement('div');
-            msg.className = isUser 
-                ? 'bg-blue-600 p-3 rounded-2xl text-white max-w-[85%] self-end ml-auto mb-3 shadow-sm' 
-                : 'bg-white/10 p-3 rounded-2xl text-gray-200 max-w-[85%] mb-3 border border-white/5';
-            msg.textContent = text;
-            chatMessages.appendChild(msg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
+    //     const appendMessage = (text, isUser = false) => {
+    //         const msg = document.createElement('div');
+    //         msg.className = isUser 
+    //             ? 'bg-blue-600 p-3 rounded-2xl text-white max-w-[85%] self-end ml-auto mb-3 shadow-sm' 
+    //             : 'bg-white/10 p-3 rounded-2xl text-gray-200 max-w-[85%] mb-3 border border-white/5';
+    //         msg.textContent = text;
+    //         chatMessages.appendChild(msg);
+    //         chatMessages.scrollTop = chatMessages.scrollHeight;
+    //     };
 
-        const handleChatSend = () => {
-            const val = chatInput.value.trim();
-            if (!val) return;
+    //     const handleChatSend = () => {
+    //         const val = chatInput.value.trim();
+    //         if (!val) return;
             
-            appendMessage(val, true);
-            chatInput.value = '';
+    //         appendMessage(val, true);
+    //         chatInput.value = '';
 
-            setTimeout(() => {
-                appendMessage("Routing this to our on-call engineer. They will be notified via Azure Communication Services. Please leave your email if you haven't yet!");
-            }, 800);
-        };
+    //         setTimeout(() => {
+    //             appendMessage("Routing this to our on-call engineer. They will be notified via Azure Communication Services. Please leave your email if you haven't yet!");
+    //         }, 800);
+    //     };
 
-        if (sendChat) sendChat.onclick = handleChatSend;
-        if (chatInput) {
-            chatInput.onkeypress = (e) => { if (e.key === 'Enter') handleChatSend(); };
-        }
-    }
+    //     if (sendChat) sendChat.onclick = handleChatSend;
+    //     if (chatInput) {
+    //         chatInput.onkeypress = (e) => { if (e.key === 'Enter') handleChatSend(); };
+    //     }
+    // }
 }
 
 init();

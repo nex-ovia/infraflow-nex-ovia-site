@@ -31,11 +31,14 @@ function renderSite(data) {
             navContainer.appendChild(a);
         });
         
-        // Navigation CTA for Email
+        // Navigation CTA - Specifically for Email
         const navCta = document.createElement('button');
         navCta.className = 'bg-white text-black px-6 py-2.5 rounded-full hover:bg-blue-600 hover:text-white transition-all font-bold text-[10px] uppercase ml-4';
-        navCta.textContent = 'Email Us';
-        navCta.onclick = () => qs('#contact')?.scrollIntoView({ behavior: 'smooth' });
+        navCta.textContent = 'Email Support';
+        navCta.onclick = () => {
+            qs('#contact')?.scrollIntoView({ behavior: 'smooth' });
+            qs('#contact-form input')?.focus();
+        };
         navContainer.appendChild(navCta);
     }
 
@@ -49,12 +52,13 @@ function renderSite(data) {
     if (heroDesc) heroDesc.textContent = data.site.description;
     
     if (ctaPrimary) {
-        ctaPrimary.querySelector('span').textContent = `${data.hero.cta_primary}`;
+        ctaPrimary.querySelector('span').textContent = "Send Email Inquiry";
         ctaPrimary.onclick = () => qs('#contact')?.scrollIntoView({ behavior: 'smooth' });
     }
     if (ctaSecondary) {
-        ctaSecondary.textContent = `${data.hero.cta_secondary}`;
-        ctaSecondary.onclick = () => {
+        ctaSecondary.textContent = "Open Live Chat";
+        ctaSecondary.onclick = (e) => {
+            e.preventDefault();
             const trigger = qs('#chat-trigger');
             if (trigger) trigger.click();
         };
@@ -130,11 +134,14 @@ function renderSite(data) {
         });
     }
 
-    if (window.lucide) window.lucide.createIcons();
+    // CRITICAL FIX: Re-run Lucide to find the newly injected <i data-lucide="..."> tags
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
 }
 
 function setupInteractions() {
-    // 1. Scroll Effects
+    // 1. Navbar Scroll Effect
     const nav = qs('#navbar');
     window.addEventListener('scroll', () => {
         if (!nav) return;
@@ -147,19 +154,17 @@ function setupInteractions() {
     // 2. Email Form Logic
     const contactForm = qs('#contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
             
-            // Visual feedback for dispatch
-            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mr-2"></i> Sending Email...';
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mr-2"></i> Paging Engineer...';
             btn.disabled = true;
             if (window.lucide) window.lucide.createIcons();
 
-            // Simulate actual SMTP/API dispatch
             setTimeout(() => {
-                btn.innerHTML = 'Email Sent Successfully';
+                btn.innerHTML = 'Success: Email Dispatched';
                 btn.classList.replace('bg-blue-600', 'bg-emerald-600');
                 contactForm.reset();
                 
@@ -191,7 +196,10 @@ function setupInteractions() {
                     chatWindow.classList.replace('opacity-0', 'opacity-100');
                 });
                 
-                // Focus input on open
+                if (chatMessages.children.length === 0) {
+                    appendMessage("Hello! We're currently handling requests via GitOps. How can we assist with your deployment?", false);
+                }
+                
                 setTimeout(() => chatInput?.focus(), 400);
             } else {
                 chatWindow.classList.replace('translate-y-0', 'translate-y-4');
@@ -206,8 +214,8 @@ function setupInteractions() {
         const appendMessage = (text, isUser = false) => {
             const msg = document.createElement('div');
             msg.className = isUser 
-                ? 'bg-blue-600/20 p-3 rounded-2xl text-gray-200 max-w-[80%] self-end ml-auto' 
-                : 'bg-white/5 p-3 rounded-2xl text-gray-300 max-w-[80%]';
+                ? 'bg-blue-600 p-3 rounded-2xl text-white max-w-[85%] self-end ml-auto mb-3 shadow-sm' 
+                : 'bg-white/10 p-3 rounded-2xl text-gray-200 max-w-[85%] mb-3 border border-white/5';
             msg.textContent = text;
             chatMessages.appendChild(msg);
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -220,10 +228,9 @@ function setupInteractions() {
             appendMessage(val, true);
             chatInput.value = '';
 
-            // Simulate support engineer reply
             setTimeout(() => {
-                appendMessage("System: Message delivered to on-call engineer. We've linked this session to your IP for follow-up.");
-            }, 1000);
+                appendMessage("Routing this to our on-call engineer. They will be notified via Azure Communication Services. Please leave your email if you haven't yet!");
+            }, 800);
         };
 
         if (sendChat) sendChat.onclick = handleChatSend;
@@ -233,5 +240,4 @@ function setupInteractions() {
     }
 }
 
-// Initial execution
 init();

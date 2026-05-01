@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — Nexovia</title>
+  <meta name="description" content="Version history of the Nexovia Standard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .release-list {
+      display: grid;
+      gap: 1.75rem;
+      margin-top: 3rem;
+    }
+
+    .release-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .release-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .release-version {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .release-date {
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+
+    .release-summary {
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .change-list {
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .change-item {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .change-label {
+      min-width: 4rem;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .section-grid {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .cta-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 780px) {
+      .release-meta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <div class="container">
+      <a href="/" class="nav-logo">nex<span>·</span>ovia</a>
+      <ul class="nav-links">
+        <li><a href="/standard">Standard</a></li>
+        <li><a href="/principles">Principles</a></li>
+        <li><a href="/tools">Tools</a></li>
+        <li class="highlight"><a href="https://github.com/sponsors/nex-ovia" rel="noopener noreferrer" target="_blank">Sponsor</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-eyebrow">Release history</div>
+      <h1 class="animate-hero">Changelog</h1>
+      <p class="page-hero-sub animate-hero delay-1">Track the progress of the Nexovia Standard, from initial publication through planned improvements and future releases.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="section-grid">
+        <div class="card reveal">
+          <span class="section-label">NXS changes</span>
+          <h2 class="section-title">What changed in each version</h2>
+          <p class="section-body">Every release includes the decisions, clarifications, and new capabilities that make the standard easier to adopt and sustain. The changelog is the single source of truth for NXS version history.</p>
+        </div>
+
+        <div class="release-list">
+          <article class="release-card reveal">
+            <div class="release-meta">
+              <div class="release-version">1.0</div>
+              <div class="release-date">May 2026</div>
+              <span class="status status-available">Current</span>
+            </div>
+            <p class="release-summary">Initial publication of the Nexovia Standard.</p>
+            <ul class="change-list">
+              <li class="change-item"><span class="change-label">Added</span> Delivery sovereignty defined as the core principle of NXS.</li>
+              <li class="change-item"><span class="change-label">Added</span> Four rules of compliant solution delivery.</li>
+              <li class="change-item"><span class="change-label">Added</span> Definition of Done — seven-item compliance checklist.</li>
+              <li class="change-item"><span class="change-label">Added</span> Four commercial metrics for measuring delivery quality.</li>
+              <li class="change-item"><span class="change-label">Added</span> Apache 2.0 open license.</li>
+            </ul>
+          </article>
+
+          <article class="release-card reveal">
+            <div class="release-meta">
+              <div class="release-version">1.1</div>
+              <div class="release-date">Coming soon</div>
+              <span class="status status-planned">Planned</span>
+            </div>
+            <p class="release-summary">Project declaration specification.</p>
+            <ul class="change-list">
+              <li class="change-item"><span class="change-label">Planned</span> Project declaration schema specification.</li>
+              <li class="change-item"><span class="change-label">Planned</span> NXS CLI v0.1 — scaffold and validate commands.</li>
+              <li class="change-item"><span class="change-label">Planned</span> Compliance badge for GitHub repositories.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="cta-panel reveal">
+          <div>
+            <p class="sponsor-label">Stay informed</p>
+            <h3 class="sponsor-title">Follow the Nexovia roadmap</h3>
+            <p class="sponsor-body">The standard evolves intentionally. Follow the repo and sponsor the work to help shape the next releases and tooling milestones.</p>
+          </div>
+          <a href="https://github.com/nex-ovia" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">View the repository</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

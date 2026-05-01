@@ -1,0 +1,40 @@
+[page]
+id          = "principles"
+title       = "Principles — Nexovia"
+route       = "/principles"
+description = "The thinking behind the Nexovia Standard and delivery sovereignty."
+
+[hero]
+eyebrow     = "The Thinking Behind NXS"
+headline    = "Delivery Sovereignty"
+subheadline = "Why ownership of what you build matters more than ever — and what it actually means in practice."
+
+[[principle]]
+id      = "ai-era"
+label   = "The AI Era Problem"
+title   = "Speed without structure is just faster debt."
+body    = "AI tools have made it trivially easy to generate implementations. A working integration, a data pipeline, a web application — things that once took weeks now take hours. That is genuinely good. The problem is what gets left behind. When AI generates the structure, the organisation, and the dependencies of a solution, the team that commissioned it often cannot explain how it works, cannot change it safely, and cannot move it without rebuilding from scratch. The solution works. The team does not own it."
+
+[[principle]]
+id      = "sovereignty"
+label   = "What Sovereignty Means"
+title   = "You own what you can understand, change, and move."
+body    = "Delivery sovereignty is not about who wrote the code. It is about who can answer these questions at any point after delivery: What does this do and why? What does it depend on? How do I change this part without breaking that part? How do I move this off this platform? If the team that commissioned the solution can answer all four questions — without asking the original builder — they have sovereignty. If they cannot, they have a dependency."
+
+[[principle]]
+id      = "non-dev"
+label   = "Leading Without Coding"
+title   = "Technical leadership does not require technical authorship."
+body    = "One of the most important things NXS enables is non-developer ownership of large technical projects. A Customer Success lead, an Implementation Manager, a Solutions Architect without deep coding experience — any of these people can lead a complex project with a large codebase when the structure is declared clearly and the standard is followed. They can define what gets built, direct AI tools to build or extend it, understand every component without reading the code, hold engineers accountable to an objective standard, and sign off on quality with genuine confidence. The standard is the bridge between technical and non-technical leadership."
+
+[[principle]]
+id      = "developer"
+label   = "Creative Freedom"
+title   = "Structure is not the enemy of creativity."
+body    = "NXS defines the boundaries of a production-grade delivery. What gets built inside those boundaries is entirely up to the people building it. The rules settle questions that should not require creative energy — how to organise the project, how to handle configuration, how to make dependencies visible. Everything else is open. The result is a developer who spends more time on genuinely interesting problems and less time on decisions that the standard has already resolved."
+
+[[principle]]
+id      = "compounding"
+label   = "Long-Term Value"
+title   = "Solutions should compound, not accumulate as debt."
+body    = "Most solutions degrade over time. The original builder moves on. Documentation is never written. Dependencies become invisible. Environments drift. What was once a working solution becomes a liability that nobody wants to touch. NXS inverts this. A solution built to the standard gets easier to work with over time, not harder. New engineers can onboard in hours. Components can be extracted and reused. The solution can be extended without fear. It compounds in value rather than accumulates as debt."

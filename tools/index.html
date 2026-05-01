@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools — Nexovia</title>
+  <meta name="description" content="Open source tooling built on the Nexovia Standard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .tools-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s var(--ease);
+    }
+
+    .tool-card:hover { transform: translateY(-3px); }
+
+    .tool-card.available { border-color: rgba(0, 212, 170, 0.25); }
+    .tool-card.available:hover { border-color: rgba(0, 212, 170, 0.5); }
+    .tool-card.in-development:hover { border-color: rgba(108, 99, 255, 0.5); }
+    .tool-card.planned { opacity: 0.8; }
+
+    .tool-header {
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tool-name {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-tagline {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      font-weight: 300;
+      max-width: 500px;
+    }
+
+    .tool-body {
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .tool-description {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .tool-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .tool-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text-2);
+      font-weight: 300;
+    }
+
+    .tool-features li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+
+    .tool-available .tool-features li::before { color: var(--accent-2); }
+
+    .tool-footer {
+      padding: 1.25rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .tool-footer-note {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .coming-soon-banner {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 4rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .coming-soon-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .tool-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-eyebrow">Built on NXS</div>
+      <h1 class="animate-hero">The tools are coming.</h1>
+      <p class="page-hero-sub animate-hero delay-1">Every tool built under nex-ovia implements the Nexovia Standard directly. Language agnostic. Open source. Built in the open.</p>
+      <div style="margin-top:2rem;" class="animate-hero delay-2">
+        <a href="https://github.com/nex-ovia" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Follow on GitHub →</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+
+      <div class="tools-grid">
+
+        <!-- NXS Site — Available -->
+        <div class="tool-card available reveal">
+          <div class="tool-header">
+            <div>
+              <h2 class="tool-name">NXS Site</h2>
+              <p class="tool-tagline">This website. Content in TOML. Graph-driven build. Stateless output.</p>
+            </div>
+            <span class="status status-available">Available</span>
+          </div>
+          <div class="tool-body tool-available">
+            <p class="tool-description">The nex-ovia.com website is itself an NXS tool — a demonstration that the standard applies to any kind of project. Content is declared in TOML files. A build graph transforms them into HTML. The theme is a TOML declaration. Adding a connector makes it dynamic. The source is open.</p>
+            <ul class="tool-features">
+              <li>Content declared in TOML — editable by anyone</li>
+              <li>Theme declared in TOML — change once, update everywhere</li>
+              <li>Graph-driven build pipeline with declared nodes and edges</li>
+              <li>Stateless HTML output — deployable anywhere for free</li>
+              <li>Dynamic-ready via connector pattern</li>
+            </ul>
+          </div>
+          <div class="tool-footer">
+            <span class="tool-footer-note">source: github.com/nex-ovia</span>
+            <a href="https://github.com/nex-ovia" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.8125rem;" rel="noopener noreferrer" target="_blank">View source →</a>
+          </div>
+        </div>
+
+        <!-- NXS CLI — In development -->
+        <div class="tool-card in-development reveal">
+          <div class="tool-header">
+            <div>
+              <h2 class="tool-name">NXS CLI</h2>
+              <p class="tool-tagline">Scaffold, validate, visualise, and document any project from a single declaration.</p>
+            </div>
+            <span class="status status-development">In Development</span>
+          </div>
+          <div class="tool-body">
+            <p class="tool-description">A Rust binary that reads your project declaration and does the work of a senior engineer setting up a new repository. Generates the folder structure, wires the connections, validates compliance against NXS rules, and produces documentation automatically. Works with any language.</p>
+            <ul class="tool-features">
+              <li>Scaffold any project from a TOML declaration</li>
+              <li>Validate NXS compliance before every commit</li>
+              <li>Generate dependency graphs from project structure</li>
+              <li>Produce documentation that stays in sync</li>
+              <li>Single binary — no runtime required</li>
+            </ul>
+          </div>
+          <div class="tool-footer">
+            <span class="tool-footer-note">built in rust · language agnostic output</span>
+            <a href="https://github.com/nex-ovia" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.8125rem;" rel="noopener noreferrer" target="_blank">Watch the repo →</a>
+          </div>
+        </div>
+
+        <!-- NXS Visualiser — Planned -->
+        <div class="tool-card planned reveal">
+          <div class="tool-header">
+            <div>
+              <h2 class="tool-name">NXS Visualiser</h2>
+              <p class="tool-tagline">See your project as a graph. Understand it without reading the code.</p>
+            </div>
+            <span class="status status-planned">Planned</span>
+          </div>
+          <div class="tool-body">
+            <p class="tool-description">A visual dependency and workflow graph generated directly from your project structure. Not a diagram you maintain — a live rendering of what your project actually is. Every component, every connection, every decision point. Readable by anyone on the team.</p>
+            <ul class="tool-features">
+              <li>Live graph from project structure — no manual diagramming</li>
+              <li>Dependency surface area visible at a glance</li>
+              <li>Decision flow and conditional paths rendered clearly</li>
+              <li>Embeddable in any documentation site</li>
+              <li>Exports to SVG, PNG, and Mermaid</li>
+            </ul>
+          </div>
+          <div class="tool-footer">
+            <span class="tool-footer-note">planned for nxs v1.1</span>
+            <a href="https://github.com/nex-ovia" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.8125rem;" rel="noopener noreferrer" target="_blank">Follow for updates →</a>
+          </div>
+        </div>
+
+        <!-- NXS Docs — Planned -->
+        <div class="tool-card planned reveal">
+          <div class="tool-header">
+            <div>
+              <h2 class="tool-name">NXS Docs</h2>
+              <p class="tool-tagline">Documentation generated from the way your project is built, not what you remember to write.</p>
+            </div>
+            <span class="status status-planned">Planned</span>
+          </div>
+          <div class="tool-body">
+            <p class="tool-description">Automatically generated documentation from a compliant NXS project. Pulls component descriptions, dependency declarations, input and output definitions, and the Definition of Done checklist into a readable, navigable site. Never out of sync because it is generated from the source of truth.</p>
+            <ul class="tool-features">
+              <li>Auto-generated from project declaration — no manual writing</li>
+              <li>Always in sync — generated at build time</li>
+              <li>Readable by non-developers and engineers equally</li>
+              <li>Versioned alongside the project</li>
+              <li>Stateless HTML output — deployable anywhere</li>
+            </ul>
+          </div>
+          <div class="tool-footer">
+            <span class="tool-footer-note">planned for nxs v1.1</span>
+            <a href="https://github.com/nex-ovia" class="btn btn-secondary" style="padding:0.5rem 1rem; font-size:0.8125rem;" rel="noopener noreferrer" target="_blank">Follow for updates →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="coming-soon-banner reveal">
+        <div class="coming-soon-icon">⬡</div>
+        <p class="section-label" style="justify-content:center; display:flex;">More tools planned</p>
+        <p style="color: var(--text-2); font-weight:300; max-width:480px; margin: 0.75rem auto 1.5rem;">Everything built under nex-ovia is open source and built on the Nexovia Standard. Follow the GitHub organisation to be notified as new tools ship.</p>
+        <a href="https://github.com/nex-ovia" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Follow nex-ovia on GitHub →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="sponsor-strip reveal">
+      <div>
+        <p class="sponsor-label">Fund the tooling</p>
+        <h3 class="sponsor-title">Sponsorship builds these tools faster.</h3>
+        <p class="sponsor-body">Every tool listed here is free and open source. Sponsorship funds the development time to build and maintain them.</p>
+      </div>
+      <a href="https://github.com/sponsors/nex-ovia" class="btn btn-sponsor" rel="noopener noreferrer" target="_blank">Become a Sponsor</a>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

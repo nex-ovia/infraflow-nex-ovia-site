@@ -1,0 +1,109 @@
+[page]
+id          = "standard"
+title       = "The Nexovia Standard (NXS v1.0)"
+route       = "/standard"
+description = "The full Nexovia Standard — a delivery standard for building solutions that last."
+
+[hero]
+eyebrow     = "NXS v1.0 — Apache 2.0"
+headline    = "The Nexovia Standard"
+subheadline = "A delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden."
+github_href = "https://github.com/nex-ovia/NXS"
+
+[[section]]
+id      = "what"
+label   = "What Is NXS"
+title   = "One standard. Any language. Any platform. Any team."
+body    = "The Nexovia Standard does not tell you what language to use, what tools to pick, or how to write your code. It defines what every finished solution must be true of, so that it can be understood by anyone, extended by anyone, packaged for reuse, and supported for the long term without depending on the person who originally built it."
+
+[[section]]
+id      = "why"
+label   = "Why It Exists"
+title   = "The risk has shifted."
+body    = "AI tools generate implementations in seconds. Workflow platforms assemble integrations without a line of code. Teams can move faster than ever. The risk is no longer that solutions take too long to build. The risk is that solutions get built and two months later nobody can explain how they work, nobody can extend them, and the business that paid for them is locked into a tool or a person they cannot replace."
+
+[[section]]
+id      = "sovereignty"
+label   = "Core Principle"
+title   = "Delivery Sovereignty"
+body    = "Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it."
+
+[[rule]]
+number  = "01"
+id      = "logic"
+title   = "The logic is separate from the tools"
+body    = "Every solution has a core: the part that makes decisions and encodes the rules that matter to the business. That core must be identifiable, readable, and independent of any specific tool, vendor, or platform used to deliver it. If the database changes, the email provider changes, or the workflow platform is replaced — the business logic does not change. Only the connection to it does."
+example_wrong = "# Logic tied to vendor SDK\nresult = SalesforceClient().create_opportunity(data)"
+example_right = "# Logic is pure, connection is separate\nresult = crm.create_opportunity(data)  # crm is a swappable connection"
+
+[[rule]]
+number  = "02"
+id      = "config"
+title   = "Configuration never lives inside the solution"
+body    = "Every value that changes between environments — credentials, API keys, connection strings, feature flags, resource limits — must live outside the solution itself. It is set in the environment the solution runs in, never baked into the implementation."
+example_wrong = "API_URL = \"https://prod.myvendor.com/v1\""
+example_right = "API_URL = os.getenv(\"VENDOR_API_URL\")"
+
+[[rule]]
+number  = "03"
+id      = "dependencies"
+title   = "Every external dependency is visible"
+body    = "If a solution communicates with anything outside itself — a database, an API, a messaging service, a file system, a third-party platform — that dependency is named and documented. Documented means: what it is, why it is there, what it provides, and what would need to change if it were replaced."
+example_wrong = "# Hidden: nobody knows this calls Stripe until it breaks\ncharge = stripe.PaymentIntent.create(amount=amount)"
+example_right = "# Declared: visible in dependency registry\n# payments.provider = stripe\n# payments.config_key = STRIPE_SECRET_KEY\ncharge = payments.create_charge(amount)"
+
+[[rule]]
+number  = "04"
+id      = "portable"
+title   = "It runs anywhere, for anyone"
+body    = "A finished solution can be run by someone who was not involved in building it, on a machine that was not used to build it, without asking the original builder for help. Inputs are documented, dependencies are listed, environment assumptions are externalised, and there is no local state that quietly accumulates."
+example_wrong = "# Requires asking the original builder\n# 'oh yeah you need to run setup.sh first and set the thing in config.local'"
+example_right = "# Self-contained: clone, set env vars from .env.example, run\ndocker run --env-file .env nex-ovia/my-solution"
+
+[[done]]
+item    = "Purpose documented"
+detail  = "Anyone can read what this solution does and why it exists, without reading the code"
+
+[[done]]
+item    = "Logic identifiable"
+detail  = "The business rules live somewhere clear, readable, and separate from tooling"
+
+[[done]]
+item    = "Dependencies listed"
+detail  = "Every external system or service is named with its purpose documented"
+
+[[done]]
+item    = "Configuration externalised"
+detail  = "Nothing environment-specific is hardcoded anywhere in the solution"
+
+[[done]]
+item    = "Runs anywhere"
+detail  = "A new person can run this on any machine by following only what is written down"
+
+[[done]]
+item    = "Health verifiable"
+detail  = "There is a defined way to confirm the solution is running correctly at any time"
+
+[[done]]
+item    = "Stable under load"
+detail  = "Confirmed to perform correctly at the expected real-world volume"
+
+[[metric]]
+name    = "Time to Understand"
+measure = "How long a new person takes to fully grasp an unfamiliar solution"
+target  = "Under 2 hours"
+
+[[metric]]
+name    = "Dependency Swap Time"
+measure = "How long to replace one external tool or vendor with another"
+target  = "Under 4 hours"
+
+[[metric]]
+name    = "Time to First Version"
+measure = "Speed from brief to a working, deployable solution"
+target  = "40% faster than baseline"
+
+[[metric]]
+name    = "Maintenance Overhead"
+measure = "Hours per week spent on manual fixes and support"
+target  = "Under 10% of team capacity"

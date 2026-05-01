@@ -1,0 +1,72 @@
+[page]
+id          = "home"
+title       = "Nexovia"
+route       = "/"
+description = "Build it once. Reuse it. Extend it. Own it for the long term."
+
+[hero]
+headline    = "Build it once."
+headline_2  = "Own it forever."
+subheadline = "The Nexovia Standard is a delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden."
+cta_primary_label = "Read the Standard"
+cta_primary_href  = "/standard"
+cta_secondary_label = "View on GitHub"
+cta_secondary_href  = "https://github.com/nex-ovia/NXS"
+
+[proposition]
+label = "One standard. Any language. Any platform. Any team."
+
+[[audience]]
+id          = "leader"
+icon        = "◈"
+title       = "For the project leader"
+description = "You do not need to write code to lead a technical project with confidence. NXS gives you the structure to direct, understand, and be fully accountable for what gets built — at any scale."
+
+[[audience]]
+id          = "developer"
+icon        = "◇"
+title       = "For the developer"
+description = "NXS resolves the structural decisions upfront so you can focus on what you do best. A production-grade foundation. Creative freedom within it. Work that other developers can extend without asking you how it works."
+
+[[audience]]
+id          = "team"
+icon        = "○"
+title       = "For the team"
+description = "A shared standard means fewer misunderstandings, faster onboarding, and solutions that compound in value over time rather than accumulate as technical debt."
+
+[rules_preview]
+label   = "The Four Rules"
+intro   = "Every NXS solution follows four rules. Not guidelines. Not suggestions."
+
+[[rules_preview.rule]]
+number  = "01"
+title   = "Logic separate from tools"
+summary = "The business rules live somewhere identifiable and independent. If the vendor changes, the logic does not."
+
+[[rules_preview.rule]]
+number  = "02"
+title   = "Configuration externalised"
+summary = "Nothing environment-specific lives inside the solution. It runs identically everywhere."
+
+[[rules_preview.rule]]
+number  = "03"
+title   = "Dependencies visible"
+summary = "Every external connection is named and documented. No hidden surface area."
+
+[[rules_preview.rule]]
+number  = "04"
+title   = "Runs anywhere, for anyone"
+summary = "No tribal knowledge required. No original builder needed."
+
+[sovereignty]
+label   = "Delivery Sovereignty"
+quote   = "A solution built once should work, grow, and last."
+body    = "Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it."
+cta_label = "Read the full principle"
+cta_href  = "/principles"
+
+[sponsor_strip]
+label   = "Support open delivery standards"
+body    = "NXS is free and open. If this work is useful to your team or organisation, consider sponsoring to help keep it moving forward."
+cta_label = "Become a Sponsor"
+cta_href  = "https://github.com/sponsors/nex-ovia"

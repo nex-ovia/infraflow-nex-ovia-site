@@ -1,0 +1,40 @@
+[page]
+id          = "sponsor"
+title       = "Sponsor — Nexovia"
+route       = "/sponsor"
+description = "Support the Nexovia Standard and the tools built on it."
+
+[hero]
+eyebrow     = "Support Open Standards"
+headline    = "Help build the future of delivery."
+subheadline = "NXS is free and open. Every tool built on it is open source. Sponsorship keeps this work moving forward."
+
+[why]
+title   = "Why sponsor?"
+body    = "Open standards only work when they are maintained, communicated, and built on. The Nexovia Standard is free to use, free to adopt, and free to build on. Sponsorship funds the time to develop the tooling, maintain the standard, publish new versions, and grow the community around it."
+
+[[use_of_funds]]
+area    = "Tooling development"
+detail  = "Building the NXS CLI, Visualiser, and Docs tools that make the standard actionable"
+
+[[use_of_funds]]
+area    = "Standard maintenance"
+detail  = "Researching, writing, and publishing new versions of NXS as delivery practices evolve"
+
+[[use_of_funds]]
+area    = "Community and content"
+detail  = "Writing, speaking, and publishing to grow awareness and adoption of delivery sovereignty"
+
+[[use_of_funds]]
+area    = "Infrastructure"
+detail  = "Hosting, domains, and tooling to keep nex-ovia.com and the GitHub org running"
+
+[cta]
+label   = "Become a Sponsor"
+href    = "https://github.com/sponsors/nex-ovia"
+note    = "Sponsorship is handled through GitHub Sponsors. All tiers and details are listed there."
+
+[acknowledgement]
+title   = "Sponsors"
+body    = "Sponsors will be listed here and in the NXS repository README with gratitude."
+empty   = "Be the first to support the Nexovia Standard."

@@ -1,0 +1,43 @@
+[meta]
+name    = "nexovia"
+version = "1.0"
+author  = "Amit"
+
+[colors]
+background      = "#0a0a0f"
+surface         = "#111118"
+surface_raised  = "#1a1a24"
+border          = "#2a2a3a"
+accent_primary  = "#6c63ff"
+accent_secondary = "#00d4aa"
+accent_warm     = "#ff6b6b"
+text_primary    = "#f0f0f5"
+text_secondary  = "#9090a8"
+text_muted      = "#5a5a72"
+
+[typography]
+font_display = "DM Serif Display"
+font_body    = "DM Sans"
+font_mono    = "JetBrains Mono"
+font_url     = "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+
+scale_xs  = "0.75rem"
+scale_sm  = "0.875rem"
+scale_base = "1rem"
+scale_lg  = "1.125rem"
+scale_xl  = "1.25rem"
+scale_2xl = "1.5rem"
+scale_3xl = "2rem"
+scale_4xl = "2.75rem"
+scale_5xl = "3.75rem"
+
+[spacing]
+unit    = "0.25rem"
+section = "6rem"
+gap     = "2rem"
+
+[motion]
+duration_fast   = "150ms"
+duration_base   = "300ms"
+duration_slow   = "600ms"
+easing          = "cubic-bezier(0.16, 1, 0.3, 1)"

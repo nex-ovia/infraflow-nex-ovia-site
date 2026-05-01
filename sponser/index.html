@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sponsor — Nexovia</title>
+  <meta name="description" content="Support the Nexovia Standard and the tools built on it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .fund-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .fund-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .fund-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .fund-card p {
+      color: var(--text-2);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .acknowledgement {
+      margin-top: 3rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .acknowledgement-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .cta-panel {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(0, 212, 170, 0.04));
+      border: 1px solid rgba(108, 99, 255, 0.18);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .cta-panel p { max-width: 520px; color: var(--text-2); }
+
+    @media (max-width: 840px) {
+      .cta-panel { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <div class="container">
+      <a href="/" class="nav-logo">nex<span>·</span>ovia</a>
+      <ul class="nav-links">
+        <li><a href="/standard">Standard</a></li>
+        <li><a href="/principles">Principles</a></li>
+        <li><a href="/tools">Tools</a></li>
+        <li><a href="/changelog">Changelog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-eyebrow">Support Open Standards</div>
+      <h1 class="animate-hero">Help build the future of delivery.</h1>
+      <p class="page-hero-sub animate-hero delay-1">NXS is free and open. Every tool built on it is open source. Sponsorship keeps this work moving forward.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="section-grid">
+        <div class="card reveal">
+          <span class="section-label">Why sponsor?</span>
+          <h2 class="section-title">Support the Nexovia Standard</h2>
+          <p class="section-body">Open standards only work when they are maintained, communicated, and built on. The Nexovia Standard is free to use, free to adopt, and free to build on. Sponsorship funds the time to develop the tooling, maintain the standard, publish new versions, and grow the community around it.</p>
+        </div>
+
+        <div class="fund-grid">
+          <article class="fund-card reveal">
+            <h3>Tooling development</h3>
+            <p>Building the NXS CLI, Visualiser, and Docs tools that make the standard actionable.</p>
+          </article>
+          <article class="fund-card reveal">
+            <h3>Standard maintenance</h3>
+            <p>Researching, writing, and publishing new versions of NXS as delivery practices evolve.</p>
+          </article>
+          <article class="fund-card reveal">
+            <h3>Community and content</h3>
+            <p>Writing, speaking, and publishing to grow awareness and adoption of delivery sovereignty.</p>
+          </article>
+          <article class="fund-card reveal">
+            <h3>Infrastructure</h3>
+            <p>Hosting, domains, and tooling to keep nex-ovia.com and the GitHub org running.</p>
+          </article>
+        </div>
+
+        <div class="cta-panel reveal">
+          <div>
+            <p class="sponsor-label">Get involved</p>
+            <h3 class="sponsor-title">Become a Sponsor</h3>
+            <p class="sponsor-body">Your support helps keep the Nexovia Standard open, available, and actively developed. All sponsorship details are managed through GitHub Sponsors.</p>
+          </div>
+          <a href="https://github.com/sponsors/nex-ovia" class="btn btn-primary" rel="noopener noreferrer" target="_blank">Become a Sponsor</a>
+        </div>
+
+        <div class="acknowledgement reveal">
+          <div class="acknowledgement-card">
+            <span class="section-label">Sponsors</span>
+            <h3 class="section-title">Sponsors will be listed here</h3>
+            <p class="section-body">Sponsors will be listed here and in the NXS repository README with gratitude. Be the first to support the Nexovia Standard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">nex<span>·</span>ovia</div>
+        <ul class="footer-links">
+          <li><a href="/standard">Standard</a></li>
+          <li><a href="/principles">Principles</a></li>
+          <li><a href="/tools">Tools</a></li>
+          <li><a href="https://github.com/nex-ovia" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+        </ul>
+        <p class="footer-copy">Apache 2.0 · NXS v1.0 · nex-ovia.com</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/shared.js"></script>
+</body>
+</html>

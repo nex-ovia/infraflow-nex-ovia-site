@@ -3,11 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - dev
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - dev
   workflow_dispatch: # Allows manual triggering of the workflow from the Actions tab
 
 jobs:
@@ -20,23 +20,13 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Tailwind CLI
+      - name: Prepare distribution folder
         run: |
-          curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64
-          chmod +x tailwindcss-linux-x64
-          sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
-
-      - name: Build Tailwind CSS for Production
-        run: |
-          # This command scans your HTML and JS files and builds a production-ready CSS file
-          tailwindcss -i ./styles.css -o ./dist/styles.css --minify
-
-      - name: Prepare Distribution Folder
-        run: |
-          # Copying other static assets to the dist folder for deployment
-          cp index.html dist/
-          cp site.js dist/
-          cp content.json dist/
+          rm -rf dist
+          mkdir -p dist
+          cp index.html site.css shared.js project.toml project-graph.js dist/
+          mkdir -p dist/partials
+          cp -R principles standard tools changelog sponser partials dist/
 
       - name: Build And Deploy
         id: builddeploy
@@ -48,7 +38,7 @@ jobs:
           ###### Repository/Build Configurations ######
           app_location: "/"          
           api_location: ""           
-          output_location: "dist"    # Now pointing to the optimized build folder
+          output_location: "dist"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

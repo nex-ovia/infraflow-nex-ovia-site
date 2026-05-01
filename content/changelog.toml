@@ -1,0 +1,51 @@
+[page]
+id          = "changelog"
+title       = "Changelog — Nexovia Standard"
+route       = "/changelog"
+description = "Version history of the Nexovia Standard."
+
+[[release]]
+version     = "1.0"
+date        = "May 2026"
+status      = "current"
+summary     = "Initial publication of the Nexovia Standard."
+description = "NXS v1.0 establishes delivery sovereignty as the core principle and defines the four rules every compliant solution must follow. This version also defines the Definition of Done checklist and the four commercial metrics for measuring delivery quality."
+
+[[release.change]]
+type    = "added"
+item    = "Delivery sovereignty defined as the core principle of NXS"
+
+[[release.change]]
+type    = "added"
+item    = "Four rules of compliant solution delivery"
+
+[[release.change]]
+type    = "added"
+item    = "Definition of Done — seven-item compliance checklist"
+
+[[release.change]]
+type    = "added"
+item    = "Four commercial metrics for measuring delivery quality"
+
+[[release.change]]
+type    = "added"
+item    = "Apache 2.0 open license"
+
+[[release]]
+version     = "1.1"
+date        = "Coming soon"
+status      = "planned"
+summary     = "Project declaration specification."
+description = "NXS v1.1 will introduce a formal specification for project declarations — a structured way to describe a project's components, connections, and dependencies in a machine-readable format that tooling can act on."
+
+[[release.change]]
+type    = "planned"
+item    = "Project declaration schema specification"
+
+[[release.change]]
+type    = "planned"
+item    = "NXS CLI v0.1 — scaffold and validate commands"
+
+[[release.change]]
+type    = "planned"
+item    = "Compliance badge for GitHub repositories"

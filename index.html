@@ -1,137 +1,1089 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexFlow</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- [read_theme node] → meta -->
+  <title>Nexovia — The Nexovia Standard</title>
+  <meta name="description" content="Build it once. Reuse it. Extend it. Own it for the long term.">
+  <meta property="og:title" content="The Nexovia Standard">
+  <meta property="og:description" content="A delivery standard for building solutions that last.">
+  <meta property="og:url" content="https://nex-ovia.com">
+  <!-- [read_theme node] → typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── [build_css node] — generated from theme.toml ── */
+    :root {
+      --bg:             #0a0a0f;
+      --surface:        #111118;
+      --surface-raised: #1a1a24;
+      --border:         #2a2a3a;
+      --accent:         #6c63ff;
+      --accent-2:       #00d4aa;
+      --accent-warm:    #ff6b6b;
+      --text:           #f0f0f5;
+      --text-2:         #9090a8;
+      --text-muted:     #5a5a72;
+      --font-display:   'DM Serif Display', Georgia, serif;
+      --font-body:      'DM Sans', system-ui, sans-serif;
+      --font-mono:      'JetBrains Mono', monospace;
+      --ease:           cubic-bezier(0.16, 1, 0.3, 1);
+      --section:        7rem;
+      --radius:         0.75rem;
+      --radius-sm:      0.375rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s var(--ease);
+    }
+
+    nav.scrolled { border-color: var(--border); }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 0.875rem;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--surface-raised); }
+
+    .nav-links .highlight a {
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links .highlight a:hover { background: #7d75ff; color: var(--bg); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.12) 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+      pointer-events: none;
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 212, 170, 0.07) 0%, transparent 70%);
+      bottom: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 860px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      padding: 0.375rem 0.875rem;
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 100px;
+      background: rgba(0, 212, 170, 0.05);
+      animation: fadeUp 0.8s var(--ease) both;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      animation: fadeUp 0.8s var(--ease) 0.1s both;
+    }
+
+    .hero h1 .italic { font-style: italic; color: var(--accent); }
+
+    .hero h1 .line2 {
+      display: block;
+      animation: fadeUp 0.8s var(--ease) 0.2s both;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-2);
+      max-width: 580px;
+      margin: 2rem 0 3rem;
+      line-height: 1.75;
+      font-weight: 300;
+      animation: fadeUp 0.8s var(--ease) 0.3s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s var(--ease) 0.4s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #7d75ff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(108, 99, 255, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--surface-raised);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      animation: fadeIn 1s var(--ease) 1s both;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── Section shared ── */
+    section {
+      padding: var(--section) 0;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body {
+      color: var(--text-2);
+      font-size: 1.0625rem;
+      max-width: 600px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ── Proposition strip ── */
+    .proposition {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .proposition-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .proposition-text {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--text-2);
+    }
+
+    .proposition-tags {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.375rem 0.75rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ── Audience cards ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .audience-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s var(--ease);
+    }
+
+    .audience-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .audience-card:hover {
+      border-color: rgba(108, 99, 255, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .audience-card:hover::before { opacity: 1; }
+
+    .audience-card:nth-child(2)::before {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, transparent 60%);
+    }
+
+    .audience-card:nth-child(2):hover { border-color: rgba(0, 212, 170, 0.4); }
+
+    .audience-card:nth-child(3)::before {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, transparent 60%);
+    }
+
+    .audience-card:nth-child(3):hover { border-color: rgba(255, 107, 107, 0.4); }
+
+    .card-icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .audience-card:nth-child(2) .card-icon { color: var(--accent-2); }
+    .audience-card:nth-child(3) .card-icon { color: var(--accent-warm); }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-body {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── Rules ── */
+    .rules-section { background: var(--surface); }
+
+    .rules-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+
+    .rules-intro {
+      color: var(--text-2);
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .rule-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .rule-card:hover { background: var(--surface-raised); }
+
+    .rule-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .rule-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.875rem;
+      letter-spacing: -0.01em;
+    }
+
+    .rule-summary {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Sovereignty quote ── */
+    .sovereignty-section {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.08) 0%, transparent 50%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sovereignty-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .sovereignty-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-style: italic;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .sovereignty-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+      border-radius: 2px;
+    }
+
+    .sovereignty-body {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Graph visualiser ── */
+    .graph-section { overflow: hidden; }
+
+    .graph-label {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .graph-canvas {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      overflow: auto;
+    }
+
+    .graph-explorer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      min-height: 500px;
+    }
+
+    .graph-svg {
+      border-radius: var(--radius-sm);
+      background: rgba(10, 10, 15, 0.3);
+    }
+
+    .graph-nodes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      overflow-y: auto;
+      max-height: 520px;
+      padding-right: 0.75rem;
+    }
+
+    .graph-nodes-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .graph-nodes-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .graph-explorer-node {
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .graph-explorer-node:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+      box-shadow: 0 8px 24px rgba(108, 99, 255, 0.12);
+    }
+
+    .graph-explorer-node.active {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.08);
+      box-shadow: 0 10px 40px rgba(108, 99, 255, 0.15);
+    }
+
+    .graph-explorer-node.root-node {
+      border: 2px solid var(--accent);
+      background: rgba(108, 99, 255, 0.12);
+      margin-bottom: 0.5rem;
+    }
+
+    .explorer-node-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .node-type-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(108, 99, 255, 0.15);
+      color: var(--accent);
+    }
+
+    .node-type-tag.node-source {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent-2);
+    }
+
+    .node-type-tag.node-asset {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--accent-warm);
+    }
+
+    .node-type-tag.node-output {
+      background: rgba(255, 215, 0, 0.15);
+      color: #ffd700;
+    }
+
+    .node-type-tag.node-config {
+      background: rgba(108, 99, 255, 0.15);
+      color: var(--accent);
+    }
+
+    .node-id-text {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .edge-relation {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-left: auto;
+    }
+
+    .explorer-node-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .node-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-2);
+    }
+
+    .node-details {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .node-details strong {
+      color: var(--text);
+    }
+
+    .graph-deps-section {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+
+    .deps-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      margin-bottom: 1rem;
+    }
+
+    .graph-deps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .graph-details {
+      background: rgba(17, 17, 24, 0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .graph-detail-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .graph-detail-body {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .graph-detail-meta {
+      display: grid;
+      gap: 0.65rem;
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .graph-detail-meta dt {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--accent-2);
+    }
+
+    .graph-detail-meta dd {
+      margin: 0;
+      color: var(--text);
+    }
+
+    /* ── Sponsor strip ── */
+    .sponsor-strip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 0 0 var(--section);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sponsor-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .sponsor-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .sponsor-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sponsor-body {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      max-width: 480px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .btn-sponsor {
+      background: transparent;
+      color: #ea4aaa;
+      border: 1px solid #ea4aaa;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-sponsor:hover {
+      background: #ea4aaa;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(234, 74, 170, 0.3);
+    }
+
+    .btn-sponsor::before { content: '♥ '; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      :root { --section: 4rem; }
+      .nav-links { display: none; }
+      .rules-header { grid-template-columns: 1fr; gap: 2rem; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .sovereignty-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .sponsor-strip { padding: 2rem; }
+      .graph-explorer { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body class="selection:bg-blue-500/30">
-    <a href="#main" class="skip-link">Skip to content</a>
+<body>
 
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-8">
-        <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-3 group">
-                <div class="logo-box">
-                    <i data-lucide="layers" class="text-white w-5 h-5"></i>
-                </div>
-                <span id="brand-name" class="text-white font-bold text-2xl tracking-tighter"></span>
-            </a>
-            <div id="nav-links" class="hidden md:flex items-center gap-10 text-[11px] font-bold tracking-widest uppercase text-gray-400"></div>
+  <!-- [read_site node] → nav -->
+  <div id="nav-placeholder"></div>
+
+  <!-- [build_pages node] → hero — source: content/home.toml [hero] -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">NXS v1.0 — Now Available</div>
+        <h1>
+          Build it once.<br>
+          <span class="line2">Own it <span class="italic">forever.</span></span>
+        </h1>
+        <p class="hero-sub">
+          The Nexovia Standard is a delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden.
+        </p>
+        <div class="hero-actions">
+          <a href="/standard" class="btn btn-primary">Read the Standard →</a>
+          <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">View on GitHub</a>
         </div>
-    </nav>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
 
-    <main id="main" tabindex="-1">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-glow"></div>
-            <div class="max-w-7xl mx-auto px-8 relative z-10">
-                <div class="max-w-5xl">
-                    <h1 class="hero-title">NexFlow <br><span id="hero-tagline" class="hero-gradient-text"></span></h1>
-                    <p id="hero-desc" class="hero-subtitle"></p>
-                    <div class="hero-actions">
-                        <button id="cta-primary" class="btn-primary"><span></span> <i data-lucide="arrow-right"></i></button>
-                        <!-- <button id="cta-secondary" class="btn-secondary"></button> -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Values Section  -->
-        <section id="value" class="py-32 max-w-7xl mx-auto px-8">
-            <div class="mb-16">
-                <h3 class="section-label">Our Philosophy</h3>
-                <h2 class="section-title">Why NexFLow?</h2>
-            </div>
-            <div id="value-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Content Injected via site.js -->
-            </div>
-        </section>
-
-        <!-- Core Pillars Section -->
-        <section id="solutions" class="py-32 max-w-7xl mx-auto px-8">
-            <div class="mb-16">
-                <h3 class="section-label">Core Pillars</h3>
-                <h2 class="section-title">Managed Simplicity.</h2>
-            </div>
-            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
-        </section>
-
-        <!-- New Contact Section -->
-        <section id="contact" class="py-32 max-w-7xl mx-auto px-8">
-            <div class="glass-card rounded-[2.5rem] p-12 md:p-20 relative overflow-hidden">
-                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h3 class="section-label">Inquiry</h3>
-                        <h2 class="text-5xl font-bold text-white mb-8 tracking-tight">Ready to scale?</h2>
-                        <p class="text-gray-400 text-xl leading-relaxed mb-10">
-                            Our team is ready to audit or support your current cloud architecture. Drop your details, and let’s build a declarative future together.
-                        </p>
-                        <div class="flex flex-col gap-6">
-                            <div class="flex items-center gap-4 text-gray-300">
-                                <i data-lucide="mail" class="text-blue-500"></i>
-                                <span>support@nex-ovia.com</span>
-                            </div>
-                            <div class="flex items-center gap-4 text-gray-300">
-                                <i data-lucide="map-pin" class="text-blue-500"></i>
-                                <span>Global Operations Center</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- <form id="contact-form" class="flex flex-col gap-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="text" placeholder="Full Name" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors">
-                            <input type="email" placeholder="Work Email" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors">
-                        </div>
-                        <textarea rows="4" placeholder="How can we help?" class="bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors"></textarea>
-                        <button type="submit" class="btn-primary w-full justify-center">
-                            Send Request
-                        </button>
-                    </form> -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Chat Widget -->
-    <!-- <div class="fixed bottom-8 right-8 z-[100]">
-        <div id="chat-window" class="hidden mb-4 w-80 bg-zinc-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden transform transition-all translate-y-4 opacity-0">
-            <div class="p-6 bg-blue-600 text-white font-bold flex justify-between items-center">
-                <span>InfraLayer Support</span>
-                <button id="close-chat"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            <div class="p-6 h-64 overflow-y-auto flex flex-col gap-4 text-sm" id="chat-messages">
-                <div class="bg-white/5 p-3 rounded-2xl text-gray-300 max-w-[80%]">
-                    Hello! How can we help with your infrastructure today?
-                </div>
-            </div>
-            <div class="p-4 border-t border-white/5 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 bg-white/5 rounded-xl px-4 py-2 text-white text-sm focus:outline-none">
-                <button id="send-chat" class="p-2 bg-blue-600 rounded-xl text-white"><i data-lucide="send" class="w-4 h-4"></i></button>
-            </div>
+  <!-- [build_pages node] → proposition — source: content/home.toml [proposition] -->
+  <div class="proposition">
+    <div class="container">
+      <div class="proposition-inner">
+        <p class="proposition-text">One standard. Any language. Any platform. Any team.</p>
+        <div class="proposition-tags">
+          <span class="tag">Language Agnostic</span>
+          <span class="tag">Platform Neutral</span>
+          <span class="tag">AI Native</span>
+          <span class="tag">Open Standard</span>
         </div>
-        <button id="chat-trigger" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform">
-            <i data-lucide="message-square"></i>
-        </button>
-    </div> -->
+      </div>
+    </div>
+  </div>
 
-    <footer class="footer">
-        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-16">
-            <div class="max-w-xs">
-                <div class="flex items-center gap-3 mb-8">
-                    <i data-lucide="layers" class="text-blue-500 w-7 h-7"></i>
-                    <span class="footer-brand text-white font-bold text-xl tracking-tighter"></span>
-                </div>
-                <p id="footer-bio" class="text-gray-500 leading-relaxed font-medium"></p>
-            </div>
-            <div id="footer-links" class="grid grid-cols-2 gap-20"></div>
+  <!-- [build_pages node] → audience — source: content/home.toml [[audience]] -->
+  <section>
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Who It Is For</p>
+        <h2 class="section-title">Built for everyone<br>who builds things.</h2>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <span class="card-icon">◈</span>
+          <h3 class="card-title">For the project leader</h3>
+          <p class="card-body">You do not need to write code to lead a technical project with confidence. NXS gives you the structure to direct, understand, and be fully accountable for what gets built — at any scale.</p>
         </div>
-        <div id="footer-copy" class="footer-copy"></div>
-    </footer>
+        <div class="audience-card reveal">
+          <span class="card-icon">◇</span>
+          <h3 class="card-title">For the developer</h3>
+          <p class="card-body">NXS resolves the structural decisions upfront so you can focus on what you do best. A production-grade foundation. Creative freedom within it. Work that others can extend without asking you how it works.</p>
+        </div>
+        <div class="audience-card reveal">
+          <span class="card-icon">○</span>
+          <h3 class="card-title">For the team</h3>
+          <p class="card-body">A shared standard means fewer misunderstandings, faster onboarding, and solutions that compound in value over time rather than accumulate as technical debt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="site.js"></script>
+  <!-- [build_pages node] → rules — source: content/home.toml [[rules_preview.rule]] -->
+  <section class="rules-section">
+    <div class="container">
+      <div class="rules-header reveal">
+        <div>
+          <p class="section-label">The Four Rules</p>
+          <h2 class="section-title">Not guidelines.<br>Not suggestions.</h2>
+        </div>
+        <p class="rules-intro">Every NXS solution follows four rules. Each one exists because it directly protects delivery sovereignty — the principle that what you build belongs to you, not to the tool that built it.</p>
+      </div>
+      <div class="rules-grid reveal">
+        <div class="rule-card">
+          <span class="rule-number">RULE 01</span>
+          <h3 class="rule-title">Logic separate from tools</h3>
+          <p class="rule-summary">The business rules live somewhere identifiable and independent. If the vendor changes, the logic does not.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-number">RULE 02</span>
+          <h3 class="rule-title">Configuration externalised</h3>
+          <p class="rule-summary">Nothing environment-specific lives inside the solution. It runs identically everywhere — local, staging, production.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-number">RULE 03</span>
+          <h3 class="rule-title">Dependencies visible</h3>
+          <p class="rule-summary">Every external connection is named and documented. No hidden surface area. No surprises during a handover.</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-number">RULE 04</span>
+          <h3 class="rule-title">Runs anywhere, for anyone</h3>
+          <p class="rule-summary">No tribal knowledge required. No original builder needed. Anyone can run it from what is written down.</p>
+        </div>
+      </div>
+      <div style="margin-top: 2rem; text-align: center;" class="reveal">
+        <a href="/standard" class="btn btn-secondary">Read the full standard →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- [build_pages node] → sovereignty — source: content/home.toml [sovereignty] -->
+  <section class="sovereignty-section">
+    <div class="container">
+      <div class="sovereignty-inner">
+        <blockquote class="sovereignty-quote reveal">
+          "A solution built once should work, grow, and last."
+        </blockquote>
+        <div class="reveal">
+          <p class="section-label">Delivery Sovereignty</p>
+          <p class="sovereignty-body">
+            Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it.
+          </p>
+          <a href="/principles" class="btn btn-secondary">Read the full principle →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [build_pages node] → graph visualiser — source: graph/build.toml -->
+  <section class="graph-section">
+    <div class="container">
+      <div class="graph-label reveal">
+        <p class="section-label">Built on NXS</p>
+        <h2 class="section-title">This website is its own proof.</h2>
+        <p class="section-body" style="margin: 1rem auto 0; text-align: center;">Content lives in TOML files. A build graph transforms them into pages. Adding a connector makes it dynamic. The architecture is declared, not assumed.</p>
+      </div>
+      <div class="graph-canvas reveal">
+        <div id="project-graph-root" class="graph-flow"></div>
+      </div>
+      <div id="project-graph-details" class="graph-details reveal">
+        <h3 class="graph-detail-title">Interactive project graph</h3>
+        <p class="graph-detail-body">This graph is generated from <code>project.toml</code>. Click any node to see its role, the file it maps to, and where to make changes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [build_pages node] → sponsor — source: content/home.toml [sponsor_strip] -->
+  <div class="container">
+    <div class="sponsor-strip reveal">
+      <div>
+        <p class="sponsor-label">Open and free</p>
+        <h3 class="sponsor-title">Support open delivery standards</h3>
+        <p class="sponsor-body">NXS and all tools built on it are free. If this work is useful to your team or organisation, consider sponsoring to help keep it moving forward.</p>
+      </div>
+      <a href="https://github.com/sponsors/nex-ovia" class="btn btn-sponsor" rel="noopener noreferrer" target="_blank">Become a Sponsor</a>
+    </div>
+  </div>
+
+  <!-- [read_site node] → footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">nex<span>·</span>ovia</div>
+        <ul class="footer-links">
+          <li><a href="/standard">Standard</a></li>
+          <li><a href="/principles">Principles</a></li>
+          <li><a href="/tools">Tools</a></li>
+          <li><a href="https://github.com/nex-ovia" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+          <li><a href="https://github.com/sponsors/nex-ovia" rel="noopener noreferrer" target="_blank">Sponsor</a></li>
+        </ul>
+        <p class="footer-copy">Apache 2.0 · NXS v1.0 · nex-ovia.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+  <script src="project-graph.js"></script>
+
 </body>
 </html>

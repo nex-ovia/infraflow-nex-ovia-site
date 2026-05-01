@@ -1,0 +1,336 @@
+[project]
+name = "infraflow-nex-ovia-site"
+description = "Nexovia website built as a TOML-driven static site."
+owner = "nex-ovia"
+repository = "https://github.com/nex-ovia/infraflow-nex-ovia-site"
+
+[[node]]
+id = "index.html"
+type = "output"
+path = "index.html"
+role = "Root Homepage"
+description = "Primary homepage layout with hero, proposition, audience, rules, sovereignty, graph explorer, and sponsor strip."
+
+[[node]]
+id = "home-content"
+type = "source"
+path = "content/home.toml"
+role = "Homepage Content"
+description = "Homepage copy, CTAs, audience messages, rules preview, sovereignty section."
+
+[[node]]
+id = "site-css"
+type = "asset"
+path = "site.css"
+role = "Site Stylesheet"
+description = "Compiled stylesheet from theme variables."
+
+[[node]]
+id = "theme-config"
+type = "source"
+path = "theme/theme.toml"
+role = "Theme Configuration"
+description = "Design tokens: colors, typography, spacing, motion."
+
+[[node]]
+id = "shared-js"
+type = "asset"
+path = "shared.js"
+role = "Shared Utilities"
+description = "Client behavior: nav scroll state, reveal animations, active link highlighting."
+
+[[node]]
+id = "graph-js"
+type = "asset"
+path = "project-graph.js"
+role = "Graph Renderer"
+description = "Loads project.toml and renders the interactive dependency graph explorer."
+
+[[node]]
+id = "project-manifest"
+type = "source"
+path = "project.toml"
+role = "Project Manifest"
+description = "Declares project structure, file responsibilities, and dependency graph."
+
+[[node]]
+id = "standard-page"
+type = "output"
+path = "standard/index.html"
+role = "Standard Page"
+description = "Nexovia Standard documentation and rules."
+
+[[node]]
+id = "standard-content"
+type = "source"
+path = "content/standard.toml"
+role = "Standard Content"
+description = "Primary page content for the Nexovia Standard."
+
+[[node]]
+id = "principles-page"
+type = "output"
+path = "principles/index.html"
+role = "Principles Page"
+description = "Delivery sovereignty and thinking page."
+
+[[node]]
+id = "principles-content"
+type = "source"
+path = "content/principles.toml"
+role = "Principles Content"
+description = "Content for delivery sovereignty and principles."
+
+[[node]]
+id = "tools-page"
+type = "output"
+path = "tools/index.html"
+role = "Tools Page"
+description = "NXS tooling status and roadmap."
+
+[[node]]
+id = "tools-content"
+type = "source"
+path = "content/tools.toml"
+role = "Tools Content"
+description = "Current and planned NXS tooling."
+
+[[node]]
+id = "changelog-page"
+type = "output"
+path = "changelog/index.html"
+role = "Changelog Page"
+description = "Release history and change log."
+
+[[node]]
+id = "changelog-content"
+type = "source"
+path = "content/changelog.toml"
+role = "Changelog Content"
+description = "Release history for the Nexovia Standard."
+
+[[node]]
+id = "sponsor-page"
+type = "output"
+path = "sponser/index.html"
+role = "Sponsor Page"
+description = "Sponsorship page and support messaging."
+
+[[node]]
+id = "sponsor-content"
+type = "source"
+path = "content/sponser.toml"
+role = "Sponsor Content"
+description = "Sponsorship copy and acknowledgement."
+
+[[node]]
+id = "nav-partial"
+type = "asset"
+path = "partials/nav.html"
+role = "Navigation Partial"
+description = "Shared navigation markup loaded by pages."
+
+[[node]]
+id = "footer-partial"
+type = "asset"
+path = "partials/footer.html"
+role = "Footer Partial"
+description = "Shared footer markup loaded by pages."
+
+[[edge]]
+from = "index.html"
+to = "home-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "index.html"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "index.html"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "index.html"
+to = "graph-js"
+type = "behavior"
+label = "displays"
+
+[[edge]]
+from = "index.html"
+to = "theme-config"
+type = "theme"
+label = "uses"
+
+[[edge]]
+from = "index.html"
+to = "project-manifest"
+type = "data"
+label = "displays"
+
+[[edge]]
+from = "site-css"
+to = "theme-config"
+type = "generated"
+label = "generated from"
+
+[[edge]]
+from = "graph-js"
+to = "project-manifest"
+type = "data"
+label = "parses"
+
+[[edge]]
+from = "standard-page"
+to = "standard-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "standard-page"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "standard-page"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "standard-page"
+to = "nav-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "standard-page"
+to = "footer-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "principles-page"
+to = "principles-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "principles-page"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "principles-page"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "principles-page"
+to = "nav-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "principles-page"
+to = "footer-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "tools-page"
+to = "tools-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "tools-page"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "tools-page"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "tools-page"
+to = "nav-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "tools-page"
+to = "footer-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "changelog-page"
+to = "changelog-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "changelog-page"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "changelog-page"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "changelog-page"
+to = "nav-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "changelog-page"
+to = "footer-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "sponsor-page"
+to = "sponsor-content"
+type = "content"
+label = "rendered from"
+
+[[edge]]
+from = "sponsor-page"
+to = "site-css"
+type = "style"
+label = "styled by"
+
+[[edge]]
+from = "sponsor-page"
+to = "shared-js"
+type = "behavior"
+label = "enhanced by"
+
+[[edge]]
+from = "sponsor-page"
+to = "nav-partial"
+type = "component"
+label = "includes"
+
+[[edge]]
+from = "sponsor-page"
+to = "footer-partial"
+type = "component"
+label = "includes"

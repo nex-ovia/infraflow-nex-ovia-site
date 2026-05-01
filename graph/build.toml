@@ -1,0 +1,130 @@
+# graph/build.toml
+# The website build pipeline declared as a graph
+# Each node transforms an input into an output
+# Edges define the flow — same pattern as LangGraph, same pattern as NXS
+
+[graph]
+name    = "nxs-site-builder"
+version = "1.0"
+description = "Transforms TOML content declarations into a stateless HTML website"
+
+# ── Nodes ─────────────────────────────────────────────────────────
+
+[[node]]
+id          = "read_theme"
+type        = "reader"
+description = "Reads theme.toml and produces CSS variables"
+input       = "theme/theme.toml"
+produces    = ["theme.vars"]
+
+[[node]]
+id          = "read_site"
+type        = "reader"
+description = "Reads site.toml and produces global nav and footer data"
+input       = "content/site.toml"
+produces    = ["site.nav", "site.footer", "site.meta"]
+
+[[node]]
+id          = "read_pages"
+type        = "reader"
+description = "Reads all page TOML files and produces page data objects"
+input       = "content/*.toml"
+produces    = ["pages.data"]
+
+[[node]]
+id          = "build_css"
+type        = "transformer"
+description = "Converts theme.vars into a single site.css file"
+receives    = ["theme.vars"]
+produces    = ["assets.css"]
+output      = "output/site.css"
+
+[[node]]
+id          = "build_pages"
+type        = "transformer"
+description = "Renders each page data object into an HTML file using the layout"
+receives    = ["pages.data", "site.nav", "site.footer", "theme.vars"]
+produces    = ["pages.html"]
+output      = "output/"
+
+[[node]]
+id          = "validate"
+type        = "validator"
+description = "Checks every output page against NXS compliance rules"
+receives    = ["pages.html", "assets.css"]
+produces    = ["validation.report"]
+rules       = [
+  "every page has a title",
+  "every page has a description",
+  "no hardcoded colors outside css variables",
+  "all internal links resolve",
+  "all external links have rel=noopener"
+]
+
+[[node]]
+id          = "emit"
+type        = "emitter"
+description = "Writes validated output to the output directory ready for deployment"
+receives    = ["pages.html", "assets.css", "validation.report"]
+produces    = ["output.ready"]
+output      = "output/"
+
+# ── Edges ─────────────────────────────────────────────────────────
+
+[[edge]]
+from      = "read_theme"
+to        = "build_css"
+
+[[edge]]
+from      = "read_theme"
+to        = "build_pages"
+
+[[edge]]
+from      = "read_site"
+to        = "build_pages"
+
+[[edge]]
+from      = "read_pages"
+to        = "build_pages"
+
+[[edge]]
+from      = "build_css"
+to        = "validate"
+
+[[edge]]
+from      = "build_pages"
+to        = "validate"
+
+[[edge]]
+from        = "validate"
+to          = "emit"
+condition   = "validation.report.passed == true"
+
+[[edge]]
+from        = "validate"
+to          = "read_pages"
+condition   = "validation.report.passed == false"
+label       = "fix and retry"
+
+# ── Connectors (future — add to make dynamic) ──────────────────────
+
+[[connector]]
+id          = "cms"
+status      = "not_connected"
+description = "Connect a headless CMS to replace TOML file reads with API calls"
+replaces    = ["read_pages"]
+config_key  = "CMS_API_URL"
+
+[[connector]]
+id          = "search"
+status      = "not_connected"
+description = "Connect Algolia or similar to add full-text search across pages"
+adds_to     = ["emit"]
+config_key  = "SEARCH_API_KEY"
+
+[[connector]]
+id          = "analytics"
+status      = "not_connected"
+description = "Connect privacy-first analytics to understand page performance"
+adds_to     = ["emit"]
+config_key  = "ANALYTICS_ID"

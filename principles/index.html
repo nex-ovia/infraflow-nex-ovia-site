@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principles — Nexovia</title>
+  <meta name="description" content="The thinking behind the Nexovia Standard and delivery sovereignty.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .principles-grid {
+      display: grid;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 4rem;
+    }
+
+    .principle-block {
+      background: var(--surface);
+      padding: 3.5rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+      transition: background 0.2s;
+    }
+
+    .principle-block:hover { background: var(--surface-raised); }
+
+    .principle-left { }
+
+    .principle-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .principle-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .principle-body {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      align-self: center;
+    }
+
+    .callout {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.04));
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      border-radius: var(--radius);
+      padding: 2.5rem 3rem;
+      margin: 4rem 0;
+      position: relative;
+    }
+
+    .callout::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem;
+      left: 2rem;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .callout-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    @media (max-width: 800px) {
+      .principle-block { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-eyebrow">The Thinking Behind NXS</div>
+      <h1 class="animate-hero">Delivery Sovereignty</h1>
+      <p class="page-hero-sub animate-hero delay-1">Why ownership of what you build matters more than ever — and what it actually means in practice.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="callout reveal">
+        <p class="callout-text">The risk is no longer that solutions take too long to build. The risk is that they get built — and two months later nobody can explain how they work.</p>
+      </div>
+
+      <div class="principles-grid">
+
+        <div class="principle-block reveal">
+          <div class="principle-left">
+            <span class="principle-label">The AI Era Problem</span>
+            <h2 class="principle-title">Speed without structure is just faster debt.</h2>
+          </div>
+          <p class="principle-body">AI tools have made it trivially easy to generate implementations. A working integration, a data pipeline, a web application — things that once took weeks now take hours. That is genuinely good. The problem is what gets left behind. When AI generates the structure, the organisation, and the dependencies of a solution, the team that commissioned it often cannot explain how it works, cannot change it safely, and cannot move it without rebuilding from scratch. The solution works. The team does not own it.</p>
+        </div>
+
+        <div class="principle-block reveal">
+          <div class="principle-left">
+            <span class="principle-label">What Sovereignty Means</span>
+            <h2 class="principle-title">You own what you can understand, change, and move.</h2>
+          </div>
+          <p class="principle-body">Delivery sovereignty is not about who wrote the code. It is about who can answer these questions at any point after delivery: What does this do and why? What does it depend on? How do I change this part without breaking that part? How do I move this off this platform? If the team that commissioned the solution can answer all four questions — without asking the original builder — they have sovereignty. If they cannot, they have a dependency.</p>
+        </div>
+
+        <div class="principle-block reveal">
+          <div class="principle-left">
+            <span class="principle-label">Leading Without Coding</span>
+            <h2 class="principle-title">Technical leadership does not require technical authorship.</h2>
+          </div>
+          <p class="principle-body">One of the most important things NXS enables is non-developer ownership of large technical projects. A Customer Success lead, an Implementation Manager, a Solutions Architect without deep coding experience — any of these people can lead a complex project with a large codebase when the standard is followed. They can define what gets built, direct AI tools to build or extend it, understand every component without reading the code, hold engineers accountable to an objective standard, and sign off on quality with genuine confidence. The standard is the bridge between technical and non-technical leadership.</p>
+        </div>
+
+        <div class="principle-block reveal">
+          <div class="principle-left">
+            <span class="principle-label">Creative Freedom</span>
+            <h2 class="principle-title">Structure is not the enemy of creativity.</h2>
+          </div>
+          <p class="principle-body">NXS defines the boundaries of a production-grade delivery. What gets built inside those boundaries is entirely up to the people building it. The rules settle questions that should not require creative energy — how to organise the project, how to handle configuration, how to make dependencies visible. Everything else is open. The result is a developer who spends more time on genuinely interesting problems and less time on decisions that the standard has already resolved.</p>
+        </div>
+
+        <div class="principle-block reveal">
+          <div class="principle-left">
+            <span class="principle-label">Long-Term Value</span>
+            <h2 class="principle-title">Solutions should compound, not accumulate as debt.</h2>
+          </div>
+          <p class="principle-body">Most solutions degrade over time. The original builder moves on. Documentation is never written. Dependencies become invisible. What was once a working solution becomes a liability that nobody wants to touch. NXS inverts this. A solution built to the standard gets easier to work with over time, not harder. New engineers can onboard in hours. Components can be extracted and reused. The solution can be extended without fear. It compounds in value rather than accumulates as debt.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="sponsor-strip reveal">
+      <div>
+        <p class="sponsor-label">Open and free</p>
+        <h3 class="sponsor-title">Support open delivery standards</h3>
+        <p class="sponsor-body">NXS is free and open. If this work is useful to your team, consider sponsoring to help keep it moving forward.</p>
+      </div>
+      <a href="https://github.com/sponsors/nex-ovia" class="btn btn-sponsor" rel="noopener noreferrer" target="_blank">Become a Sponsor</a>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

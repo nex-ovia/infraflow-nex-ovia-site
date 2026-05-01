@@ -1,0 +1,74 @@
+[page]
+id          = "tools"
+title       = "Tools — Nexovia"
+route       = "/tools"
+description = "Open source tooling built on the Nexovia Standard. Coming soon."
+
+[hero]
+eyebrow     = "Built on NXS"
+headline    = "The tools are coming."
+subheadline = "Every tool built under nex-ovia implements the Nexovia Standard directly. Language agnostic. Open source. Built in the open."
+
+[[tool]]
+id          = "cli"
+name        = "NXS CLI"
+tagline     = "Scaffold, validate, visualise, and document any project from a single declaration."
+status      = "in_development"
+description = "A Rust binary that reads your project declaration and does the work of a senior engineer setting up a new repository. Generates the folder structure, wires the connections, validates compliance against NXS rules, and produces documentation automatically. Works with any language."
+features    = [
+  "Scaffold any project from a TOML declaration",
+  "Validate NXS compliance before every commit",
+  "Generate dependency graphs from project structure",
+  "Produce documentation that stays in sync with the code",
+  "Run anywhere — single binary, no runtime required"
+]
+github      = "https://github.com/nex-ovia"
+cta         = "Watch the repo"
+
+[[tool]]
+id          = "visualiser"
+name        = "NXS Visualiser"
+tagline     = "See your project as a graph. Understand it without reading the code."
+status      = "planned"
+description = "A visual dependency and workflow graph generated directly from your project structure. Not a diagram you maintain — a live rendering of what your project actually is. Every component, every connection, every decision point. Readable by anyone."
+features    = [
+  "Live graph from project structure — no manual diagramming",
+  "Dependency surface area at a glance",
+  "Decision flow visualisation",
+  "Embeddable in any documentation site",
+  "Exports to SVG, PNG, and Mermaid"
+]
+github      = "https://github.com/nex-ovia"
+cta         = "Follow for updates"
+
+[[tool]]
+id          = "docs"
+name        = "NXS Docs"
+tagline     = "Documentation generated from the way your project is built, not what you remember to write."
+status      = "planned"
+description = "Automatically generated documentation from a compliant NXS project. Pulls component descriptions, dependency declarations, input and output definitions, and the Definition of Done checklist into a readable, navigable documentation site. Never out of sync because it is generated from the source of truth."
+features    = [
+  "Auto-generated from project declaration",
+  "Always in sync — generated at build time",
+  "Readable by non-developers",
+  "Versioned alongside the project",
+  "Stateless HTML output — deployable anywhere"
+]
+github      = "https://github.com/nex-ovia"
+cta         = "Follow for updates"
+
+[[tool]]
+id          = "site-builder"
+name        = "NXS Site"
+tagline     = "This website. Content in TOML. Graph-driven build. Stateless output."
+status      = "available"
+description = "The nex-ovia.com website is itself an NXS tool — a demonstration that the standard applies to any kind of project. Content is declared in TOML files. A build graph transforms them into HTML. The theme is a TOML declaration. Adding a connector makes it dynamic. The source is open."
+features    = [
+  "Content declared in TOML — editable by anyone",
+  "Theme declared in TOML — change once, update everywhere",
+  "Graph-driven build pipeline",
+  "Stateless HTML output",
+  "Dynamic-ready via connector pattern"
+]
+github      = "https://github.com/nex-ovia"
+cta         = "View source"

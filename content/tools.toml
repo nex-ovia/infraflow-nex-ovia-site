@@ -2,12 +2,12 @@
 id          = "tools"
 title       = "Tools — Nexovia"
 route       = "/tools"
-description = "Open source tooling built on the Nexovia Standard. Coming soon."
+description = "Open source tooling built on the Nexovia Standard, starting with genome."
 
 [hero]
 eyebrow     = "Built on NXS"
-headline    = "The tools are coming."
-subheadline = "Every tool built under nex-ovia implements the Nexovia Standard directly. Language agnostic. Open source. Built in the open."
+headline    = "The first tools are here."
+subheadline = "Every tool built under nex-ovia implements the Nexovia Standard directly. Language agnostic. Open source. Built in the open — starting with genome."
 
 [[tool]]
 id          = "genome"

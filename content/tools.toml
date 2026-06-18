@@ -27,22 +27,6 @@ github      = "https://github.com/nex-ovia/genome"
 cta         = "Explore genome"
 
 [[tool]]
-id          = "cli"
-name        = "NXS CLI"
-tagline     = "Scaffold, validate, visualise, and document any project from a single declaration."
-status      = "in_development"
-description = "A Rust binary that reads your project declaration and does the work of a senior engineer setting up a new repository. Generates the folder structure, wires the connections, validates compliance against NXS rules, and produces documentation automatically. Works with any language."
-features    = [
-  "Scaffold any project from a TOML declaration",
-  "Validate NXS compliance before every commit",
-  "Generate dependency graphs from project structure",
-  "Produce documentation that stays in sync with the code",
-  "Run anywhere — single binary, no runtime required"
-]
-github      = "https://github.com/nex-ovia"
-cta         = "Watch the repo"
-
-[[tool]]
 id          = "visualiser"
 name        = "NXS Visualiser"
 tagline     = "See your project as a graph. Understand it without reading the code."

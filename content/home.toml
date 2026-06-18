@@ -65,6 +65,30 @@ body    = "Delivery sovereignty means the team that commissions a solution retai
 cta_label = "Read the full principle"
 cta_href  = "/principles"
 
+[value_ladder]
+label    = "From standard to software"
+headline = "A standard you can see."
+body     = "NXS is the standard. genome is how you see it — point it at a system and a non-developer can understand it, question it, and approve it, without reading the code. The standard, made real."
+cta_primary_label   = "Explore genome"
+cta_primary_href    = "https://genome.nex-ovia.com"
+cta_secondary_label = "See all tools"
+cta_secondary_href  = "/tools"
+
+[[value_ladder.step]]
+number = "01 — Free & open"
+title  = "The Standard"
+body   = "NXS defines what every solution must be true of, so it stays understandable, portable, and owned — in any language, on any platform."
+
+[[value_ladder.step]]
+number = "02 — Built on the standard"
+title  = "The Tools"
+body   = "genome reads your declaration and renders an offline map you can understand, question, and approve. Source-available — the standard, in software you run."
+
+[[value_ladder.step]]
+number = "03 — Sovereignty kept"
+title  = "The Delivery"
+body   = "Apply the standard to real projects, with full understanding, control, and portability retained by the team that commissioned them."
+
 [sponsor_strip]
 label   = "Support open delivery standards"
 body    = "NXS is free and open. If this work is useful to your team or organisation, consider sponsoring to help keep it moving forward."

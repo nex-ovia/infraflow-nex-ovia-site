@@ -10,6 +10,23 @@ headline    = "The tools are coming."
 subheadline = "Every tool built under nex-ovia implements the Nexovia Standard directly. Language agnostic. Open source. Built in the open."
 
 [[tool]]
+id          = "genome"
+name        = "genome"
+tagline     = "Understand any system without reading its code. One nexovia.toml becomes an offline, read-only HTML map."
+status      = "available"
+description = "genome turns one editable nexovia.toml into a self-contained, offline HTML map of your project — its architecture, every module, what each part does and why — so architects, engineers, and executives can see it, question it, and approve it in the browser. Honest provenance on every field; network-free by default."
+features    = [
+  "Render a project to a self-contained, offline HTML map",
+  "Exec / Arch / Eng lenses — comprehension without reading code",
+  "Ask questions and record approvals, per node or per snapshot",
+  "Validate schema, honesty, and integrity gates",
+  "Single Rust binary · offline · optional embedded-model enrichment"
+]
+site        = "https://genome.nex-ovia.com"
+github      = "https://github.com/nex-ovia/genome"
+cta         = "Explore genome"
+
+[[tool]]
 id          = "cli"
 name        = "NXS CLI"
 tagline     = "Scaffold, validate, visualise, and document any project from a single declaration."

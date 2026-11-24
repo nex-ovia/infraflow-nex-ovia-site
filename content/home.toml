@@ -7,14 +7,14 @@ description = "Amit Srivastava leads software delivery with AI agents and wrote 
 [hero]
 headline    = "AI writes the code."
 headline_2  = "You still own it."
-subheadline = "I'm Amit Srivastava. I lead software delivery with AI agents and wrote the Nexovia Standard (NXS) so the teams who commission software keep full understanding, control and portability of it, whoever or whatever built it."
+subheadline = "I'm Amit. For 13 years I've made enterprise software work after the demo is over: Linux servers, mail platforms, mobile SDKs, and support stacks for some of the biggest game studios in the world. Today I lead delivery with AI agents, and I wrote NXS so what they build stays understandable and yours."
 cta_primary_label = "How I lead with AI"
 cta_primary_href  = "/ai"
 cta_secondary_label = "Star NXS on GitHub"
 cta_secondary_href  = "https://github.com/nex-ovia/NXS"
 
 [proposition]
-label = "13 years in enterprise delivery · Author of NXS · Building open-source tools"
+label = "13 years in enterprise delivery · Global implementation manager · Author of NXS"
 
 [tools_strip]
 label      = "Open source"
@@ -40,8 +40,8 @@ description = "Four rules for solutions that last."
 
 [work_strip]
 label           = "Work with me"
-title           = "Interviews, talks, advisory, pilots."
-body            = "If your team or audience is working out how to lead with AI without losing control of what gets built, let's talk."
+title           = "Want to talk about AI and delivery?"
+body            = "I do podcasts, interviews, talks and hands-on advisory for teams figuring out how to use AI without losing control of what gets built."
 primary_label   = "Work with me"
 primary_href    = "/work-with-me"
 secondary_label = "About me"
@@ -50,20 +50,20 @@ secondary_href  = "/about"
 [[audience]]
 id          = "leader"
 icon        = "◈"
-title       = "For the project leader"
-description = "You do not need to write code to lead a technical project with confidence. NXS gives you the structure to direct, understand, and be fully accountable for what gets built — at any scale."
+title       = "If you lead the project"
+description = "You shouldn't need to read code to know what was built, why, and what it depends on. NXS gives you that view, in plain language, at any scale."
 
 [[audience]]
 id          = "developer"
 icon        = "◇"
-title       = "For the developer"
-description = "NXS resolves the structural decisions upfront so you can focus on what you do best. A production-grade foundation. Creative freedom within it. Work that other developers can extend without asking you how it works."
+title       = "If you write the code"
+description = "The structural decisions are made upfront, so you spend your time on the interesting parts. And the next developer can pick up your work without calling you."
 
 [[audience]]
 id          = "team"
 icon        = "○"
-title       = "For the team"
-description = "A shared standard means fewer misunderstandings, faster onboarding, and solutions that compound in value over time rather than accumulate as technical debt."
+title       = "If you run the team"
+description = "One shared way of building means fewer surprises at handover, faster onboarding, and work that gets more valuable over time instead of turning into debt."
 
 [rules_preview]
 label   = "The Four Rules"

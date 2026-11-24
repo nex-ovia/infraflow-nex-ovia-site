@@ -47,7 +47,6 @@
     }
 
     .about-grid--3 { grid-template-columns: repeat(3, 1fr); }
-    .about-grid--2 { grid-template-columns: repeat(2, 1fr); }
 
     .about-card {
       background: var(--surface);
@@ -111,16 +110,48 @@
 
     .about-card-link:hover { text-decoration: underline; }
 
-    .about-skill-group {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
+    .about-trust-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
     }
 
-    .about-skill-items {
+    .about-timeline {
+      list-style: none;
+      max-width: 720px;
+      border-left: 1px solid var(--border);
+      padding-left: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    .about-step {
+      position: relative;
+      overflow-wrap: anywhere;
+    }
+
+    .about-step::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.75rem - 5px);
+      top: 0.5rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .about-step-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+
+    .about-step-body {
       color: var(--text-2);
       font-size: 0.9375rem;
       line-height: 1.7;
@@ -153,8 +184,7 @@
     }
 
     @media (max-width: 720px) {
-      .about-grid--3,
-      .about-grid--2 { grid-template-columns: 1fr; }
+      .about-grid--3 { grid-template-columns: 1fr; }
       .about-block { margin-bottom: 3.5rem; }
     }
   </style>
@@ -166,26 +196,71 @@
     <div class="page-hero-glow"></div>
     <div class="container">
       <p class="section-label animate-hero">About</p>
-      <h1 class="animate-hero delay-1">I build the systems and teams that make software delivery actually work.</h1>
-      <p class="page-hero-sub animate-hero delay-2">I'm Amit Srivastava, a CX engineering leader based in Sacramento, California, and the author of the Nexovia Standard (NXS). For 13 years I've worked across implementation, solutions engineering and customer success at global SaaS companies, building and mentoring technical teams across continents.</p>
+      <h1 class="animate-hero delay-1">I'm the person who makes it work after the demo.</h1>
+      <p class="page-hero-sub animate-hero delay-2">I'm Amit Srivastava. I live in Sacramento, California, and I've spent 13 years in the part of software most people never see: getting it running, keeping it running, and making sure the customer actually gets what they paid for.</p>
     </div>
   </div>
 
   <section>
     <div class="container">
 
-      <div class="about-block reveal">
-        <h2 class="about-h2">Why I wrote NXS</h2>
-        <div class="about-prose">
-          <p>Most enterprise implementations fail the same way. Something gets built, the person who built it moves on, and nobody left can explain, maintain or extend what was delivered.</p>
-          <p>AI makes this worse, not better. When code is cheap to generate, the scarce thing is understanding. NXS is my answer: four rules that keep any solution owned, understood and portable, whoever or whatever built it.</p>
-          <p>I use it on everything I ship, including this website.</p>
+      <div class="about-block">
+        <h2 class="about-h2 reveal">What people trust me for</h2>
+        <div class="about-grid about-grid--3">
+          <div class="about-card reveal">
+            <p class="about-trust-title">Engineers trust me to understand the work.</p>
+          </div>
+          <div class="about-card reveal">
+            <p class="about-trust-title">Customers trust me to own the outcome.</p>
+          </div>
+          <div class="about-card reveal">
+            <p class="about-trust-title">Non-technical leaders trust me to make it visible.</p>
+          </div>
         </div>
       </div>
 
       <div class="about-block">
-        <h2 class="about-h2 reveal">Impact</h2>
-        <p class="about-note reveal">Results from delivery and automation work I've led.</p>
+        <h2 class="about-h2 reveal">How I got here</h2>
+        <ol class="about-timeline">
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2013 – 2015 · Linux engineer, Tetra Information Services</h3>
+            <p class="about-step-body">Open-source infrastructure for clients: Zimbra mail, OpenLDAP, MySQL, OpenStack. I led a small support team and sat in on pre-sales calls to design what we'd build.</p>
+          </li>
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2015 – 2018 · Technical support engineer, Zimbra (Synacor)</h3>
+            <p class="about-step-body">Mail servers at scale. I wrote the daily automation our NOC ran on, handled escalations for high-profile customers, and wrote knowledge-base articles used worldwide.</p>
+          </li>
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2018 – 2019 · Software engineer, Synacor</h3>
+            <p class="about-step-body">Core infrastructure team. I built and released the product packages for every supported OS and wrote tooling that made the product easier to run.</p>
+          </li>
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2019 – 2021 · Senior technical support engineer, Helpshift</h3>
+            <p class="about-step-body">I built an engineering practice inside support from scratch, mentored four engineers, and wrote Python tools and sample apps that made iOS and Android SDK integrations much smoother.</p>
+          </li>
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2021 – 2023 · Solutions architect, Helpshift (Keywords Studios)</h3>
+            <p class="about-step-body">Enterprise delivery for top-tier gaming and consumer tech companies. My team grew recurring revenue by $1M and cut onboarding time by 18%.</p>
+          </li>
+          <li class="about-step reveal">
+            <h3 class="about-step-title">2024 – now · Global implementation manager, Keywords Studios</h3>
+            <p class="about-step-body">I lead the team that builds in-product solutions: bots, automations, AI intents and integrations with Salesforce, Zendesk, Jira, Slack and generative AI.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">Why I wrote NXS</h2>
+        <div class="about-prose reveal">
+          <p>I kept watching the same failure. Something gets built, the person who built it moves on, and nobody left can explain it, change it or move it.</p>
+          <p>AI makes that worse. When code is cheap to write, understanding becomes the scarce thing. NXS is four rules that keep any solution understood and owned, whoever or whatever built it.</p>
+          <p>My foundation is hands-on: Linux, open-source infrastructure, real systems. So the standard is built on how systems actually behave, not on how they look on a slide.</p>
+          <p><a href="/standard" class="about-card-link">Read the standard →</a></p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">Results I've led</h2>
         <div class="about-grid about-grid--3">
           <div class="about-card reveal">
             <div class="about-stat-number">$1M+</div>
@@ -215,7 +290,7 @@
       </div>
 
       <div class="about-block">
-        <h2 class="about-h2 reveal">Frameworks I built</h2>
+        <h2 class="about-h2 reveal">Frameworks I use</h2>
         <div class="about-grid about-grid--3">
           <div class="about-card reveal">
             <h3 class="about-card-name">NXS</h3>
@@ -237,28 +312,6 @@
       </div>
 
       <div class="about-block">
-        <h2 class="about-h2 reveal">What I work with</h2>
-        <div class="about-grid about-grid--2">
-          <div class="about-card reveal">
-            <p class="about-skill-group">Leadership</p>
-            <p class="about-skill-items">Team building and mentoring, delivery governance, cross-functional leadership, enterprise digital transformation</p>
-          </div>
-          <div class="about-card reveal">
-            <p class="about-skill-group">AI and automation</p>
-            <p class="about-skill-items">Agentic AI, LLM deployment, AI-driven process optimisation, workflow automation</p>
-          </div>
-          <div class="about-card reveal">
-            <p class="about-skill-group">Cloud and DevOps</p>
-            <p class="about-skill-items">AWS, Azure, Cloudflare, Terraform, Docker, Kubernetes, GitHub Actions, Linux</p>
-          </div>
-          <div class="about-card reveal">
-            <p class="about-skill-group">Languages</p>
-            <p class="about-skill-items">Go, Rust, Python, JavaScript, shell</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-block">
         <h2 class="about-h2 reveal">Certifications</h2>
         <ul class="about-certs reveal">
           <li>AWS Certified Solutions Architect – Associate</li>
@@ -271,7 +324,7 @@
 
       <div class="about-block reveal">
         <h2 class="about-h2">Let's talk</h2>
-        <p class="about-note">Interviews, podcasts, speaking, advisory, or help adopting the tools.</p>
+        <p class="about-note">Podcasts, interviews, talks, advisory, or help adopting the tools.</p>
         <div class="about-cta-actions">
           <a href="/work-with-me" class="btn btn-primary">Work with me</a>
           <a href="https://www.linkedin.com/in/srivastava-ami" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Connect on LinkedIn →</a>

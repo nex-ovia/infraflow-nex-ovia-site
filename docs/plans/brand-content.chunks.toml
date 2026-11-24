@@ -190,3 +190,23 @@ control of what it builds. From 13 years of enterprise delivery."
 Must not overflow at 390px.
 """
 validate = "grep -q 'Keep control of what it builds' index.html && grep -q 'Take what you need' index.html && grep -q 'This site was built the way I teach' index.html && ! grep -q 'Who this is for' index.html && {validate_all}"
+
+[[chunk]]
+id = "K1"
+title = "Put the loop + waypoint logo on the site"
+do = """
+Assets already exist in brand/ (do not edit them). Make these changes only:
+1. favicon.svg: replace its content with the exact contents of brand/nex-ovia-app-icon.svg.
+2. partials/nav.html: inside the .nav-logo link, replace the visible text (the <span class="nav-word">…</span>) with
+   <img src="/brand/nex-ovia-wordmark.svg" alt="nexovia" width="100" height="25" class="nav-wordmark">. Keep the
+   link's href and class.
+3. partials/footer.html: replace the footer logo text with
+   <img src="/brand/nex-ovia-wordmark.svg" alt="nexovia" width="88" height="22" class="footer-wordmark">, keeping
+   any wrapping link/element.
+4. site.css AND index.html's <style> (index.html does not load site.css): add
+   .nav-wordmark { display:block; height:25px; width:auto; }  .footer-wordmark { display:block; height:22px; width:auto; }
+   and remove now-unused .nav-word rules if present.
+5. tools/nxsite: confirm brand/ is copied to the output (copyBrand) so /brand/*.svg resolve; update build_test.go only
+   if a test asserts the old nav text.
+"""
+validate = "grep -q 'nex-ovia-wordmark.svg' partials/nav.html partials/footer.html && grep -q 'nav-wordmark' site.css index.html && cmp -s favicon.svg brand/nex-ovia-app-icon.svg && {validate_all} && test -f dist/site/brand/nex-ovia-wordmark.svg"

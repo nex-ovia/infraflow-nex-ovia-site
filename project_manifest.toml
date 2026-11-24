@@ -7,8 +7,9 @@ branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Clo
 live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"
 build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ../.nxsite build -root .. -out ../dist && ../.nxsite check -out ../dist"
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
-active   = "planned.apex-always-on (approved 2026-11-24), then planned.nexovia-site C01–C04"
+active   = "planned.brand-site (overnight, local branch brand-site, needs approval to push); planned.apex-always-on apply awaiting approval"
 handoff  = "docs/HANDOFF.md: read first when resuming"
+last_commit = "9674ba7 infra: always keep the proxied apex record so nex-ovia.com redirects to www before and after cutover (2026-11-24)"
 
 [rules]
 plan_first      = "write [planned.<name>] + an HTML review page; build only after an explicit 'yes'"
@@ -67,6 +68,14 @@ chunks = [
   "A3 infra/scripts/plan.sh: replace allow-list = www[0] only. validate: grep",
   "A4 (Claude) push to dev, review plan (expect 1 add: apex), user approves; verify apex 301 for /, /robots.txt, /sitemap.xml, /feed.xml, /llms.txt, query string preserved",
 ]
+
+[planned.brand-site]
+status  = "authorised 2026-11-24 overnight: build locally on branch brand-site; push to dev (= live on Azure SWA) only after user approval"
+goal    = "personal brand hub: Amit Srivastava + NXS + AI-driven leadership; showcase how he uses AI; drive GitHub stars on open-source tools; inbound for interviews, speaking, advisory and tool adoption. Sponsor removed entirely."
+facts   = "only from user-authored public sources: github.com/srivastava-ami profile README + srivastava-ami.github.io/resume.toml + nex-ovia repos; no invented testimonials, logos, star counts or client names; employer names left out pending approval"
+spec    = "docs/plans/brand-site.chunks.toml (copy + per-chunk validate)"
+workers = "agent-dispatcher, Claude Haiku (user OK 2026-11-24)"
+chunks  = ["B1 remove sponsor", "B2 /about", "B3 /ai", "B4 /work-with-me", "B5 /tools rewrite", "B6 home", "B7 nav/footer/sameAs", "B8 draft post", "B9 /sponser 301"]
 
 [planned.nexovia-coderev-page]
 status = "not started (after nexovia-site cutover)"

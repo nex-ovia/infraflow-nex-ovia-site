@@ -1,0 +1,249 @@
+# brand-site: personal brand hub for Amit Srivastava (NXS + AI-driven leadership).
+# Every fact below comes from user-authored public sources:
+#   github.com/srivastava-ami (profile README), srivastava-ami.github.io/resume.toml, repo READMEs.
+# Do not add facts, numbers, testimonials, logos, client names or star counts that are not here.
+
+[shared]
+page_template = """
+New pages copy the structure of tools/index.html exactly:
+- same <head> pattern: charset, viewport, <title>X — Nexovia</title>, <meta name="description">, the same Google Fonts
+  <link> lines, <link rel="stylesheet" href="/site.css">, then a page-local <style> block.
+- <body> starts with <div id="nav-placeholder"></div>, ends with <div id="footer-placeholder"></div> (copy the exact
+  placeholder markup tools/index.html uses) and <script src="/shared.js"></script>.
+- hero uses <div class="page-hero"> + <div class="container"> + <p class="section-label"> + <h1 class="animate-hero">.
+- body sections are <section><div class="container">…</div></section>; cards/blocks get class "reveal".
+- buttons: <a class="btn btn-primary"> / <a class="btn btn-secondary">. External links get
+  rel="noopener noreferrer" target="_blank".
+- page-local CSS uses only existing CSS variables from site.css (--surface, --border, --radius, --accent,
+  --accent-2, --text, --muted or whatever names site.css actually defines; check). No inline style="" attributes
+  (strict CSP), no inline <script>, no new external hosts.
+- must read well at 390px wide: grids collapse to one column under 720px; no horizontal overflow.
+"""
+contact = """
+Contact channels (only these): LinkedIn https://www.linkedin.com/in/srivastava-ami ,
+GitHub https://github.com/srivastava-ami , GitHub org https://github.com/nex-ovia .
+No email address anywhere (pending owner approval).
+"""
+validate_all = "cd tools && GOTOOLCHAIN=local go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+[[chunk]]
+id = "B1"
+title = "Remove sponsor completely"
+do = """
+Remove every trace of sponsorship from the site:
+- delete the directory sponser/ and content/sponser.toml
+- partials/nav.html: delete the <li class="highlight"> Sponsor item
+- partials/footer.html: delete the Sponsor link
+- index.html: delete the sponsor section (comment '[build_pages node] → sponsor', source content/home.toml
+  [sponsor_strip]) and any CSS rules in index.html used only by it
+- content/home.toml: delete the [sponsor_strip] table
+- site.css: delete .btn-sponsor and any rule used only by sponsor markup
+- any other page (standard/, principles/, tools/, changelog/) linking to /sponser or github.com/sponsors:
+  delete that link/element
+- tools/nxsite: if normalizeLinks or tests reference /sponser, remove that special case and its test lines
+Do not add anything new.
+"""
+validate = "! grep -rniE 'sponsor|sponser' --include=*.html --include=*.css --include=*.toml --include=*.go --include=*.js . | grep -v '^./docs/' && {validate_all}"
+
+[[chunk]]
+id = "B2"
+title = "New page /about"
+file = "about/index.html"
+title_tag = "About Amit Srivastava — Nexovia"
+meta_description = "Amit Srivastava: CX engineering leader, author of the Nexovia Standard (NXS), building AI-driven delivery systems and open-source tools."
+hero_label = "About"
+hero_h1 = "I build the systems and teams that make software delivery actually work."
+hero_lead = "I'm Amit Srivastava, a CX engineering leader based in Sacramento, California, and the author of the Nexovia Standard (NXS). For 13 years I've worked across implementation, solutions engineering and customer success at global SaaS companies, building and mentoring technical teams across continents."
+story_h2 = "Why I wrote NXS"
+story = [
+  "Most enterprise implementations fail the same way. Something gets built, the person who built it moves on, and nobody left can explain, maintain or extend what was delivered.",
+  "AI makes this worse, not better. When code is cheap to generate, the scarce thing is understanding. NXS is my answer: four rules that keep any solution owned, understood and portable, whoever or whatever built it.",
+  "I use it on everything I ship, including this website.",
+]
+impact_h2 = "Impact"
+impact_note = "Results from delivery and automation work I've led."
+impact = [
+  { number = "$1M+", label = "recurring revenue protected and grown through AI automation and delivery engineering" },
+  { number = "40%", label = "faster escalation response" },
+  { number = "35%", label = "lower customer service costs" },
+  { number = "30%", label = "fewer manual support interventions" },
+  { number = "18%", label = "faster enterprise onboarding" },
+  { number = "95%", label = "of the software release process automated" },
+]
+frameworks_h2 = "Frameworks I built"
+frameworks = [
+  { name = "NXS", sub = "Delivery sovereignty standard", body = "Four rules: logic separate from tools, configuration externalised, every dependency visible, runs anywhere for anyone.", href = "/standard" },
+  { name = "LISP", sub = "Delivery operating model", body = "Lightweight automation, insight delivery, solution reuse, practical integration: how CX engineering teams deliver impact." },
+  { name = "SPARK", sub = "Stretched-scope governance", body = "Scalability, prototyping, advanced innovation, reuse and knowledge sharing: managing technical work that goes beyond standard implementation scope." },
+]
+skills_h2 = "What I work with"
+skills = [
+  { group = "Leadership", items = "Team building and mentoring, delivery governance, cross-functional leadership, enterprise digital transformation" },
+  { group = "AI and automation", items = "Agentic AI, LLM deployment, AI-driven process optimisation, workflow automation" },
+  { group = "Cloud and DevOps", items = "AWS, Azure, Cloudflare, Terraform, Docker, Kubernetes, GitHub Actions, Linux" },
+  { group = "Languages", items = "Go, Rust, Python, JavaScript, shell" },
+]
+certs_h2 = "Certifications"
+certs = ["AWS Certified Solutions Architect – Associate", "Microsoft Azure Fundamentals", "Oracle Database SQL Certified Expert", "Red Hat Certified Engineer (RHCE)", "ITIL Foundation"]
+cta_h2 = "Let's talk"
+cta_body = "Interviews, podcasts, speaking, advisory, or help adopting the tools."
+cta_primary = { label = "Work with me", href = "/work-with-me" }
+cta_secondary = { label = "Connect on LinkedIn", href = "https://www.linkedin.com/in/srivastava-ami" }
+validate = "test -f about/index.html && {validate_all}"
+
+[[chunk]]
+id = "B3"
+title = "New page /ai — How I lead with AI"
+file = "ai/index.html"
+title_tag = "How I lead with AI — Nexovia"
+meta_description = "How Amit Srivastava runs software delivery with AI agents: plan, chunk, dispatch, validate, approve. A repeatable, governed workflow anyone can copy."
+hero_label = "AI-driven leadership"
+hero_h1 = "AI writes the code. I own the outcome."
+hero_lead = "I lead delivery with AI agents every day. Not as autocomplete, but as a team I direct. Here is the exact operating model I use, with the guardrails that keep the work understandable, reviewable and mine."
+loop_h2 = "The operating model"
+loop = [
+  { step = "01", name = "Plan", body = "I write the intent, constraints and acceptance checks as a plan in plain TOML, before any code exists. The plan is the contract." },
+  { step = "02", name = "Chunk", body = "The plan is cut into the smallest independent units: one function, one page, one config change. Each chunk carries its own validation gate." },
+  { step = "03", name = "Dispatch", body = "A dispatcher sends each chunk to an AI worker in an isolated git worktree. Cheap, fast models take routine chunks; stronger models take hard ones." },
+  { step = "04", name = "Validate", body = "Nothing is accepted on the model's word. Tests, builds, linters and policy checks run automatically; a failed gate isolates the failure to one small chunk." },
+  { step = "05", name = "Approve", body = "I review the diff, merge it, and every change to production waits behind a human approval gate. The AI proposes; a person decides." },
+]
+principles_h2 = "Guardrails that make it work"
+principles = [
+  { name = "Shared context, not chat history", body = "Every agent reads the same project manifest: decisions, rules and current state live in the repo, not in someone's head or a chat window." },
+  { name = "Least privilege by default", body = "Workers get only the tools a chunk needs. Cloud access uses short-lived OIDC identities instead of stored secrets." },
+  { name = "Agent-agnostic", body = "The same configuration drives Claude Code, OpenCode, Pi and others, so the workflow outlives any single vendor. That's NXS rule one applied to AI." },
+  { name = "Evidence over confidence", body = "Every recommendation cites a file, a command output or a source. Claims without evidence don't ship." },
+]
+proof_h2 = "Built this way"
+proof_body = "This website, its infrastructure and the tools below were built with this model: plans and chunk specs are committed alongside the code, so you can see exactly how."
+proof_links = [
+  { label = "This site's source", href = "https://github.com/nex-ovia/infraflow-nex-ovia-site" },
+  { label = "coderev", href = "https://github.com/srivastava-ami/coderev" },
+  { label = "genome", href = "https://github.com/nex-ovia/genome" },
+]
+benefit_h2 = "What it gives me"
+benefit = [
+  "I ship as a leader without becoming a bottleneck: the agents do the typing, I do the deciding.",
+  "Every change is small, tested and reversible, so speed doesn't turn into debt.",
+  "Anyone, including non-developers, can read the plan and know what was built and why.",
+]
+cta_h2 = "Want this in your team?"
+cta_body = "I talk about this on podcasts and in interviews, and I help teams set it up."
+cta_primary = { label = "Work with me", href = "/work-with-me" }
+cta_secondary = { label = "Read the Standard", href = "/standard" }
+validate = "test -f ai/index.html && {validate_all}"
+
+[[chunk]]
+id = "B4"
+title = "New page /work-with-me"
+file = "work-with-me/index.html"
+title_tag = "Work with me — Nexovia"
+meta_description = "Invite Amit Srivastava for an interview, podcast or talk, or get help adopting AI-driven delivery and the open-source Nexovia tools."
+hero_label = "Work with me"
+hero_h1 = "Let's build something that lasts."
+hero_lead = "I'm open to conversations with teams and media working on AI-era delivery. Pick what fits and reach out on LinkedIn."
+offers = [
+  { name = "Interviews and podcasts", body = "AI-driven leadership, leading technical work as a non-coder, delivery sovereignty, and what actually changes when AI writes most of the code." },
+  { name = "Talks and workshops", body = "The NXS standard and the plan → chunk → dispatch → validate → approve operating model, with live examples from real repositories." },
+  { name = "Advisory", body = "Set up governed AI delivery in your team: shared agent context, approval gates, least-privilege workers, and measurable delivery metrics." },
+  { name = "Tool adoption", body = "Pilot genome or coderev on your codebase. I'll help you get running and turn your feedback into the roadmap." },
+]
+topics_h2 = "Topics I speak on"
+topics = ["Leading AI agents as a team", "Delivery sovereignty: owning what AI builds", "Governance gates for AI-generated code", "From customer success to engineering leadership", "Open standards vs. vendor lock-in"]
+bio_h2 = "Short bio"
+bio_note = "For hosts and event pages; copy freely."
+bio = "Amit Srivastava is a CX engineering leader with 13 years across implementation, solutions engineering and customer success at global SaaS companies. He is the author of the Nexovia Standard (NXS), an open standard for delivery sovereignty in the AI era, and builds open-source tools including genome and coderev. He lives in Sacramento, California."
+cta_h2 = "Get in touch"
+cta_body = "LinkedIn is the fastest way to reach me. Say what you have in mind and when."
+cta_primary = { label = "Message me on LinkedIn", href = "https://www.linkedin.com/in/srivastava-ami" }
+cta_secondary = { label = "GitHub", href = "https://github.com/srivastava-ami" }
+validate = "test -f work-with-me/index.html && {validate_all}"
+
+[[chunk]]
+id = "B5"
+title = "Rewrite /tools around shipped open-source work"
+file = "tools/index.html"
+do = """
+Keep the page's head, CSS and card component. Replace the hero and the cards.
+Hero: label "Open source", h1 "Tools I build and use every day.", lead "Everything here is open, built on NXS and
+used in my own delivery work. If one helps you, a GitHub star is the best way to say so — it helps others find it."
+Hero buttons: primary "Star NXS on GitHub" -> https://github.com/nex-ovia/NXS ; secondary "Follow nex-ovia" -> https://github.com/nex-ovia
+Cards (in this order), each footer has a primary-style "★ Star on GitHub" button linking to the repo and a secondary
+link to docs/site where given:
+1 genome — status "available · experimental". Tagline: "Understand any system without reading its code."
+  Body: "genome turns one editable nexovia.toml into a self-contained, offline HTML map of your project: its
+  architecture, every module, what each part does and why, so architects, engineers and executives can see it,
+  question it and approve it in the browser." Features: "Offline, read-only HTML map", "Exec, architecture and
+  engineering views", "Prebuilt for Linux, macOS and Windows", "Install: curl -fsSL https://genome.nex-ovia.com/install.sh | sh"
+  Repo https://github.com/nex-ovia/genome · site https://genome.nex-ovia.com
+2 coderev — status "available · v0.30". Tagline: "One command to scan your code, map it, and get an AI review."
+  Body: "Deterministic static analysis and rules run first; a bounded AI review runs second, so the AI only sees what
+  matters." Features: "brew install srivastava-ami/tools/coderev", "No Python, no Node, no config file", "Rules
+  first, AI second". Repo https://github.com/srivastava-ami/coderev
+3 NXS — status "v1.0 · open standard". Tagline: "The Nexovia Standard: four rules for solutions that last."
+  Body: "An open delivery standard for the AI era: logic separate from tools, configuration externalised,
+  dependencies visible, runs anywhere for anyone." Repo https://github.com/nex-ovia/NXS · docs /standard
+4 pr-watch — status "available · v0.1". Tagline: "Know when a PR needs you." Body: "macOS notifications for PRs
+  assigned to you and for new commits pushed after your review. Runs every 15 minutes via launchd."
+  Repo https://github.com/srivastava-ami/pr-watch
+5 nex-ovia.com — status "open source". Tagline: "This website, built the way I describe on /ai." Body: "Hand-written
+  HTML plus TOML content, a small Go builder, Terraform on Cloudflare, and every change gated by tests and approval."
+  Repo https://github.com/nex-ovia/infraflow-nex-ovia-site · link /ai
+Delete the old "NXS Site", "NXS CLI" and any other planned/roadmap cards. No star counts.
+"""
+validate = "grep -q 'github.com/srivastava-ami/coderev' tools/index.html && ! grep -q 'NXS CLI' tools/index.html && {validate_all}"
+
+[[chunk]]
+id = "B6"
+title = "Reposition the home page"
+file = "index.html"
+do = """
+Keep the existing CSS, the rules section, the sovereignty section and the graph visualiser. Change:
+- hero: headline "AI writes the code." headline_2 "You still own it." subheadline "I'm Amit Srivastava. I lead
+  software delivery with AI agents and wrote the Nexovia Standard (NXS) so the teams who commission software keep
+  full understanding, control and portability of it, whoever or whatever built it." primary CTA "How I lead with AI"
+  -> /ai ; secondary CTA "Star NXS on GitHub" -> https://github.com/nex-ovia/NXS
+- proposition label: "13 years in enterprise delivery · Author of NXS · Building open-source tools"
+- audience cards: keep the three, unchanged.
+- NEW section after the rules section, label "Open source", h2 "Tools I build and use", three compact cards:
+  genome (https://github.com/nex-ovia/genome, "Understand any system without reading its code."), coderev
+  (https://github.com/srivastava-ami/coderev, "Scan, map and AI-review your code in one command."), NXS
+  (https://github.com/nex-ovia/NXS, "Four rules for solutions that last."), each with a "★ Star" link to the repo,
+  and a "All tools →" link to /tools.
+- where the sponsor strip was: a "Work with me" strip. Label "Work with me", h2 "Interviews, talks, advisory, pilots.",
+  body "If your team or audience is working out how to lead with AI without losing control of what gets built, let's
+  talk.", primary button "Work with me" -> /work-with-me, secondary "About me" -> /about
+- update content/home.toml [hero] and [proposition] to match, and add [tools_strip] and [work_strip] tables with
+  the same text (the HTML comments reference these sources).
+- <title> "Amit Srivastava · NXS & AI-driven delivery — Nexovia"; meta description "Amit Srivastava leads software
+  delivery with AI agents and wrote the Nexovia Standard (NXS). Open-source tools, the operating model, and how to work with him."
+"""
+validate = "grep -q 'How I lead with AI' index.html && grep -q '/work-with-me' index.html && {validate_all}"
+
+[[chunk]]
+id = "B7"
+title = "Nav, footer, identity metadata"
+do = """
+- partials/nav.html links in order: Standard, Principles, Tools, AI (/ai), About (/about), and a highlighted last item
+  "Work with me" (/work-with-me) using the class the old Sponsor item used (li.highlight). Keep Changelog out of the
+  nav (it stays in the footer).
+- partials/footer.html: Standard, Principles, Tools, AI, About, Work with me, Changelog, GitHub, LinkedIn
+  (https://www.linkedin.com/in/srivastava-ami).
+- content/site.toml: uncomment the LinkedIn same_as line with https://www.linkedin.com/in/srivastava-ami ;
+  description = "Amit Srivastava on AI-driven delivery leadership, the Nexovia Standard (NXS) and the open-source tools built on it."
+- tools/nxsite: the build adds Blog after /tools via AddLinkAfter; keep that working (Blog lands after Tools).
+- nav must not overflow at 390px: if site.css has a mobile nav pattern, keep it; otherwise allow wrapping.
+"""
+validate = "grep -q '/work-with-me' partials/nav.html && grep -q 'linkedin.com/in/srivastava-ami' content/site.toml && {validate_all}"
+
+[[chunk]]
+id = "B9"
+title = "Redirect the removed sponsor URL"
+do = """
+infra/rules.tf, ruleset "redirects": add a rule after apex_to_www, ref "sponser_to_work", expression
+'(http.host eq "${var.site_host}" and starts_with(http.request.uri.path, "/sponser"))', 301 to
+concat("https://${var.site_host}", "/work-with-me/"). Follow the existing rule's exact shape.
+Add an assertion in infra/tests/stack.tftest.hcl only if existing tests already assert individual redirect rules.
+"""
+validate = "cd infra && terraform fmt -check && grep -q sponser_to_work rules.tf"

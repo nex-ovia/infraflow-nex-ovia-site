@@ -25,6 +25,9 @@ RG="${RG:-nexovia-tfstate-rg}"
 CONTAINER="tfstate"
 APP_NAME="${APP_NAME:-nexovia-site-terraform}"
 
+on_err() { printf '\033[31merror:\033[0m line %s failed (exit %s): %s\n' "$1" "$2" "$3" >&2; }
+trap 'on_err "$LINENO" "$?" "$BASH_COMMAND"' ERR
+
 say() { printf '\n\033[1;34m==>\033[0m %s\n' "$*"; }
 ok()  { printf '    \033[32m✓\033[0m %s\n' "$*"; }
 die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
@@ -32,7 +35,7 @@ die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
 for bin in az gh jq; do command -v "$bin" >/dev/null || die "$bin is not installed (brew install azure-cli gh jq)"; done
 az account show >/dev/null 2>&1 || die "run 'az login' first"
 gh auth status >/dev/null 2>&1 || die "run 'gh auth login' first"
-[[ -n "${SUBSCRIPTION:-}" ]] && az account set --subscription "$SUBSCRIPTION"
+if [[ -n "${SUBSCRIPTION:-}" ]]; then az account set --subscription "$SUBSCRIPTION"; fi
 SUB_ID=$(az account show --query id -o tsv)
 TENANT_ID=$(az account show --query tenantId -o tsv)
 ok "subscription $(az account show --query name -o tsv) ($SUB_ID)"
@@ -43,7 +46,8 @@ az group create -n "$RG" -l "$LOCATION" --tags purpose=terraform-state project=n
 # Reuse the account recorded in GitHub (or an existing one in the group) so re-runs don't create another.
 SA=$(gh variable get AZURE_TFSTATE_ACCOUNT --repo "$REPO" 2>/dev/null || true)
 [[ -n "$SA" ]] || SA=$(az storage account list -g "$RG" --query "[0].name" -o tsv)
-[[ -n "$SA" ]] || SA="nexoviatfstate$(LC_ALL=C tr -dc 'a-z0-9' </dev/urandom | head -c 8)"
+# 8 hex chars from od (no pipe that can SIGPIPE under pipefail).
+[[ -n "$SA" ]] || SA="nexoviatfstate$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')"
 if ! az storage account show -n "$SA" -g "$RG" -o none 2>/dev/null; then
   az storage account create -n "$SA" -g "$RG" -l "$LOCATION" --sku Standard_LRS --kind StorageV2 \
     --min-tls-version TLS1_2 --https-only true --allow-blob-public-access false \

@@ -22,6 +22,14 @@ import (
 var staticFiles = []string{"site.css", "blog.css", "shared.js", "project-graph.js", "project.toml",
 	"favicon.svg", "partials/nav.html", "partials/footer.html"}
 
+// GitHub sources for the tool cards and the NXS version list.
+const (
+	toolTopic = "nex-ovia-tool"
+	nxsRepo   = "nex-ovia/NXS"
+)
+
+var toolOwners = []string{"srivastava-ami", "nex-ovia"}
+
 // Build renders the whole site into out. now stamps the feed when there are no posts.
 func Build(root, out, aiPolicy string, now time.Time) error {
 	s, err := Load(root)
@@ -72,6 +80,30 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 	var htmlOut []string
 	var sitemap []SitemapURL
 	var fetchOK bool
+	online := os.Getenv("NXSITE_OFFLINE") != "1"
+	gh := GitHub{Token: os.Getenv("GITHUB_TOKEN")}
+	if api := os.Getenv("NXSITE_GITHUB_API"); api != "" {
+		gh.API = api
+	}
+	// Fetched at most once, and only when a page needs them. A failure keeps the page's static fallback.
+	var repos []Repo
+	var versions []Version
+	var reposErr, versionsErr error
+	var gotRepos, gotVersions bool
+	toolRepos := func() ([]Repo, error) {
+		if !gotRepos {
+			gotRepos = true
+			repos, reposErr = gh.ToolRepos(toolOwners, toolTopic)
+		}
+		return repos, reposErr
+	}
+	nxsVersions := func() ([]Version, error) {
+		if !gotVersions {
+			gotVersions = true
+			versions, versionsErr = gh.Versions(nxsRepo)
+		}
+		return versions, versionsErr
+	}
 	stats := GitHubStats(&http.Client{Timeout: 10 * time.Second}, os.Getenv("GITHUB_TOKEN"))
 	for _, p := range s.Pages {
 		if p.Route == "/impact/" && os.Getenv("NXSITE_OFFLINE") != "1" {
@@ -82,6 +114,25 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 			})
 			if fetchOK {
 				p.HTML = FillMetricDate(p.HTML, now.Format("2006-01-02"))
+			}
+		}
+		if online && strings.Contains(p.HTML, "<!-- github:tools -->") {
+			if rs, err := toolRepos(); err == nil && len(rs) > 0 {
+				p.HTML, _ = ReplaceRegion(p.HTML, "tools", ToolCards(rs))
+			} else {
+				fmt.Fprintf(os.Stderr, "nxsite: warning: %s: GitHub tools unavailable (err=%v, repos=%d), keeping fallback\n", p.Route, err, len(rs))
+			}
+		}
+		if online && strings.Contains(p.HTML, "<!-- github:nxs-versions -->") {
+			if vs, err := nxsVersions(); err == nil && len(vs) > 0 {
+				p.HTML, _ = ReplaceRegion(p.HTML, "nxs-versions", VersionList(vs, nxsRepo))
+			} else {
+				fmt.Fprintf(os.Stderr, "nxsite: warning: %s: NXS versions unavailable (err=%v, versions=%d), keeping fallback\n", p.Route, err, len(vs))
+			}
+		}
+		if online && strings.Contains(p.HTML, "data-nxs-version") {
+			if vs, err := nxsVersions(); err == nil && len(vs) > 0 {
+				p.HTML = FillText(p.HTML, "data-nxs-version", vs[0].Tag)
 			}
 		}
 		in := HeadInput{Title: p.Title, Description: p.Description, Image: defaultImg, Type: "website"}

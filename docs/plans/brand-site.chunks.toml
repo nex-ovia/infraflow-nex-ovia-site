@@ -264,3 +264,42 @@ do = """
    and assert one of them in tools/nxsite/headers_test.go following the existing test style.
 """
 validate = "cd infra && terraform fmt -check && ! grep -q sponser_typo rules.tf && cd .. && grep -q 'work-with-me/  301' tools/nxsite/headers.go && {validate_all}"
+
+[[chunk]]
+id = "B10"
+title = "Mobile nav without JS"
+do = """
+site.css only. Today the @media rule near line 150 sets .nav-links { display: none; } so phones get no navigation.
+Replace that with a CSS-only layout for widths <= 720px: the nav container wraps; .nav-links becomes a full-width
+single row under the logo with overflow-x: auto, white-space: nowrap, no visible scrollbar
+(scrollbar-width: none; ::-webkit-scrollbar { display: none; }), gap 0, links padding 0.5rem 0.625rem,
+font-size 0.8125rem; the .highlight item stays visibly highlighted. The page itself must not scroll horizontally
+(document scrollWidth == viewport width at 390px). Desktop (> 720px) must look exactly as before. No JS, no HTML change.
+If the fixed/sticky nav height changes on mobile, make sure page content is not hidden under it (adjust the mobile
+top padding rule that offsets the nav, if one exists).
+"""
+validate = "! grep -qE '\\.nav-links \\{ display: none; \\}' site.css && {validate_all}"
+
+[[chunk]]
+id = "B11"
+title = "Home uses the shared footer"
+do = """
+index.html has a hard-coded <footer>…</footer> (around line 1059) with stale links. Replace that whole element with
+the same placeholder the other pages use: <div id="footer-placeholder"></div> (see tools/index.html). Remove CSS in
+index.html that only styled the removed hard-coded footer if site.css already styles the shared footer; keep it if
+the shared footer relies on it. Nothing else changes.
+"""
+validate = "grep -q 'footer-placeholder' index.html && ! grep -q '<footer' index.html && {validate_all} && grep -q 'work-with-me' dist/site/index.html"
+
+[[chunk]]
+id = "B12"
+title = "Favicon on every page"
+do = """
+1. Add favicon.svg at the repo root: a 64x64 viewBox rounded square (rx 14) filled #6c63ff with the letters "nx"
+   centered in #0a0a0f, font-family 'DM Serif Display', Georgia, serif, font-size 34, font-weight 700. Plain SVG, no
+   scripts, no external references.
+2. tools/nxsite: make the build copy favicon.svg into the output root (follow how site.css/shared.js are copied), and
+   make HeadTags (head.go) emit <link rel="icon" href="/favicon.svg" type="image/svg+xml"> so every page, including
+   generated blog pages and 404.html, gets it. Update head_test.go / build_test.go to assert both.
+"""
+validate = "test -f favicon.svg && {validate_all} && test -f dist/site/favicon.svg && grep -q 'favicon.svg' dist/site/about/index.html"

@@ -313,3 +313,44 @@ order: -1 so the highlighted "Work with me" item is the first, always-visible li
 Nothing else changes.
 """
 validate = "grep -qE 'highlight[^}]*order: *-1' site.css && {validate_all}"
+
+[[chunk]]
+id = "B13"
+title = "Logo on the site + press kit"
+do = """
+Brand assets already exist in brand/ (do not edit them): nex-ovia-mark.svg (dark bg), nex-ovia-mark-light.svg,
+nex-ovia-mark-white.svg, nex-ovia-mark-black.svg, nex-ovia-symbol.svg (no letters, small sizes), avatar-1080.png,
+linkedin-banner-1584x396.png, x-header-1500x500.png, youtube-banner-2560x1440.png.
+1. tools/nxsite: the build copies the whole brand/ directory to the output root (/brand/...), except generate-mark.py.
+2. Favicon: replace the root favicon.svg content with the contents of brand/nex-ovia-symbol.svg (same file name, so
+   the existing <link rel="icon"> keeps working).
+3. partials/nav.html: the .nav-logo link keeps its href and its visible text, and gains, before the text,
+   <img src="/brand/nex-ovia-mark.svg" alt="" width="44" height="29" class="nav-mark">. In site.css add .nav-mark
+   { display:block; height:29px; width:auto; } and make .nav-logo display:flex; align-items:center; gap:0.6rem.
+   Do the same in partials/footer.html if it has a .nav-logo/footer logo link.
+   index.html has its own nav markup only if it does not use nav-placeholder: check, and apply the same if so.
+4. work-with-me/index.html: add a section before the "Get in touch" CTA, h2 "Press kit", body "Logo files and
+   banners for event pages, podcasts and articles.", and a simple list of links to: /brand/nex-ovia-mark.svg
+   ("Logo, dark backgrounds (SVG)"), /brand/nex-ovia-mark-light.svg ("Logo, light backgrounds (SVG)"),
+   /brand/nex-ovia-mark-white.svg ("Logo, one colour white (SVG)"), /brand/avatar-1080.png ("Square avatar (PNG)").
+   Use existing classes/CSS variables; no inline styles.
+5. Add assertions in build_test.go that brand/nex-ovia-mark.svg is copied and generate-mark.py is not.
+"""
+validate = "{validate_all} && test -f dist/site/brand/nex-ovia-mark.svg && ! test -f dist/site/brand/generate-mark.py && grep -q 'nav-mark' dist/site/about/index.html && grep -q '/brand/avatar-1080.png' work-with-me/index.html"
+
+[[chunk]]
+id = "B14"
+title = "Azure deploys the nxsite build"
+do = """
+.github/workflows/azure-static-web-apps.yml currently copies raw folders into dist/ (cp -R principles standard ...)
+and deploys that, so the live site misses sitemap.xml, llms.txt, feed.xml, the blog and server-rendered SEO tags.
+Change the build so the deployed folder is the nxsite build output:
+- before the build step, add actions/setup-go pinned exactly as in .github/workflows/site.yml
+  (uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0, same `with:` block as site.yml).
+- replace the cp-based dist assembly with the same build commands site.yml uses to produce its dist
+  (cd tools && go build ... nxsite; then nxsite build into dist and nxsite check), so output_location "dist" holds
+  the nxsite output. Keep app_location/output_location keys, permissions and everything else unchanged.
+- if the deploy step has skip_app_build or similar, keep it so Azure does not try its own build.
+Do not change any other workflow.
+"""
+validate = "! grep -q 'cp -R principles' .github/workflows/azure-static-web-apps.yml && grep -q 'setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5' .github/workflows/azure-static-web-apps.yml && grep -q 'nxsite' .github/workflows/azure-static-web-apps.yml"

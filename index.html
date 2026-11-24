@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- [read_theme node] → meta -->
-  <title>Amit Srivastava · NXS & AI-driven delivery — Nexovia</title>
-  <meta name="description" content="Amit Srivastava leads software delivery with AI agents and wrote the Nexovia Standard (NXS). Open-source tools, the operating model, and how to work with him.">
-  <meta property="og:title" content="The Nexovia Standard">
-  <meta property="og:description" content="A delivery standard for building solutions that last.">
+  <title>Use AI to ship faster, keep control | Amit Srivastava · nex-ovia</title>
+  <meta name="description" content="Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
+  <meta property="og:title" content="Use AI to ship faster, keep control | Amit Srivastava · nex-ovia">
+  <meta property="og:description" content="Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
   <meta property="og:url" content="https://nex-ovia.com">
   <!-- [read_theme node] → typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -366,7 +366,7 @@
     /* ── Audience cards ── */
     .audience-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       margin-top: 3.5rem;
     }
@@ -378,6 +378,8 @@
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
       transition: border-color 0.3s, transform 0.3s var(--ease);
     }
 
@@ -387,6 +389,7 @@
       inset: 0;
       background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, transparent 60%);
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.3s;
     }
 
@@ -408,16 +411,6 @@
     }
 
     .audience-card:nth-child(3):hover { border-color: rgba(255, 107, 107, 0.4); }
-
-    .card-icon {
-      font-size: 1.5rem;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-
-    .audience-card:nth-child(2) .card-icon { color: var(--accent-2); }
-    .audience-card:nth-child(3) .card-icon { color: var(--accent-warm); }
 
     .card-title {
       font-family: var(--font-display);
@@ -544,6 +537,8 @@
       text-align: center;
       margin-bottom: 3rem;
     }
+
+    .graph-label .section-body { margin: 1rem auto 0; }
 
     .graph-canvas {
       background: var(--surface);
@@ -808,6 +803,7 @@
       :root { --section: 4rem; }
       .nav-links { display: none; }
       .rules-header { grid-template-columns: 1fr; gap: 2rem; }
+      .audience-grid { grid-template-columns: 1fr; }
       .rules-grid { grid-template-columns: 1fr; }
       .sovereignty-inner { grid-template-columns: 1fr; gap: 3rem; }
       .graph-explorer { grid-template-columns: 1fr; }
@@ -836,17 +832,17 @@
     <div class="hero-glow-2"></div>
     <div class="container">
       <div class="hero-inner">
-        <div class="hero-eyebrow">NXS v1.0 — Now Available</div>
+        <div class="hero-eyebrow">Free playbook + open-source tools</div>
         <h1>
-          AI writes the code.<br>
-          <span class="line2">You still <span class="italic">own it.</span></span>
+          Use AI to ship faster.<br>
+          <span class="line2"><span class="italic">Keep control of what it builds.</span></span>
         </h1>
         <p class="hero-sub">
-          I'm Amit. For 13 years I've made enterprise software work after the demo is over: Linux servers, mail platforms, mobile SDKs, and support stacks for some of the biggest game studios in the world. Today I lead delivery with AI agents, and I wrote NXS so what they build stays understandable and yours.
+          AI can write most of your code now. The hard part is still understanding it, changing it safely and owning it a year from now. Here you'll find the exact playbook, free tools and open standard I use to do that, from 13 years of making enterprise software work after the demo.
         </p>
         <div class="hero-actions">
-          <a href="/ai" class="btn btn-primary">How I lead with AI</a>
-          <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Star NXS on GitHub</a>
+          <a href="/ai" class="btn btn-primary">Get the playbook</a>
+          <a href="/tools" class="btn btn-secondary">Try the free tools</a>
         </div>
       </div>
     </div>
@@ -860,39 +856,62 @@
   <div class="proposition">
     <div class="container">
       <div class="proposition-inner">
-        <p class="proposition-text">13 years in enterprise delivery · Global implementation manager · Author of NXS</p>
+        <p class="proposition-text">Amit Srivastava · Global implementation manager · Author of NXS</p>
         <div class="proposition-tags">
-          <span class="tag">Language Agnostic</span>
-          <span class="tag">Platform Neutral</span>
-          <span class="tag">AI Native</span>
-          <span class="tag">Open Standard</span>
+          <span class="tag">13 years in enterprise delivery</span>
+          <span class="tag">$1M+ ARR from automation</span>
+          <span class="tag">100% open source</span>
+          <span class="tag">Built with AI, reviewed by a human</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- [build_pages node] → audience — source: content/home.toml [[audience]] -->
+  <!-- [build_pages node] → what you get — source: content/home.toml [what_you_get] -->
   <section>
     <div class="container">
       <div class="reveal">
-        <p class="section-label">Who It Is For</p>
-        <h2 class="section-title">Who this is for</h2>
+        <p class="section-label">What's here for you</p>
+        <h2 class="section-title">Take what you need. It's all free.</h2>
       </div>
       <div class="audience-grid">
         <div class="audience-card reveal">
-          <span class="card-icon">◈</span>
-          <h3 class="card-title">If you lead the project</h3>
-          <p class="card-body">You shouldn't need to read code to know what was built, why, and what it depends on. NXS gives you that view, in plain language, at any scale.</p>
+          <h3 class="card-title">A playbook you can copy today</h3>
+          <p class="card-body">Plan, chunk, dispatch, validate, approve. The five-step way I lead delivery with AI agents, with the guardrails that stop bad code from shipping.</p>
+          <div class="tool-mini-links"><a href="/ai" class="btn btn-secondary">Read the playbook</a></div>
         </div>
         <div class="audience-card reveal">
-          <span class="card-icon">◇</span>
-          <h3 class="card-title">If you write the code</h3>
-          <p class="card-body">The structural decisions are made upfront, so you spend your time on the interesting parts. And the next developer can pick up your work without calling you.</p>
+          <h3 class="card-title">Tools that save you hours</h3>
+          <p class="card-body">genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free and open source.</p>
+          <div class="tool-mini-links"><a href="/tools" class="btn btn-secondary">See the tools</a></div>
         </div>
         <div class="audience-card reveal">
-          <span class="card-icon">○</span>
-          <h3 class="card-title">If you run the team</h3>
-          <p class="card-body">One shared way of building means fewer surprises at handover, faster onboarding, and work that gets more valuable over time instead of turning into debt.</p>
+          <h3 class="card-title">A standard your team can adopt</h3>
+          <p class="card-body">NXS is four rules that keep any solution, human- or AI-built, understood, changeable and portable. Use it as a review checklist tomorrow.</p>
+          <div class="tool-mini-links"><a href="/standard" class="btn btn-secondary">Read the standard</a></div>
+        </div>
+        <div class="audience-card reveal">
+          <h3 class="card-title">Lessons from the field</h3>
+          <p class="card-body">Short, honest posts on what works and what breaks when AI writes the code, from someone who's been on the hook for delivery for 13 years.</p>
+          <div class="tool-mini-links"><a href="/blog" class="btn btn-secondary">Read the blog</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [build_pages node] → problem — source: content/home.toml [problem] -->
+  <section class="sovereignty-section">
+    <div class="container">
+      <div class="sovereignty-inner">
+        <blockquote class="sovereignty-quote reveal">
+          "AI made code cheap. Understanding is now the expensive part."
+        </blockquote>
+        <div class="reveal">
+          <p class="section-label">Why this matters</p>
+          <p class="sovereignty-body">
+            Most teams hit the same wall: the person who built it moved on, the AI-generated module nobody can explain, the small change that breaks three other things. NXS and the tools here exist to stop that before it starts.
+          </p>
+          <a href="/standard" class="btn btn-secondary">See the four rules</a>
         </div>
       </div>
     </div>
@@ -904,7 +923,7 @@
       <div class="rules-header reveal">
         <div>
           <p class="section-label">The Four Rules</p>
-          <h2 class="section-title">Not guidelines.<br>Not suggestions.</h2>
+          <h2 class="section-title">Four rules. Every project. No exceptions.</h2>
         </div>
         <p class="rules-intro">Every NXS solution follows four rules. Each one exists because it directly protects delivery sovereignty — the principle that what you build belongs to you, not to the tool that built it.</p>
       </div>
@@ -930,7 +949,7 @@
           <p class="rule-summary">No tribal knowledge required. No original builder needed. Anyone can run it from what is written down.</p>
         </div>
       </div>
-      <div style="margin-top: 2rem; text-align: center;" class="reveal">
+      <div class="reveal tools-all">
         <a href="/standard" class="btn btn-secondary">Read the full standard →</a>
       </div>
     </div>
@@ -941,26 +960,26 @@
     <div class="container">
       <div class="reveal">
         <p class="section-label">Open source</p>
-        <h2 class="section-title">Tools I build and use</h2>
+        <h2 class="section-title">Free tools, built in the open</h2>
       </div>
       <div class="tools-grid">
         <div class="tool-mini reveal">
           <h3 class="card-title">genome</h3>
-          <p class="card-body">Understand any system without reading its code.</p>
+          <p class="card-body">See any system without reading its code.</p>
           <div class="tool-mini-links">
             <a href="https://github.com/nex-ovia/genome" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
           </div>
         </div>
         <div class="tool-mini reveal">
           <h3 class="card-title">coderev</h3>
-          <p class="card-body">Scan, map and AI-review your code in one command.</p>
+          <p class="card-body">Static checks first, AI review second, one command.</p>
           <div class="tool-mini-links">
             <a href="https://github.com/srivastava-ami/coderev" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
           </div>
         </div>
         <div class="tool-mini reveal">
           <h3 class="card-title">NXS</h3>
-          <p class="card-body">Four rules for solutions that last.</p>
+          <p class="card-body">The standard behind everything here.</p>
           <div class="tool-mini-links">
             <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
           </div>
@@ -972,31 +991,13 @@
     </div>
   </section>
 
-  <!-- [build_pages node] → sovereignty — source: content/home.toml [sovereignty] -->
-  <section class="sovereignty-section">
-    <div class="container">
-      <div class="sovereignty-inner">
-        <blockquote class="sovereignty-quote reveal">
-          "A solution built once should work, grow, and last."
-        </blockquote>
-        <div class="reveal">
-          <p class="section-label">Delivery Sovereignty</p>
-          <p class="sovereignty-body">
-            Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it.
-          </p>
-          <a href="/principles" class="btn btn-secondary">Read the full principle →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- [build_pages node] → graph visualiser — source: graph/build.toml -->
   <section class="graph-section">
     <div class="container">
       <div class="graph-label reveal">
-        <p class="section-label">Built on NXS</p>
-        <h2 class="section-title">This website is its own proof.</h2>
-        <p class="section-body" style="margin: 1rem auto 0; text-align: center;">Content lives in TOML files. A build graph transforms them into pages. Adding a connector makes it dynamic. The architecture is declared, not assumed.</p>
+        <p class="section-label">Proof, not promises</p>
+        <h2 class="section-title">This site was built the way I teach.</h2>
+        <p class="section-body">Every page here was planned, built by AI agents in small checked steps, and approved by me before it went live. The graph below is generated from the project's own manifest. Click any node to see what it does.</p>
       </div>
       <div class="graph-canvas reveal">
         <div id="project-graph-root" class="graph-flow"></div>
@@ -1013,12 +1014,12 @@
     <div class="container">
       <div class="reveal">
         <p class="section-label">Work with me</p>
-        <h2 class="section-title">Want to talk about AI and delivery?</h2>
-        <p class="section-body">I do podcasts, interviews, talks and hands-on advisory for teams figuring out how to use AI without losing control of what gets built.</p>
+        <h2 class="section-title">Bring this to your team or your audience.</h2>
+        <p class="section-body">Podcasts, interviews, talks and hands-on advisory for teams using AI without losing control.</p>
       </div>
       <div class="hero-actions reveal work-actions">
         <a href="/work-with-me" class="btn btn-primary">Work with me</a>
-        <a href="/about" class="btn btn-secondary">About me</a>
+        <a href="/about" class="btn btn-secondary">About Amit</a>
       </div>
     </div>
   </section>

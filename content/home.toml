@@ -1,73 +1,68 @@
 [page]
 id          = "home"
-title       = "Amit Srivastava · NXS & AI-driven delivery — Nexovia"
+title       = "Use AI to ship faster, keep control | Amit Srivastava · nex-ovia"
 route       = "/"
-description = "Amit Srivastava leads software delivery with AI agents and wrote the Nexovia Standard (NXS). Open-source tools, the operating model, and how to work with him."
+description = "Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery."
 
 [hero]
-headline    = "AI writes the code."
-headline_2  = "You still own it."
-subheadline = "I'm Amit. For 13 years I've made enterprise software work after the demo is over: Linux servers, mail platforms, mobile SDKs, and support stacks for some of the biggest game studios in the world. Today I lead delivery with AI agents, and I wrote NXS so what they build stays understandable and yours."
-cta_primary_label = "How I lead with AI"
-cta_primary_href  = "/ai"
-cta_secondary_label = "Star NXS on GitHub"
-cta_secondary_href  = "https://github.com/nex-ovia/NXS"
+badge       = "Free playbook + open-source tools"
+headline    = "Use AI to ship faster."
+headline_2  = "Keep control of what it builds."
+subheadline = "AI can write most of your code now. The hard part is still understanding it, changing it safely and owning it a year from now. Here you'll find the exact playbook, free tools and open standard I use to do that, from 13 years of making enterprise software work after the demo."
+cta_primary_label   = "Get the playbook"
+cta_primary_href    = "/ai"
+cta_secondary_label = "Try the free tools"
+cta_secondary_href  = "/tools"
 
 [proposition]
-label = "13 years in enterprise delivery · Global implementation manager · Author of NXS"
+label = "Amit Srivastava · Global implementation manager · Author of NXS"
+tags  = ["13 years in enterprise delivery", "$1M+ ARR from automation", "100% open source", "Built with AI, reviewed by a human"]
 
-[tools_strip]
-label      = "Open source"
-title      = "Tools I build and use"
-all_label  = "All tools →"
-all_href   = "/tools"
-star_label = "★ Star"
+[what_you_get]
+label = "What's here for you"
+title = "Take what you need. It's all free."
 
-[[tools_strip.tool]]
-name        = "genome"
-href        = "https://github.com/nex-ovia/genome"
-description = "Understand any system without reading its code."
+[[what_you_get.card]]
+id          = "playbook"
+title       = "A playbook you can copy today"
+body        = "Plan, chunk, dispatch, validate, approve. The five-step way I lead delivery with AI agents, with the guardrails that stop bad code from shipping."
+link_label  = "Read the playbook"
+link_href   = "/ai"
 
-[[tools_strip.tool]]
-name        = "coderev"
-href        = "https://github.com/srivastava-ami/coderev"
-description = "Scan, map and AI-review your code in one command."
+[[what_you_get.card]]
+id          = "tools"
+title       = "Tools that save you hours"
+body        = "genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free and open source."
+link_label  = "See the tools"
+link_href   = "/tools"
 
-[[tools_strip.tool]]
-name        = "NXS"
-href        = "https://github.com/nex-ovia/NXS"
-description = "Four rules for solutions that last."
+[[what_you_get.card]]
+id          = "standard"
+title       = "A standard your team can adopt"
+body        = "NXS is four rules that keep any solution, human- or AI-built, understood, changeable and portable. Use it as a review checklist tomorrow."
+link_label  = "Read the standard"
+link_href   = "/standard"
 
-[work_strip]
-label           = "Work with me"
-title           = "Want to talk about AI and delivery?"
-body            = "I do podcasts, interviews, talks and hands-on advisory for teams figuring out how to use AI without losing control of what gets built."
-primary_label   = "Work with me"
-primary_href    = "/work-with-me"
-secondary_label = "About me"
-secondary_href  = "/about"
+[[what_you_get.card]]
+id          = "blog"
+title       = "Lessons from the field"
+body        = "Short, honest posts on what works and what breaks when AI writes the code, from someone who's been on the hook for delivery for 13 years."
+link_label  = "Read the blog"
+link_href   = "/blog"
 
-[[audience]]
-id          = "leader"
-icon        = "◈"
-title       = "If you lead the project"
-description = "You shouldn't need to read code to know what was built, why, and what it depends on. NXS gives you that view, in plain language, at any scale."
-
-[[audience]]
-id          = "developer"
-icon        = "◇"
-title       = "If you write the code"
-description = "The structural decisions are made upfront, so you spend your time on the interesting parts. And the next developer can pick up your work without calling you."
-
-[[audience]]
-id          = "team"
-icon        = "○"
-title       = "If you run the team"
-description = "One shared way of building means fewer surprises at handover, faster onboarding, and work that gets more valuable over time instead of turning into debt."
+[problem]
+label     = "Why this matters"
+quote     = "AI made code cheap. Understanding is now the expensive part."
+body      = "Most teams hit the same wall: the person who built it moved on, the AI-generated module nobody can explain, the small change that breaks three other things. NXS and the tools here exist to stop that before it starts."
+cta_label = "See the four rules"
+cta_href  = "/standard"
 
 [rules_preview]
 label   = "The Four Rules"
-intro   = "Every NXS solution follows four rules. Not guidelines. Not suggestions."
+title   = "Four rules. Every project. No exceptions."
+intro   = "Every NXS solution follows four rules. Each one exists because it directly protects delivery sovereignty — the principle that what you build belongs to you, not to the tool that built it."
+cta_label = "Read the full standard →"
+cta_href  = "/standard"
 
 [[rules_preview.rule]]
 number  = "01"
@@ -77,21 +72,50 @@ summary = "The business rules live somewhere identifiable and independent. If th
 [[rules_preview.rule]]
 number  = "02"
 title   = "Configuration externalised"
-summary = "Nothing environment-specific lives inside the solution. It runs identically everywhere."
+summary = "Nothing environment-specific lives inside the solution. It runs identically everywhere — local, staging, production."
 
 [[rules_preview.rule]]
 number  = "03"
 title   = "Dependencies visible"
-summary = "Every external connection is named and documented. No hidden surface area."
+summary = "Every external connection is named and documented. No hidden surface area. No surprises during a handover."
 
 [[rules_preview.rule]]
 number  = "04"
 title   = "Runs anywhere, for anyone"
-summary = "No tribal knowledge required. No original builder needed."
+summary = "No tribal knowledge required. No original builder needed. Anyone can run it from what is written down."
 
-[sovereignty]
-label   = "Delivery Sovereignty"
-quote   = "A solution built once should work, grow, and last."
-body    = "Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it."
-cta_label = "Read the full principle"
-cta_href  = "/principles"
+[tools_strip]
+label      = "Open source"
+title      = "Free tools, built in the open"
+all_label  = "All tools →"
+all_href   = "/tools"
+star_label = "★ Star"
+
+[[tools_strip.tool]]
+name        = "genome"
+href        = "https://github.com/nex-ovia/genome"
+description = "See any system without reading its code."
+
+[[tools_strip.tool]]
+name        = "coderev"
+href        = "https://github.com/srivastava-ami/coderev"
+description = "Static checks first, AI review second, one command."
+
+[[tools_strip.tool]]
+name        = "NXS"
+href        = "https://github.com/nex-ovia/NXS"
+description = "The standard behind everything here."
+
+[proof]
+label = "Proof, not promises"
+title = "This site was built the way I teach."
+body  = "Every page here was planned, built by AI agents in small checked steps, and approved by me before it went live. The graph below is generated from the project's own manifest. Click any node to see what it does."
+
+[work_strip]
+label           = "Work with me"
+title           = "Bring this to your team or your audience."
+body            = "Podcasts, interviews, talks and hands-on advisory for teams using AI without losing control."
+primary_label   = "Work with me"
+primary_href    = "/work-with-me"
+secondary_label = "About Amit"
+secondary_href  = "/about"

@@ -48,6 +48,8 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
+    // nxsite renders nav/footer into the HTML at build time; fall back to fetching only if a placeholder remains.
+    if (!document.querySelector('#nav-placeholder')) setupNav();
     loadFragment('#nav-placeholder', '/partials/nav.html', setupNav);
     loadFragment('#footer-placeholder', '/partials/footer.html');
     setupReveal();

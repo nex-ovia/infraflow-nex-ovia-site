@@ -1,0 +1,29 @@
+# Site-wide settings read by tools/nxsite. Fill the social handles to link your profiles (JSON-LD sameAs).
+[site]
+base_url    = "https://www.nex-ovia.com"
+name        = "Nexovia"
+tagline     = "Build it once. Own it forever."
+description = "The Nexovia Standard and the open-source tools built on it."
+language    = "en"
+repo        = "https://github.com/nex-ovia"
+
+[author]
+name    = "Amit Srivastava"
+url     = "https://www.nex-ovia.com"
+same_as = [
+  "https://github.com/srivastava-ami",
+  # "https://www.linkedin.com/in/<handle>",
+  # "https://x.com/<handle>",
+  # "https://www.instagram.com/<handle>",
+]
+
+# Tools listed as SoftwareApplication in JSON-LD on /tools/.
+[[tool]]
+name = "genome"
+url  = "https://genome.nex-ovia.com"
+description = "Turns one nexovia.toml into a self-contained, offline HTML map of a project."
+
+[[tool]]
+name = "coderev"
+url  = "https://github.com/srivastava-ami/coderev"
+description = "Code review CLI: deterministic static analysis and rules first, bounded AI review second."

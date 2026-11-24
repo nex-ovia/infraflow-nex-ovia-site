@@ -160,3 +160,11 @@ footer { border-top: 1px solid var(--border); padding: 3rem 0; }
   .nav-links { display: none; }
   .sponsor-strip { padding: 2rem; }
 }
+
+/* Mobile overflow fixes (nxsite): keep every page within the viewport at 390px. */
+.page-hero { overflow: hidden; }
+.footer-links { flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+.code-block { max-width: 100%; }
+.code-block pre, .code-block code { white-space: pre-wrap; word-break: break-word; }
+html, body { overflow-x: clip; }
+.metrics-table { display: block; max-width: 100%; overflow-x: auto; }

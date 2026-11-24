@@ -9,7 +9,7 @@ build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ..
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
 active   = "planned.brand-site BUILT on local branch brand-site; see its approval_stack (A1–A9)"
 handoff  = "docs/HANDOFF.md: read first when resuming"
-last_commit = "cda0602 ci: Azure uploads the nxsite dist directly (app_location dist, skip_app_build) (2026-11-23)"
+last_commit = "076ae97 content: humanized home, about (real career timeline), work-with-me, /ai; X profile in sameAs and footer (2026-11-23)"
 
 [rules]
 plan_first      = "write [planned.<name>] + an HTML review page; build only after an explicit 'yes'"
@@ -70,7 +70,7 @@ chunks = [
 ]
 
 [planned.brand-site]
-status  = "LIVE on www via Azure SWA (dev aede493+; Azure now deploys the nxsite build). Brand mark in brand/ (generator brand/generate-mark.py). Remaining: approval stack."
+status  = "LIVE 2026-11-24: apex 301 -> www (infra run 45347846078 applied), humanized copy from LinkedIn career (docs/plans/brand-content.chunks.toml), logo removed at owner request; logo options on canvas https://claude.ai/artifact/Fs6FLbGmzXPFem29RZdLt9 awaiting a pick; social playbook docs/social/playbook.md"
 goal    = "personal brand hub: Amit Srivastava + NXS + AI-driven leadership; showcase how he uses AI; drive GitHub stars on open-source tools; inbound for interviews, speaking, advisory and tool adoption. Sponsor removed entirely."
 facts   = "only from user-authored public sources: github.com/srivastava-ami profile README + srivastava-ami.github.io/resume.toml + repo READMEs"
 spec    = "docs/plans/brand-site.chunks.toml"
@@ -78,10 +78,9 @@ workers = "agent-dispatcher, Claude Haiku"
 done    = ["B1 sponsor removed", "B1b /sponser+/sponsor 301 -> /work-with-me (Cloudflare rule + Pages _redirects)", "B2 /about", "B3 /ai", "B4 /work-with-me", "B5 /tools (genome, coderev, NXS, pr-watch, site; star CTAs)", "B6 home repositioned", "B7 nav/footer + LinkedIn sameAs", "B8 draft post content/blog/how-i-lead-delivery-with-ai-agents.md (draft = true)", "B10/B10b mobile nav (was hidden <720px)", "B11 home shared footer", "B12 favicon"]
 review  = "https://claude.ai/artifact/MiMQr7nJGPHWq4yk1Hof9H (approval stack + screenshots)"
 approval_stack = [
-  "A1 approve infra run 45347846078 (apex record + sponsor redirects; plan 1 add, 2 change, 0 destroy, planguard ok). Claude was blocked by the permission classifier from approving production itself",
   "A3 sign off on publishing: 13 years, Sacramento, impact numbers ($1M+, 40/35/30/18/95%), certifications (from your public resume.toml); employer names intentionally omitted",
   "A4 contact: site uses LinkedIn only. Choose: keep, add a public email (which?), or add a booking link (Cal.com free)",
-  "A10 upload brand/avatar-1080.png + platform banners to LinkedIn, X, Instagram, YouTube",
+  "A10 pick a logo direction on the concept canvas (1 Waypoint, 2 Blueprint, 3 Strata, 4 Handover, 5 Open loop); then build its kit",
   "A5 headshot: none on the site; add a photo for /about + /work-with-me (biggest trust gap for media inbound)",
   "A6 publish the blog draft: set draft = false (LinkedIn + X social drafts generated)",
   "A7 GitHub discoverability (outward, needs OK): descriptions/topics/homepage on coderev, pr-watch, agent-config; pin NXS, genome, coderev; update nex-ovia/.github profile README (still advertises unshipped CLI/Visualiser)",

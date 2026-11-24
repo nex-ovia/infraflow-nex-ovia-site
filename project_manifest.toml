@@ -2,6 +2,7 @@
 # Everything else is pulled on demand through [pull]: load a key only when the task needs it.
 
 [context]
+purpose  = "PERSONAL BRAND, not a business: public, dated, verifiable record of Amit's work (trust over revenue). Identity: implementation leader & technical strategist; never 'project manager'; never offer services/advisory/paid work. Spec: docs/plans/brand-trust.chunks.toml; playbook docs/social/playbook.md"
 what     = "nex-ovia.com brand hub: static site (hand-written HTML pages + content/*.toml) built by a Go tool, moving from Azure Static Web Apps to Cloudflare Pages via Terraform"
 branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Cloudflare apply runs from dev)"
 live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"

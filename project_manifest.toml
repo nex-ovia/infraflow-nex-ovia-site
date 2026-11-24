@@ -100,3 +100,7 @@ spec     = "docs/plans/brand-fix.chunks.toml"
 source   = "reports/Nexovia website independent review.md (P0) + owner: tools beta not site; NXS a living framework; versions/stars/licenses from GitHub"
 mechanism = "repos with GitHub topic 'nex-ovia-tool' (owners srivastava-ami, nex-ovia) render on /tools at build; NXS versions = annotated tags of nex-ovia/NXS; site rebuilds daily (cron) so GitHub changes reach the site"
 waves    = "A: G1 H1 H2 H3 H4 H5 · B: G2 B1 · C: G3"
+
+[planned.brand-a11y]
+status = "DONE 2026-11-24: axe-core wcag2a/aa = 0 violations on all 9 pages (reduced motion); spec docs/plans/brand-a11y.chunks.toml"
+note   = "design tokens changed: --accent #6c63ff -> #7870ff, --text-muted -> #8585a0, .btn-primary bg #5b52f0. Profile READMEs (srivastava-ami, nex-ovia/.github) rewritten same day."

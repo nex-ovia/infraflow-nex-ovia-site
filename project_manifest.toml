@@ -1,0 +1,63 @@
+# nex-ovia.com: project manifest. Always-loaded context is [context] + [rules] only.
+# Everything else is pulled on demand through [pull]: load a key only when the task needs it.
+
+[context]
+what     = "nex-ovia.com brand hub: static site (hand-written HTML pages + content/*.toml) built by a Go tool, moving from Azure Static Web Apps to Cloudflare Pages via Terraform"
+branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Cloudflare apply runs from dev)"
+live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"
+build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ../.nxsite build -root .. -out ../dist && ../.nxsite check -out ../dist"
+infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
+active   = "planned.nexovia-site: next step U3 (run scripts/azure-state.sh), then first plan/apply, then C01–C04"
+handoff  = "docs/HANDOFF.md: read first when resuming"
+
+[rules]
+plan_first      = "write [planned.<name>] + an HTML review page; build only after an explicit 'yes'"
+chunks          = "one function per chunk; tests ship in the same chunk; each chunk has a validate gate"
+language        = "tools are written in Go (tools/ module, Go 1.24, deps pinned ≥ 2 weeks old)"
+shell_output    = "redirect to .tmp/<cmd>.log; read back one summary line"
+commits         = "no Co-Authored-By, no 'Generated with' lines; commit on dev; never push feature branches"
+free_tiers      = "free tiers only: Cloudflare (Pages, DNS, WAF managed, Web Analytics), GitHub Actions, Azure Blob (state, cents), social developer APIs"
+secrets         = "never paste secrets in chat or files; GitHub secrets via hidden prompts (gh secret set); Azure via OIDC (no secret)"
+security        = "actions pinned by SHA; least-privilege permissions; planguard blocks deletes of DNS/Pages; gitleaks + actionlint + zizmor in CI"
+excluded_input  = "nothing from helpshift-solutions"
+context_hygiene = "use [pull] pointers and grep before reading whole files"
+
+[pull]
+handoff        = "docs/HANDOFF.md"
+plan_chunks    = "docs/plans/nexovia-site.chunks.toml: read only the chunk ids being executed"
+setup_guide    = "docs/setup.md (Cloudflare token, environments, cutover) · docs/social.md (LinkedIn/X/Instagram)"
+terraform      = "infra/*.tf + infra/README.md; tests infra/tests/stack.tftest.hcl; CI scripts infra/scripts/{plan.sh,cf-env.sh}"
+state_backend  = "Azure Blob (azurerm, OIDC): infra/backend.tf, scripts/azure-state.sh"
+site_builder   = "tools/nxsite (load, layout, head/JSON-LD, feeds, blog, headers/CSP, card, check)"
+social         = "tools/nxsocial (drafts, LinkedIn/X/Instagram publishers) + .github/workflows/social.yml"
+shared_model   = "tools/content/post.go (blog post front matter, shared by nxsite + nxsocial)"
+workflows      = ".github/workflows/{infra,site,security,social}.yml; legacy azure-static-web-apps.yml (delete at C04)"
+coderev_plans  = "github.com/srivastava-ami/coderev dev: docs/plans/coderev-80-20.{html,chunks.toml}; manifest copy: docs/handoff/coderev.project_manifest.toml"
+plan_pages     = "https://claude.ai/artifact/WDCq4KxoNxVF1hyuDfP8cr (site) · https://claude.ai/artifact/STwoYfQ3nnPtY1JnT7rN8G (coderev)"
+seo_audit      = "2026-11-23 baseline: no sitemap, no canonical, og:url apex/www mismatch, no og:image/JSON-LD, JS-injected nav, no blog/RSS, Cloudflare robots.txt blocking AI bots. All fixed in the nxsite build (live after cutover)"
+
+[planned.nexovia-site]
+status    = "in-progress. Done + CI green: I01–I09, S01–S08, P01–P03, X01–X05. User done: CF_ACCOUNT_ID var, CLOUDFLARE_API_TOKEN secret, environments. Next: U3 Azure state (scripts/azure-state.sh) → first plan/apply → C01–C04"
+repo      = "nex-ovia/infraflow-nex-ovia-site"
+decisions = [
+  "free tiers only; Terraform state in Azure Blob via GitHub OIDC (R2 dropped: needs a card)",
+  "host: Cloudflare Pages (direct upload via wrangler 4.159.0 in CI); Azure SWA kept 7 days after cutover for rollback",
+  "pipeline: PR = checks + guarded plan + preview; dev push = plan → apply after 'production' approval",
+  "Cloudflare needs only CF_ACCOUNT_ID (var) + CLOUDFLARE_API_TOKEN (secret); zone ID derived at runtime",
+  "AI crawlers: allow search, assistant and training bots (ai_crawlers = allow_all)",
+  "blog at www.nex-ovia.com/blog; social = LinkedIn, X, Instagram: drafts always, auto opt-in per post",
+]
+next = [
+  "U3  user: LOCATION=eastus bash scripts/azure-state.sh, then re-run latest infra run",
+  "C00 review first terraform plan (expect creates only; planguard must pass) → user approves apply",
+  "C01 site workflow deploys dist → verify https://nexovia-site.pages.dev (Playwright 390/1280, headers, robots, sitemap, feed, links)",
+  "C02 cutover: cutover = true in infra/env/prod.tfvars → plan (www/apex replace allowed) → approve",
+  "C03 Search Console + Bing verification TXT via Terraform; user submits sitemap",
+  "C04 after 7 clean days: delete Azure SWA resource + azure-static-web-apps.yml",
+  "W05 add coderev card to tools/index.html + content/site.toml [[tool]] (already in JSON-LD)",
+]
+
+[planned.nexovia-coderev-page]
+status = "not started (after nexovia-site cutover)"
+goal   = "coderev product page at coderev.nex-ovia.com via nex-ovia/pages-template; credit Open Code Review (Alibaba, Apache-2.0) as optional engine; no logo/benchmark reuse"
+open   = "repo stays srivastava-ami/coderev (CNAME → srivastava-ami.github.io) or moves to nex-ovia/coderev (→ nex-ovia.github.io)?"

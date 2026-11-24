@@ -1,0 +1,75 @@
+# coderev — project manifest. Always-loaded context is [context] + [rules] only.
+# Everything else is pulled on demand through [pull]: load a key only when the task needs it.
+
+[context]
+what     = "Go 1.22 CLI that scans code and reviews PRs (cobra; module github.com/srivastava-ami/coderev)"
+branch   = "dev — the only branch to commit/push"
+build    = "go build ./... && go test ./...  (baseline 2026-11-23: 13 pkgs ok, 0 FAIL)"
+layout   = "cmd/coderev (CLI) · internal/analysis (finding, runner) · internal/tools/* (adapters) · internal/report (md/html/sarif) · internal/llm · internal/output/ghpr · internal/github"
+active   = "planned.nexovia-site (in progress, waiting on user setup) → planned.nexovia-coderev-page → planned.coderev-80-20"
+
+[rules]
+plan_first     = "write [planned.<name>] + HTML review page; build only after an explicit 'yes'"
+chunks         = "one function per chunk; tests ship in the same chunk; each chunk has a validate gate"
+dispatch       = "code chunks → haiku via dispatcher (none in repo yet: run inline with the same gates until a path is given)"
+language       = "tools are written in Go"
+shell_output   = "redirect to .tmp/<cmd>.log; read back one summary line"
+commits        = "no Co-Authored-By, no 'Generated with' lines; never push feature branches"
+excluded_input = "nothing from helpshift-solutions (golden PR #8 replaced by synthetic fixture C61)"
+context_hygiene = "do not read whole files when a [pull] pointer or grep answers it; graphify query when graphify-out/ exists"
+
+# On-demand pointers: key → where the detail lives. Load only the keys the current task needs.
+[pull]
+plan_page        = "docs/plans/coderev-80-20.html  (published: https://claude.ai/artifact/STwoYfQ3nnPtY1JnT7rN8G)"
+site_plan_chunks = "docs/plans/nexovia-site.chunks.toml"
+plan_chunks      = "docs/plans/coderev-80-20.chunks.toml  — read only the [[chunk]] ids being executed"
+gap_table        = "plan_page § Gap table (stage → exists/partial/missing + file:line)"
+finding_model    = "internal/analysis/finding.go:14"
+rule_dsl         = "docs/TOML_PATTERN_DSL.md; matcher at internal/tools/treesitter/pattern_matcher.go:155"
+diff_lines_today = "internal/output/ghpr/annotate.go:138 (has \\ No newline off-by-one; fixed by C09/C11)"
+llm_today        = "internal/llm/llm.go:16 (Provider), internal/llm/context.go:237 (prompt)"
+ocr_cli          = "ocr v1.14.2 via npm @alibaba-group/open-code-review (Apache-2.0); `ocr <cmd> --help > .tmp/ocr_<cmd>.help`"
+ocr_session_spec = "github.com/alibaba/open-code-review internal/session/persist.go @ v1.14.2 — fetch before chunk C47"
+site_template    = "github.com/nex-ovia/pages-template (site/ + .github/workflows/pages.yml + setup.sh)"
+site_reference   = "github.com/nex-ovia/genome site/ (live: genome.nex-ovia.com) and nex-ovia/nx-viz site/"
+site_hub         = "nex-ovia/infraflow-nex-ovia-site @ branch dev → Azure Static Web Apps (dist/), Cloudflare DNS proxied in front (NS ainsley/olof.ns.cloudflare.com). main is a stale older site. Content: content/*.toml + hand-kept *.html; nav/footer in partials/"
+site_seo_audit   = "2026-11-23: no sitemap.xml (404 = default Azure SWA page), no canonical, og:url apex vs www mismatch, no og:image/twitter card, no JSON-LD, nav injected by JS, no blog/RSS, robots.txt is Cloudflare-managed (search=yes, ai-train=no)"
+
+[planned.coderev-80-20]
+status       = "awaiting-approval"
+goal         = "PR review pipeline: ~80% deterministic (S1 ingest → S9 guarded post) + ~20% bounded, schema-validated LLM"
+entrypoint   = "coderev pr <pr-url | branch | base..head> [--runtime scenarios.toml] [--llm off|provider|ocr] [--max-llm-tokens N] [--post --confirm]"
+code_root    = "internal/pr/… (existing `coderev .` scan untouched)"
+chunks       = "64 (C01–C64) in [pull].plan_chunks"
+acceptance   = "C62 synthetic golden: recall ≥10/12 + 2 outside-diff, 0 bad anchors, REQUEST_CHANGES, no attribution, 5 suggestion blocks; C63 ocr round-trip"
+open         = ["S5 runtime harness now or later?", "default LLM engine: existing provider or ocr?"]
+
+[planned.nexovia-site]
+status    = "in-progress: I01–I09, S01–S08, P01–P03, X01–X05 done + CI green (site repo dev @0bacec9). Blocked on user U1–U3 (Cloudflare vars/secrets, R2, environments) → then C01–C04. Setup guide: site repo docs/setup.md, docs/social.md"
+repo      = "nex-ovia/infraflow-nex-ovia-site (infra/ Terraform + tools/nxsite + tools/nxsocial + .github/workflows). Needs push access (U4)."
+decisions = [
+  "free tiers only: Cloudflare Pages + DNS + WAF managed + Web Analytics, R2 (TF state), GitHub Actions (public repo), LinkedIn/X/Instagram developer APIs",
+  "host: Cloudflare Pages (direct upload), managed by Terraform; content deployed by wrangler in CI; Azure SWA retired after 7-day rollback window",
+  "pipeline: PR = checks + plan + preview; main = apply behind 'production' approval",
+  "AI: allow search/answer and training crawlers via own robots.txt; Cloudflare-managed robots + AI block off",
+  "social: LinkedIn, X, Instagram — drafts always; auto-publish opt-in per post per platform",
+  "blog at www.nex-ovia.com/blog",
+]
+chunks    = "33 (U1–U4 user, I01–I09, S01–S08, P01–P03, X01–X05, C01–C04) in [pull].site_plan_chunks"
+new_deps  = "github.com/yuin/goldmark (markdown); wrangler pinned in CI only"
+
+[planned.nexovia-coderev-page]  # P2 of nexovia-site; hub card now unblocked
+status    = "awaiting-approval — runs BEFORE coderev-80-20 per user"
+goal      = "coderev product page at coderev.nex-ovia.com + card on www.nex-ovia.com/tools; credits Open Code Review (Alibaba, Apache-2.0) as an optional engine, no logo/benchmark reuse"
+repo      = "srivastava-ami/coderev — add site/ from nex-ovia/pages-template (same pattern as genome, nx-viz)"
+host      = "GitHub Pages via Actions; Cloudflare DNS CNAME coderev → nex-ovia.github.io (DNS-only until TLS issues)"
+blocked   = [
+  "Pages under srivastava-ami serves at srivastava-ami.github.io, so the CNAME target is srivastava-ami.github.io unless the repo moves to nex-ovia/coderev",
+]
+chunks = [
+  "W01 scaffold: copy pages-template site/ + pages.yml into coderev, run setup.sh coderev srivastava-ami/coderev",
+  "W02 content.json: hero, value cards (80/20 pipeline), how-it-works (S1→S9), install (brew / docker / go install), use cases, ocr credit",
+  "W03 installers: adapt site/install.sh|ps1 to coderev's Go release asset names (release ships bare binaries coderev-v<ver>-<os>-<arch>; template expects <target-triple>.tar.gz + .sha256)",
+  "W04 verify: serve site/ locally, Playwright at 390px + 1280px, no horizontal scroll, link check",
+  "W05 hub card: coderev entry in infraflow-nex-ovia-site@dev content/tools.toml + tools/index.html",
+]

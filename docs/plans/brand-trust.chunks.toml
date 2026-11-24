@@ -1,0 +1,127 @@
+# brand-trust: nex-ovia is a personal brand (not a business) that builds public, dated, verifiable evidence of
+# Amit's work. Identity: implementation leader who sets the strategy and stays technical. Never "IT project manager".
+# Approved by owner 2026-11-24 (items 1-6). Facts only from this file.
+
+[shared]
+voice = """
+First person, plain words, short sentences. Identity words: "implementation leader", "technical strategist",
+"sets implementation strategy", "leads technical teams". NEVER: "project manager", "IT project manager", "PM".
+No service-selling words: never "advisory", "consulting", "hire", "pilot", "work with me", "services", "clients".
+No em-dash asides. Sentence case headings. No inline style attributes, no inline scripts (strict CSP).
+"""
+validate_all = "cd tools && GOTOOLCHAIN=local go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+[[chunk]]
+id = "S1"
+title = "Work with me becomes Connect (speaking and collaboration, no services)"
+do = """
+1. Create connect/index.html, built from work-with-me/index.html's structure and CSS, with this content:
+   hero label "Connect"; h1 "Let's talk about building with AI, responsibly."; lead "I share what I learn in the open.
+   If you host a podcast, run an event, write about AI and software delivery, or want to collaborate on NXS and the
+   tools, I'd like to hear from you."
+   three cards:
+   "Speaking and interviews" / "Podcasts, interviews, meetups and conference talks on implementation strategy,
+     leading technical teams through AI adoption, and keeping AI-built software understandable."
+   "Open-source collaboration" / "NXS, genome and coderev are open. Issues, pull requests, feedback and write-ups of
+     real use are all welcome."
+   "Use the tools, free" / "Everything here is free to use. If it helps your team, tell me how. Real-world feedback
+     shapes what I build next."
+   topics h2 "Topics I speak on": "Implementation strategy in the AI era", "Leading technical teams through AI
+     adoption", "Owning what AI builds", "Approval gates for AI-generated code", "From support engineer to
+     implementation leader"
+   "Short bio" (keep the "for hosts" note): "Amit Srivastava is an implementation leader and technical strategist
+     with 13 years in enterprise software delivery, from Linux and mail infrastructure to solutions architecture for
+     top-tier gaming and consumer tech companies. As Global Implementation Manager at Keywords Studios he sets
+     implementation strategy and leads technical teams. He wrote the Nexovia Standard (NXS), an open standard for
+     keeping AI-built software understood and owned, and builds open-source tools including genome and coderev. He
+     lives in Sacramento, California."
+   final CTA h2 "Get in touch", body "LinkedIn is the fastest way to reach me.", buttons: primary
+     "Message me on LinkedIn" -> https://www.linkedin.com/in/srivastava-ami , secondary "X (@amit4srivastava)" ->
+     https://x.com/amit4srivastava , secondary "GitHub" -> https://github.com/srivastava-ami
+   <title> "Connect — Nexovia"; meta description "Invite Amit Srivastava to speak or be interviewed about
+     implementation strategy and AI-built software, or collaborate on NXS and the open-source tools."
+2. work-with-me/index.html becomes a minimal redirect page: <meta http-equiv="refresh" content="0; url=/connect/">,
+   <link rel="canonical" href="https://www.nex-ovia.com/connect/">, <meta name="robots" content="noindex">, and a
+   visible link "This page moved to /connect/". Keep nav/footer placeholders.
+3. Replace every internal link to /work-with-me (any page, partials, content/*.toml, content/blog/*.md) with
+   /connect, and every visible "Work with me" label with "Connect". The nav's highlighted last item becomes
+   "Connect" (/connect).
+4. tools/nxsite headers.go: the _redirects lines for /sponser and /sponsor now target /connect/; add
+   "/work-with-me    /connect/  301" and "/work-with-me/*  /connect/  301". Update headers_test.go.
+5. If the sitemap generator would list work-with-me, exclude it (it is noindex).
+"""
+validate = "test -f connect/index.html && ! grep -rniE 'advisory|pilot|work with me' --include=*.html --include=*.toml --include=*.md partials index.html about ai tools standard principles connect content | grep -v '^docs/' && grep -q 'url=/connect/' work-with-me/index.html && {validate_all}"
+
+[[chunk]]
+id = "S2"
+title = "About: implementation leader and technical strategist"
+file = "about/index.html"
+do = """
+Text changes plus one new section and one new short section; keep structure/classes; no inline styles.
+- hero lead: "I'm Amit Srivastava, an implementation leader and technical strategist in Sacramento, California. I've
+  spent 13 years in the part of software most people never see: getting it running, keeping it running, and making
+  sure the people who paid for it actually get what they needed."
+- NEW section after "What people trust me for", h2 "What I do", four items (reuse the trust-card or frameworks card
+  style), title + body:
+  "Set the implementation strategy" / "I decide how a solution gets delivered: the phases, the risks, the trade-offs
+    between business goals and technical reality, and how we'll know it worked."
+  "Lead technical teams" / "I build and mentor engineering teams across continents, and I stay close enough to the
+    work to review it, unblock it and own it."
+  "Bridge business and engineering" / "I turn what customers and executives need into technical plans engineers can
+    build, and turn progress back into terms leaders can act on."
+  "Turn delivery into standards" / "What works once becomes a practice others can repeat. NXS is the open version of
+    that habit."
+- NEW short section right after "Why I wrote NXS", h2 "What I'm working toward", body "Making AI-assisted software
+  implementation reliable, accountable and understandable for the organizations that depend on it, through an open
+  standard, open-source tools and practical guidance anyone can use for free.", link "See the record" -> /impact
+- final CTA: primary "Connect" -> /connect (secondary LinkedIn stays).
+"""
+validate = "grep -q 'What I do' about/index.html && grep -q 'What I.m working toward' about/index.html && grep -q 'href=\"/impact' about/index.html && ! grep -qiE 'project manager' about/index.html && {validate_all}"
+
+[[chunk]]
+id = "S3"
+title = "Home and /ai: identity line, follow-the-work strip, no services"
+do = """
+index.html (+ content/home.toml):
+- proposition label: "Amit Srivastava · Implementation leader and technical strategist · Author of NXS"
+- the last strip (work strip): label "Follow the work"; h2 "Follow the work as it happens."; body "I publish what I
+  build and learn: releases, lessons, and the occasional failure. Follow along where you already are.";
+  buttons: primary "Follow on LinkedIn" -> https://www.linkedin.com/in/srivastava-ami , secondary "Follow on X" ->
+  https://x.com/amit4srivastava , secondary "See the record" -> /impact
+ai/index.html:
+- final CTA: h2 "Want to talk about it?", body "I speak about this on podcasts and at events, and the playbook and
+  tools are free to use.", primary "Connect" -> /connect, secondary "Read the standard" -> /standard
+- remove any sentence that offers to set this up for someone's team.
+"""
+validate = "grep -q 'Follow the work as it happens' index.html && grep -q 'Want to talk about it' ai/index.html && ! grep -qiE 'help teams set it up|advisory|pilot' index.html ai/index.html && {validate_all}"
+
+[[chunk]]
+id = "S4"
+title = "New /impact page: the dated, verifiable record"
+file = "impact/index.html"
+do = """
+Create impact/index.html (same head/nav/footer pattern as about/index.html) and content/impact.toml holding the
+data below. Add "Impact" (/impact) to partials/nav.html between About and Connect, and to the footer after About.
+- hero: label "Impact"; h1 "The record, with dates and links."; lead "Everything here is public and verifiable. If a
+  number is small, it's still the real number."
+- section h2 "Open standard": NXS, the Nexovia Standard. "An open standard for keeping AI-built software understood,
+  changeable and portable." Dated list: "2026-05-10 · v0.1.0 first published", "2026-09-02 · v2.0 released".
+  Link "github.com/nex-ovia/NXS" -> https://github.com/nex-ovia/NXS
+- section h2 "Open-source releases": a table (wrap in an overflow-x:auto container via a CSS class) with columns
+  Project, First release, Latest, Releases, Downloads, Link:
+  coderev | 2026-06-27 (v0.1.0) | v0.30.4 · 2026-11-23 | 57 | 400 | https://github.com/srivastava-ami/coderev
+  genome | 2026-06-18 (v0.1.0-alpha.1) | v0.1.0-alpha.1 · 2026-06-18 | 1 | 3 | https://github.com/nex-ovia/genome
+  pr-watch | 2026-07-08 (v0.1.0) | v0.1.0 · 2026-07-08 | 1 | 0 | https://github.com/srivastava-ami/pr-watch
+  Under it a small note: "Downloads = GitHub release asset downloads. Figures as of 2026-11-24."
+  Give each numeric cell a data-metric attribute naming repo and field, e.g. data-metric="srivastava-ami/coderev:releases",
+  "…:downloads", "…:latest" (a later step fills them at build time).
+- section h2 "Live and in use": "genome.nex-ovia.com, the genome tool's public site and installers" ->
+  https://genome.nex-ovia.com ; "nex-ovia.com, this site, built and deployed through the process described on /ai" -> /ai
+- section h2 "Writing": "Posts on implementation strategy and AI-built software." link "Read the blog" -> /blog
+- section h2 "Career results": one line "Results from implementation work I've led are on the About page." link
+  "See results" -> /about
+- final strip: h2 "Invite me to speak, or build on the work."; primary "Connect" -> /connect
+<title> "Impact — Nexovia"; meta description "A dated, verifiable record of Amit Srivastava's open standard, open-source
+releases and implementation work."
+"""
+validate = "test -f impact/index.html && test -f content/impact.toml && grep -q 'href=\"/impact' partials/nav.html && grep -q 'data-metric=\"srivastava-ami/coderev:downloads\"' impact/index.html && {validate_all}"

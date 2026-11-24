@@ -368,3 +368,21 @@ do = """
    renders as "nex·ovia" again. Keep the img and href unchanged.
 """
 validate = "grep -q 'highlight.active a' site.css && grep -q 'nav-word' partials/nav.html && {validate_all}"
+
+[[chunk]]
+id = "B16"
+title = "Remove the logo from the site"
+do = """
+The owner rejected the logo. Remove it from the site completely:
+1. partials/nav.html (and partials/footer.html if present there): delete the <img ... class="nav-mark"> element.
+   Keep the .nav-logo link and its <span class="nav-word"> text exactly as they are.
+2. site.css: delete the .nav-mark rule. Keep .nav-logo working (it may stay display:flex).
+3. work-with-me/index.html: delete the whole "Press kit" section (heading, body and the list of /brand/ links).
+4. favicon.svg: restore the content it had in commit 2855397 (`git show 2855397:favicon.svg`), the plain "nx" square.
+5. Delete the brand/ directory and docs/brand/ directory entirely.
+6. tools/nxsite: make copyBrand a no-op when brand/ does not exist (it must not fail the build), and change the tests
+   in build_test.go that create brand/nex-ovia-mark.svg and brand/generate-mark.py so they still test copyBrand using
+   a generic file name (e.g. brand/sample.svg and brand/generate-mark.py in the temp fixture), plus one test that a
+   build with no brand/ directory succeeds.
+"""
+validate = "! test -e brand && ! test -e docs/brand && ! grep -q 'nav-mark' partials/nav.html site.css && ! grep -q '/brand/' work-with-me/index.html && {validate_all}"

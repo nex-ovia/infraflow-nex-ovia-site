@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NXS: the Nexovia Standard — Nexovia</title>
+  <meta name="description" content="NXS is a living framework for owning what gets built, by people or by AI: four questions, four rules and a definition of done.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    /* Page-specific: /nxs/ */
+    .nxs-questions { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; max-width: 640px; }
+    .nxs-questions li {
+      padding: 0.75rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+    }
+    .nxs-version { margin-top: 1.5rem; color: var(--text-2); font-size: 0.9375rem; }
+    .nxs-version a { color: var(--accent); }
+
+    .nxs-toc { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .nxs-toc a {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nxs-toc a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .standard-content { padding: var(--section) 0; max-width: 900px; }
+
+    .standard-section {
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .standard-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .section-body + .section-body { margin-top: 1rem; }
+
+    /* Principles */
+    .principle { margin-top: 2rem; }
+    .principle-title { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+
+    /* Rule blocks */
+    .rule-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .rule-header {
+      padding: 1.75rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+    }
+
+    .rule-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .rule-title { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.01em; }
+
+    .rule-body {
+      padding: 1.75rem 2rem;
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .rule-examples {
+      padding: 0 2rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Done list */
+    .done-intro { margin-bottom: 2rem; }
+    .done-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .done-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.2s;
+    }
+
+    .done-item:hover { border-color: var(--accent-2); }
+
+    .done-check {
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-2);
+      font-size: 0.7rem;
+    }
+
+    .done-item-title { font-weight: 500; font-size: 0.9375rem; margin-bottom: 0.25rem; }
+    .done-item-detail { font-size: 0.875rem; color: var(--text-2); font-weight: 300; }
+
+    /* Metrics table */
+    .metrics-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+    .metrics-table th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .metrics-table td { padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.9375rem; vertical-align: top; }
+    .metrics-table tr:last-child td { border-bottom: none; }
+    .metrics-table tr:hover td { background: var(--surface-raised); }
+    .metric-name { font-weight: 500; color: var(--text); }
+    .metric-measure { color: var(--text-2); font-weight: 300; font-size: 0.875rem; }
+    .metric-target { color: var(--accent-2); font-family: var(--font-mono); font-size: 0.8rem; white-space: nowrap; }
+
+    /* Closing CTA */
+    .nxs-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+
+    @media (max-width: 900px) {
+      .rule-examples { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <main id="main">
+  <section class="page-hero" id="what">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-eyebrow">NXS framework · <span data-nxs-version>v2.0</span> · Apache-2.0</div>
+      <h1 class="animate-hero">The Nexovia Standard</h1>
+      <p class="page-hero-sub animate-hero delay-1">I wrote NXS because the risk has shifted. AI tools generate implementations in seconds. The risk is no longer that solutions take too long to build. The risk is that they get built, and two months later nobody can explain how they work. NXS does not tell you what language or tools to use. It defines what every finished solution must be true of. You own what you build if you can answer four questions without asking the original builder:</p>
+      <ul class="nxs-questions animate-hero delay-2">
+        <li>What does this do and why?</li>
+        <li>What does it depend on?</li>
+        <li>How do I change this part without breaking that part?</li>
+        <li>How do I move this off this platform?</li>
+      </ul>
+      <p class="nxs-version">Current version: <a href="https://github.com/nex-ovia/NXS/tags" rel="noopener noreferrer" target="_blank"><span data-nxs-version>v2.0</span> on GitHub</a></p>
+      <nav aria-label="On this page">
+        <ul class="nxs-toc">
+          <li><a href="#principles">Why it exists</a></li>
+          <li><a href="#rules">The four rules</a></li>
+          <li><a href="#done">Definition of done</a></li>
+          <li><a href="#measure">How to measure it</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="standard-content">
+
+      <section class="standard-section" id="principles">
+        <p class="section-label reveal">Principles</p>
+        <h2 class="section-title reveal">Why it exists</h2>
+
+        <div class="principle reveal">
+          <h3 class="principle-title">Speed without structure is just faster debt</h3>
+          <p class="section-body">AI tools have made it easy to generate implementations. Things that once took weeks now take hours. That is good. The problem is what gets left behind. The team that commissioned the solution often cannot explain how it works, change it safely, or move it without rebuilding. The solution works. The team does not own it.</p>
+        </div>
+
+        <div class="principle reveal">
+          <h3 class="principle-title">You own what you can understand, change and move</h3>
+          <p class="section-body">Delivery sovereignty is not about who wrote the code. It is about who can answer the four questions above at any point after delivery. If the team can answer all four without asking the original builder, they have sovereignty. If they cannot, they have a dependency.</p>
+        </div>
+
+        <div class="principle reveal">
+          <h3 class="principle-title">Technical leadership does not require technical authorship</h3>
+          <p class="section-body">When the standard is followed, a Customer Success lead, an Implementation Manager or a Solutions Architect without deep coding experience can lead a project with a large codebase. They can define what gets built, direct AI tools, understand every component without reading the code, and sign off on quality against an objective standard.</p>
+        </div>
+
+        <div class="principle reveal">
+          <h3 class="principle-title">Structure is not the enemy of creativity</h3>
+          <p class="section-body">NXS defines the boundaries of a production-grade delivery. What gets built inside them is up to the people building it. The rules settle questions that should not need creative energy: how to organise the project, how to handle configuration, how to make dependencies visible. Everything else is open.</p>
+        </div>
+
+        <div class="principle reveal">
+          <h3 class="principle-title">Solutions should compound, not accumulate as debt</h3>
+          <p class="section-body">Most solutions degrade over time. The builder moves on, documentation is not written, and dependencies become invisible. A solution built to NXS gets easier to work with over time, not harder. New engineers can onboard in hours. Components can be extracted and reused. It can be extended without fear.</p>
+        </div>
+      </section>
+
+      <section class="standard-section" id="rules">
+        <p class="section-label reveal">Rules</p>
+        <h2 class="section-title reveal">The four rules</h2>
+
+        <div class="rule-block reveal">
+          <div class="rule-header">
+            <span class="rule-num">Rule 01</span>
+            <h3 class="rule-title">The logic is separate from the tools</h3>
+          </div>
+          <div class="rule-body">Every solution has a core: the part that makes decisions and encodes the rules that matter to the business. That core must be identifiable, readable, and independent of any specific tool, vendor, or platform used to deliver it. If the database changes, the email provider changes, or the workflow platform is replaced — the business logic does not change. Only the connection to it does.</div>
+          <div class="rule-examples">
+            <div>
+              <div class="code-block">
+                <p class="code-label wrong">✕ Wrong</p>
+                <code>result = SalesforceClient()
+  .create_opportunity(data)</code>
+              </div>
+            </div>
+            <div>
+              <div class="code-block">
+                <p class="code-label right">✓ Right</p>
+                <code># crm is a swappable connection
+result = crm.create_opportunity(data)</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-block reveal">
+          <div class="rule-header">
+            <span class="rule-num">Rule 02</span>
+            <h3 class="rule-title">Configuration never lives inside the solution</h3>
+          </div>
+          <div class="rule-body">Every value that changes between environments — credentials, API keys, connection strings, feature flags, resource limits — must live outside the solution itself. It is set in the environment the solution runs in, never baked into the implementation. When this is done right, the exact same solution runs on a local machine, in staging, and in production without modification.</div>
+          <div class="rule-examples">
+            <div>
+              <div class="code-block">
+                <p class="code-label wrong">✕ Wrong</p>
+                <code>API_URL = "https://prod.vendor.com/v1"</code>
+              </div>
+            </div>
+            <div>
+              <div class="code-block">
+                <p class="code-label right">✓ Right</p>
+                <code>API_URL = os.getenv("VENDOR_API_URL")</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-block reveal">
+          <div class="rule-header">
+            <span class="rule-num">Rule 03</span>
+            <h3 class="rule-title">Every external dependency is visible</h3>
+          </div>
+          <div class="rule-body">If a solution communicates with anything outside itself — a database, an API, a messaging service, a file system, or a third-party platform — that dependency is named and documented. Documented means: what it is, why it is there, what it provides, and what would need to change if it were replaced. Anyone reading the documentation should see the full surface area without reading the implementation.</div>
+          <div class="rule-examples">
+            <div>
+              <div class="code-block">
+                <p class="code-label wrong">✕ Wrong</p>
+                <code># Hidden until it breaks
+charge = stripe.PaymentIntent
+  .create(amount=amount)</code>
+              </div>
+            </div>
+            <div>
+              <div class="code-block">
+                <p class="code-label right">✓ Right</p>
+                <code># Declared in dependency registry
+# provider = stripe
+# config_key = STRIPE_SECRET_KEY
+charge = payments.create_charge(amount)</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-block reveal">
+          <div class="rule-header">
+            <span class="rule-num">Rule 04</span>
+            <h3 class="rule-title">It runs anywhere, for anyone</h3>
+          </div>
+          <div class="rule-body">A finished solution can be run by someone who was not involved in building it, on a machine that was not used to build it, without asking the original builder for help. Inputs are documented, dependencies are listed, environment assumptions are externalised, and there is no local state that quietly accumulates and never gets cleaned up. If tribal knowledge is required to run it, it is not finished.</div>
+          <div class="rule-examples">
+            <div>
+              <div class="code-block">
+                <p class="code-label wrong">✕ Wrong</p>
+                <code># "Ask Sarah, she knows the steps"</code>
+              </div>
+            </div>
+            <div>
+              <div class="code-block">
+                <p class="code-label right">✓ Right</p>
+                <code># Clone, set .env vars, run
+docker run --env-file .env solution</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="standard-section" id="done">
+        <p class="section-label reveal">Done</p>
+        <h2 class="section-title reveal">Definition of done</h2>
+        <p class="section-body done-intro reveal">A solution built to NXS is complete when all seven of these are true, not just checked off.</p>
+        <ul class="done-list">
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Purpose documented</div><div class="done-item-detail">Anyone can read what this solution does and why it exists, without reading the code</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Logic identifiable</div><div class="done-item-detail">The business rules live somewhere clear, readable, and separate from tooling</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Dependencies listed</div><div class="done-item-detail">Every external system or service is named with its purpose documented</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Configuration externalised</div><div class="done-item-detail">Nothing environment-specific is hardcoded anywhere in the solution</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Runs anywhere</div><div class="done-item-detail">A new person can run this on any machine by following only what is written down</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Health verifiable</div><div class="done-item-detail">There is a defined way to confirm the solution is running correctly at any time</div></div></li>
+          <li class="done-item reveal"><div class="done-check">✓</div><div><div class="done-item-title">Stable under load</div><div class="done-item-detail">Confirmed to perform correctly at the expected real-world volume</div></div></li>
+        </ul>
+      </section>
+
+      <section class="standard-section reveal" id="measure">
+        <p class="section-label">Metrics</p>
+        <h2 class="section-title">How to measure it</h2>
+        <p class="section-body">Quality without measurement is opinion. NXS defines four metrics that make delivery quality measurable.</p>
+        <table class="metrics-table">
+          <thead><tr><th>Metric</th><th>What it measures</th><th>NXS target</th></tr></thead>
+          <tbody>
+            <tr><td><span class="metric-name">Time to Understand</span></td><td><span class="metric-measure">How long a new person takes to fully grasp an unfamiliar solution</span></td><td><span class="metric-target">Under 2 hours</span></td></tr>
+            <tr><td><span class="metric-name">Dependency Swap Time</span></td><td><span class="metric-measure">How long to replace one external tool or vendor with another</span></td><td><span class="metric-target">Under 4 hours</span></td></tr>
+            <tr><td><span class="metric-name">Time to First Version</span></td><td><span class="metric-measure">Speed from brief to a working, deployable solution</span></td><td><span class="metric-target">40% faster</span></td></tr>
+            <tr><td><span class="metric-name">Maintenance Overhead</span></td><td><span class="metric-measure">Hours per week on manual fixes, firefighting, and support</span></td><td><span class="metric-target">Under 10%</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="standard-section reveal" id="next">
+        <h2 class="section-title">Use it</h2>
+        <p class="section-body">NXS is open under Apache-2.0. Read it, apply it, and see what is built on it.</p>
+        <div class="nxs-actions">
+          <a href="https://github.com/nex-ovia/NXS" class="btn btn-primary" rel="noopener noreferrer" target="_blank">Read NXS on GitHub</a>
+          <a href="/tools" class="btn btn-secondary">See the tools built on it</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

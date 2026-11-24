@@ -11,6 +11,7 @@ import (
 	"image"
 	"io"
 	"io/fs"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -63,7 +64,19 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 
 	var htmlOut []string
 	var sitemap []SitemapURL
+	var fetchOK bool
+	stats := GitHubStats(&http.Client{Timeout: 10 * time.Second}, os.Getenv("GITHUB_TOKEN"))
 	for _, p := range s.Pages {
+		if p.Route == "/impact/" && os.Getenv("NXSITE_OFFLINE") != "1" {
+			p.HTML = FillMetrics(p.HTML, func(r string) (RepoStats, error) {
+				st, err := stats(r)
+				fetchOK = fetchOK || err == nil
+				return st, err
+			})
+			if fetchOK {
+				p.HTML = FillMetricDate(p.HTML, now.Format("2006-01-02"))
+			}
+		}
 		in := HeadInput{Title: p.Title, Description: p.Description, Image: defaultImg, Type: "website"}
 		// A page that declares its own canonical (e.g. a redirect page) keeps it.
 		if _, rest, ok := strings.Cut(p.HTML, `<link rel="canonical" href="`); ok {

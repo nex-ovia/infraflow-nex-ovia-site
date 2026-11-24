@@ -147,7 +147,15 @@ footer { border-top: 1px solid var(--border); padding: 3rem 0; }
 /* Shared nav script output */
 @media (max-width: 768px) {
   :root { --section: 4rem; }
-  .nav-links { display: none; }
+}
+
+/* Mobile nav (no JS): logo on row 1, links on a full-width scrollable row 2. */
+@media (max-width: 720px) {
+  nav .container { flex-wrap: wrap; row-gap: 0.5rem; }
+  .nav-links { width: 100%; min-width: 0; gap: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links li { flex-shrink: 0; }
+  .nav-links a { padding: 0.5rem 0.625rem; font-size: 0.8125rem; }
 }
 
 /* Mobile overflow fixes (nxsite): keep every page within the viewport at 390px. */

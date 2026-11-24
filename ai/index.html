@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I lead with AI — Nexovia</title>
+  <meta name="description" content="How Amit Srivastava runs software delivery with AI agents: plan, chunk, dispatch, validate, approve. A repeatable, governed workflow anyone can copy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .stack-gap {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .loop-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    .loop-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .loop-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      margin-bottom: 0.75rem;
+    }
+
+    .loop-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .loop-body {
+      color: var(--text-2);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .principle-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 2.5rem;
+    }
+
+    .principle-name {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .principle-body {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .proof-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .proof-body {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .proof-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .benefit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .benefit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      font-weight: 300;
+    }
+
+    .benefit-list li::before {
+      content: '→';
+      color: var(--accent-2);
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+
+    .cta-block {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .cta-body {
+      color: var(--text-2);
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0.75rem auto 1.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    @media (max-width: 1100px) {
+      .loop-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .loop-grid,
+      .principles-grid { grid-template-columns: 1fr; }
+      .principle-card,
+      .proof-card,
+      .benefit-card,
+      .cta-block { padding: 1.75rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <p class="section-label">AI-driven leadership</p>
+      <h1 class="animate-hero">AI writes the code. I own the outcome.</h1>
+      <p class="page-hero-sub animate-hero delay-1">I lead delivery with AI agents every day. Not as autocomplete, but as a team I direct. Here is the exact operating model I use, with the guardrails that keep the work understandable, reviewable and mine.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container stack-gap">
+
+      <div>
+        <h2 class="section-heading reveal">The operating model</h2>
+        <div class="loop-grid">
+
+          <div class="loop-step reveal">
+            <p class="loop-num">01</p>
+            <h3 class="loop-name">Plan</h3>
+            <p class="loop-body">I write the intent, constraints and acceptance checks as a plan in plain TOML, before any code exists. The plan is the contract.</p>
+          </div>
+
+          <div class="loop-step reveal">
+            <p class="loop-num">02</p>
+            <h3 class="loop-name">Chunk</h3>
+            <p class="loop-body">The plan is cut into the smallest independent units: one function, one page, one config change. Each chunk carries its own validation gate.</p>
+          </div>
+
+          <div class="loop-step reveal">
+            <p class="loop-num">03</p>
+            <h3 class="loop-name">Dispatch</h3>
+            <p class="loop-body">A dispatcher sends each chunk to an AI worker in an isolated git worktree. Cheap, fast models take routine chunks; stronger models take hard ones.</p>
+          </div>
+
+          <div class="loop-step reveal">
+            <p class="loop-num">04</p>
+            <h3 class="loop-name">Validate</h3>
+            <p class="loop-body">Nothing is accepted on the model's word. Tests, builds, linters and policy checks run automatically; a failed gate isolates the failure to one small chunk.</p>
+          </div>
+
+          <div class="loop-step reveal">
+            <p class="loop-num">05</p>
+            <h3 class="loop-name">Approve</h3>
+            <p class="loop-body">I review the diff, merge it, and every change to production waits behind a human approval gate. The AI proposes; a person decides.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-heading reveal">Guardrails that make it work</h2>
+        <div class="principles-grid">
+
+          <div class="principle-card reveal">
+            <h3 class="principle-name">Shared context, not chat history</h3>
+            <p class="principle-body">Every agent reads the same project manifest: decisions, rules and current state live in the repo, not in someone's head or a chat window.</p>
+          </div>
+
+          <div class="principle-card reveal">
+            <h3 class="principle-name">Least privilege by default</h3>
+            <p class="principle-body">Workers get only the tools a chunk needs. Cloud access uses short-lived OIDC identities instead of stored secrets.</p>
+          </div>
+
+          <div class="principle-card reveal">
+            <h3 class="principle-name">Agent-agnostic</h3>
+            <p class="principle-body">The same configuration drives Claude Code, OpenCode, Pi and others, so the workflow outlives any single vendor. That's NXS rule one applied to AI.</p>
+          </div>
+
+          <div class="principle-card reveal">
+            <h3 class="principle-name">Evidence over confidence</h3>
+            <p class="principle-body">Every recommendation cites a file, a command output or a source. Claims without evidence don't ship.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="proof-card reveal">
+        <h2 class="section-heading">Built this way</h2>
+        <p class="proof-body">This website, its infrastructure and the tools below were built with this model: plans and chunk specs are committed alongside the code, so you can see exactly how.</p>
+        <div class="proof-links">
+          <a href="https://github.com/nex-ovia/infraflow-nex-ovia-site" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">This site's source</a>
+          <a href="https://github.com/srivastava-ami/coderev" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">coderev</a>
+          <a href="https://github.com/nex-ovia/genome" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">genome</a>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal">
+        <h2 class="section-heading">What it gives me</h2>
+        <ul class="benefit-list">
+          <li>I ship as a leader without becoming a bottleneck: the agents do the typing, I do the deciding.</li>
+          <li>Every change is small, tested and reversible, so speed doesn't turn into debt.</li>
+          <li>Anyone, including non-developers, can read the plan and know what was built and why.</li>
+        </ul>
+      </div>
+
+      <div class="cta-block reveal">
+        <h2 class="section-heading">Want this in your team?</h2>
+        <p class="cta-body">I talk about this on podcasts and in interviews, and I help teams set it up.</p>
+        <div class="cta-actions">
+          <a href="/work-with-me" class="btn btn-primary">Work with me</a>
+          <a href="/standard" class="btn btn-secondary">Read the Standard</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

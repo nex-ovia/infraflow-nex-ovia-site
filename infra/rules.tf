@@ -25,6 +25,21 @@ resource "cloudflare_ruleset" "redirects" {
       }
     },
     {
+      ref         = "sponser_to_work"
+      description = "Removed sponsor path -> work-with-me"
+      expression  = "(http.host eq \"${var.site_host}\" and starts_with(http.request.uri.path, \"/sponser\"))"
+      action      = "redirect"
+      action_parameters = {
+        from_value = {
+          status_code           = 301
+          preserve_query_string = true
+          target_url = {
+            expression = "concat(\"https://${var.site_host}\", \"/work-with-me/\")"
+          }
+        }
+      }
+    },
+    {
       ref         = "sponser_typo"
       description = "Old misspelled sponsor path"
       expression  = "${local.site_hosts_expr} and starts_with(http.request.uri.path, \"/sponser\")"

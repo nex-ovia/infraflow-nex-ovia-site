@@ -1,0 +1,301 @@
+# brand-fix: fixes from reports/Nexovia website independent review.md (P0) plus owner requests 2026-11-24:
+# - tools are beta, the website is not; NXS is a living framework whose versions come from GitHub
+# - tool list, versions, licenses and stars come from GitHub at build time; a repo with topic `nex-ovia-tool`
+#   (owners srivastava-ami, nex-ovia) appears on /tools automatically; the site rebuilds daily
+# Facts: genome and coderev are BSL 1.1 (source-available), pr-watch MIT, NXS Apache-2.0.
+# NXS tags: v2.0 (2026-09-02, "NXS v2.0 - Outcome-first, simple, and readable"), v0.1.0 (2026-05-10,
+# "Nexovia Standard Release v0.1.0").
+
+[shared]
+voice = """
+First person, plain words, short sentences. Never "project manager". Never call genome or coderev "open source"
+(they are source-available, BSL 1.1). No inline style attributes, no inline scripts (strict CSP). Keep existing
+classes and structure unless told otherwise. Use the copy text exactly as given.
+"""
+validate_all = "cd tools && GOTOOLCHAIN=local NXSITE_OFFLINE=1 go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && NXSITE_OFFLINE=1 dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+# ---------- wave A: independent ----------
+
+[[chunk]]
+id = "G1"
+title = "GitHub client: tool repos by topic, and tag versions"
+file = "tools/nxsite/github.go (new) + tools/nxsite/github_test.go (new)"
+model = "sonnet"
+do = """
+Create tools/nxsite/github.go (package main, stdlib only):
+
+type Repo struct {
+    Name, FullName, Description, Homepage, URL, License string
+    Stars      int
+    Version    string // tag of the newest release, prereleases included; "" if none
+    Date       string // YYYY-MM-DD of that release
+    Prerelease bool
+}
+type Version struct{ Tag, Date, Title string } // Title = first line of the tag (or commit) message
+
+type GitHub struct {
+    Client *http.Client // nil -> &http.Client{Timeout: 10 * time.Second}
+    Token  string       // optional; sent as "Authorization: Bearer <token>"
+    API    string       // "" -> "https://api.github.com"
+}
+
+func (g GitHub) get(path string, v any) error
+    GET API+path with header Accept: application/vnd.github+json (+ auth if Token). Non-200 -> error naming path
+    and status. JSON-decode body into v.
+
+func (g GitHub) ToolRepos(owners []string, topic string) ([]Repo, error)
+    One search: /search/repositories?q=topic:<topic>+user:<o1>+user:<o2>...&sort=stars&order=desc&per_page=100
+    (build q with url.QueryEscape on each term joined by "+"). Skip items with archived or fork true.
+    Map fields: name, full_name, description, homepage, html_url, stargazers_count, license.spdx_id.
+    Per repo: /repos/<full>/releases?per_page=1 -> if one exists: Version=tag_name, Date=published_at[:10],
+    Prerelease=prerelease.
+    License: if spdx_id is "" or "NOASSERTION", GET /repos/<full>/license (field "content", base64 with newlines);
+    decoded text containing "Business Source License" -> "BSL-1.1"; otherwise leave "". A 404 on /license -> "".
+    Any other error -> return it.
+
+func (g GitHub) Versions(repo string) ([]Version, error)
+    /repos/<repo>/tags?per_page=100 gives name + commit.sha. For each tag GET /repos/<repo>/git/ref/tags/<name>:
+    object.type "tag" -> GET /repos/<repo>/git/tags/<object.sha> -> Date=tagger.date[:10], Title=first line of
+    message; otherwise GET /repos/<repo>/commits/<commit.sha> -> commit.committer.date[:10] and first line of
+    commit.message. Trim Title. Return sorted by Date descending (stable; ties keep API order).
+
+github_test.go: httptest.NewServer with a mux serving canned JSON for: the search (one normal repo with
+spdx_id "NOASSERTION" whose license content is base64 of "Business Source License 1.1", one archived repo),
+its releases (one prerelease v0.1.0-alpha.1), a repo with spdx "MIT" and no releases, and Versions for a repo with
+one annotated tag (2026-09-02) and one lightweight tag (2026-05-10). Assert all mapped fields, the skipped
+archived repo, BSL-1.1, and Versions order. No real network.
+"""
+validate = "test -f tools/nxsite/github.go && grep -q 'func (g GitHub) ToolRepos' tools/nxsite/github.go && grep -q 'func (g GitHub) Versions' tools/nxsite/github.go && {validate_all}"
+
+[[chunk]]
+id = "H1"
+title = "Nav and footer: no beta on the site; honest license line"
+file = "partials/nav.html, partials/footer.html, site.css"
+do = """
+1. partials/nav.html and partials/footer.html: remove every <span class="beta-tag">beta</span>. The site is not beta.
+2. site.css: delete the .beta-tag rules (any selector containing .beta-tag).
+3. partials/footer.html: the footer-copy text "Apache 2.0 · NXS beta · nex-ovia.com" becomes
+   "NXS framework: Apache-2.0 · Tools in beta, each with its own license · nex-ovia.com".
+"""
+validate = "! grep -rn 'beta-tag' partials site.css && grep -q 'Tools in beta, each with its own license' partials/footer.html && {validate_all}"
+
+[[chunk]]
+id = "H2"
+title = "Home: working phone menu, honest tool wording, no empty-blog link"
+file = "index.html, content/home.toml"
+do = """
+index.html has its own inline <style> and does not load site.css.
+1. Phone menu: inside the @media (max-width: 768px) block, delete the rule `.nav-links { display: none; }` and add
+   a new block after it, copied from site.css lines for max-width 720px, so the menu scrolls sideways:
+   @media (max-width: 720px) {
+     .nav-links { width: 100%; min-width: 0; gap: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+     .nav-links::-webkit-scrollbar { display: none; }
+     .nav-links li { flex-shrink: 0; }
+     .nav-links .highlight { order: -1; }
+     .nav-links a { padding: 0.5rem 0.625rem; font-size: 0.8125rem; }
+   }
+   Also make sure the nav container wraps on phones: if the nav inner flex container has no flex-wrap, add
+   `flex-wrap: wrap;` for it inside the same 720px block (look at how site.css styles the same nav container).
+2. Delete the `.nav-logo .beta-tag` CSS rule.
+3. Copy (index.html and the same strings in content/home.toml):
+   "Free playbook + open-source tools" -> "Free playbook + tools on GitHub"
+   "100% open source" -> "Free to use"
+   "Both free and open source." -> "Both free to use, with source on GitHub."
+   meta description and og:description: "Free playbook, open-source tools and the NXS standard" ->
+   "Free playbook, tools and the NXS framework"
+   the section-label "Open source" (tools strip) -> "Tools"
+4. Delete the element <div class="tool-mini-links"><a href="/blog" class="btn btn-secondary">Read the blog</a></div>.
+"""
+validate = "! grep -nE 'open-source|100% open|href=\"/blog|beta-tag|\\.nav-links \\{ display: none' index.html && grep -q 'overflow-x: auto' index.html && {validate_all}"
+
+[[chunk]]
+id = "H3"
+title = "Tools page: GitHub-filled region, beta tools, framework NXS"
+file = "tools/index.html"
+do = """
+1. <meta name="description"> -> "Free tools built on NXS. Versions, licenses and stars come straight from GitHub."
+2. Hero: section-label "Open source" -> "Tools in beta". page-hero-sub -> "Everything here is free to use, built on
+   NXS, and used in my own delivery work. The tools are in beta. Versions, licenses and stars below are read from
+   GitHub each time this site builds. If one helps you, a GitHub star helps others find it."
+3. Put the genome, coderev and pr-watch cards (with their HTML comments) inside a region, as direct children of
+   .tools-grid, starting with the exact line `<!-- github:tools -->` and ending with `<!-- /github:tools -->`.
+   The NXS card and the nex-ovia.com card stay outside the region, after it. The region content is the offline
+   fallback; the build replaces it with live GitHub data.
+4. Inside the region fix the fallback cards:
+   genome status "beta · v0.1.0-alpha.1"; footer note "nex-ovia/genome · BSL-1.1 (source-available)".
+   coderev status "beta · v0.30.4"; footer note "srivastava-ami/coderev · BSL-1.1 (source-available)".
+   pr-watch status "beta · v0.1.0"; footer note "srivastava-ami/pr-watch · MIT (open source)".
+5. NXS card: tagline "The Nexovia Standard: a living framework for owning what gets built."; status text becomes
+   `framework · <span data-nxs-version>v2.0</span>`; description "A delivery framework for the AI era: logic
+   separate from tools, configuration externalised, dependencies visible, runs anywhere for anyone. It keeps
+   evolving; every version is a tag on GitHub." Footer note "nex-ovia/NXS · Apache-2.0".
+   Secondary button "Read the standard →" stays; add a second secondary button "Version history" -> /changelog.
+6. nex-ovia.com card: status text "open source" -> "live".
+"""
+validate = "grep -q '<!-- github:tools -->' tools/index.html && grep -q '<!-- /github:tools -->' tools/index.html && grep -q 'data-nxs-version' tools/index.html && ! grep -qi '>open source<' tools/index.html && {validate_all}"
+
+[[chunk]]
+id = "H4"
+title = "Standard and changelog: NXS is a living framework, versions from GitHub"
+file = "standard/index.html, changelog/index.html, content/standard.toml, content/changelog.toml"
+do = """
+standard/index.html (+ content/standard.toml eyebrow):
+1. <title> "The Nexovia Standard (NXS beta)" -> "The Nexovia Standard (NXS)".
+2. page-eyebrow "NXS beta · Apache 2.0" -> `NXS framework · <span data-nxs-version>v2.0</span> · Apache-2.0`
+   (in the TOML write the plain text "NXS framework · Apache-2.0").
+3. Any other "beta" wording about NXS on the page -> "framework" (keep sentences grammatical).
+changelog/index.html (+ content/changelog.toml where the same text exists):
+4. page-hero-sub -> "NXS is a living framework. Every version is a tag in the GitHub repository, and this page
+   reads them each time the site builds."
+5. The intro card section-body -> "Every version is a tag in github.com/nex-ovia/NXS. This list is read from
+   GitHub when the site builds, so it always matches the repository."
+6. Replace the whole contents of <div class="release-list"> with exactly this (fallback for offline builds):
+<!-- github:nxs-versions -->
+<article class="release-card reveal">
+  <div class="release-meta">
+    <div class="release-version">v2.0</div>
+    <div class="release-date">2026-09-02</div>
+    <span class="status status-available">Current</span>
+  </div>
+  <p class="release-summary">NXS v2.0 - Outcome-first, simple, and readable</p>
+  <p><a href="https://github.com/nex-ovia/NXS/releases/tag/v2.0" rel="noopener noreferrer" target="_blank">View on GitHub</a></p>
+</article>
+<article class="release-card reveal">
+  <div class="release-meta">
+    <div class="release-version">v0.1.0</div>
+    <div class="release-date">2026-05-10</div>
+  </div>
+  <p class="release-summary">Nexovia Standard Release v0.1.0</p>
+  <p><a href="https://github.com/nex-ovia/NXS/releases/tag/v0.1.0" rel="noopener noreferrer" target="_blank">View on GitHub</a></p>
+</article>
+<!-- /github:nxs-versions -->
+   (This removes the old "Beta / May 2026" card and the "Next beta / Coming soon" planned card.)
+"""
+validate = "grep -q '<!-- github:nxs-versions -->' changelog/index.html && grep -q 'data-nxs-version' standard/index.html && ! grep -qi 'NXS beta\\|Next beta' standard/index.html changelog/index.html && {validate_all}"
+
+[[chunk]]
+id = "H5"
+title = "About description and impact: naming and empty-blog link"
+file = "about/index.html, impact/index.html"
+do = """
+1. about/index.html <meta name="description"> -> "Amit Srivastava: implementation leader and technical strategist,
+   author of the Nexovia Standard (NXS), building AI-driven delivery systems and free tools."
+2. about/index.html: "how CX engineering teams deliver impact" -> "how delivery teams deliver impact".
+3. impact/index.html: delete the paragraph containing <a href="/blog" class="btn btn-secondary">Read the blog</a>.
+"""
+validate = "! grep -qi 'CX engineering' about/index.html && ! grep -q 'href=\"/blog' impact/index.html && {validate_all}"
+
+# ---------- wave B ----------
+
+[[chunk]]
+id = "G2"
+title = "Render GitHub data: tool cards, version list, region and text fill"
+file = "tools/nxsite/ghrender.go (new) + tools/nxsite/ghrender_test.go (new); tools/nxsite/metrics.go"
+model = "sonnet"
+do = """
+Create tools/nxsite/ghrender.go (uses Repo and Version from github.go). Escape every GitHub string with
+html.EscapeString.
+
+func Beta(r Repo) bool: true if r.Prerelease, or r.Version == "", or the major number is 0 (strip a leading "v",
+take text before the first ".").
+
+func LicenseLabel(id string) string: "" -> "license not stated"; "BSL-1.1" -> "BSL-1.1 (source-available)";
+"MIT", "Apache-2.0", "BSD-3-Clause", "BSD-2-Clause", "MPL-2.0", "GPL-3.0", "AGPL-3.0" -> id + " (open source)";
+anything else -> id.
+
+func ToolCards(repos []Repo) string: one card per repo, same markup as the existing cards in tools/index.html:
+<div class="tool-card available reveal">
+  <div class="tool-header">
+    <div>
+      <h2 class="tool-name">{Name}</h2>
+      <p class="tool-tagline">{Description}</p>
+    </div>
+    <span class="status status-available">{status}</span>
+  </div>
+  <div class="tool-body">
+    <ul class="tool-features">
+      <li>Latest release: {Version} · {Date}</li>        (omit li when Version == "")
+      <li>License: {LicenseLabel}</li>
+      <li>GitHub stars: {Stars}</li>
+    </ul>
+  </div>
+  <div class="tool-footer">
+    <span class="tool-footer-note">{FullName}</span>
+    <div class="tool-actions">
+      <a href="{URL}" class="btn btn-primary" rel="noopener noreferrer" target="_blank">★ Star on GitHub</a>
+      <a href="{Homepage}" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Visit site →</a>
+    </div>
+  </div>
+</div>
+status = "beta · " + Version when Beta and Version != ""; "beta" when Version == ""; Version otherwise.
+Omit the Visit site link when Homepage is "" or equals URL. Only http(s) Homepage values are linked.
+
+func VersionList(vs []Version, repo string) string: one block per version, exactly this markup; the first one
+gets the Current status span, the others none:
+<article class="release-card reveal">
+  <div class="release-meta">
+    <div class="release-version">{Tag}</div>
+    <div class="release-date">{Date}</div>
+    <span class="status status-available">Current</span>
+  </div>
+  <p class="release-summary">{Title}</p>
+  <p><a href="https://github.com/{repo}/releases/tag/{Tag}" rel="noopener noreferrer" target="_blank">View on GitHub</a></p>
+</article>
+(url.PathEscape the tag in the href.)
+
+func ReplaceRegion(html, name, body string) (string, bool): replaces everything between "<!-- github:"+name+" -->"
+and "<!-- /github:"+name+" -->" with "\\n"+body+"\\n", keeping both markers. false (html unchanged) if either
+marker is missing.
+
+func FillText(html, attr, value string) string: sets the text content of every element whose start tag contains
+the attribute `attr` (bare or with a value) to html.EscapeString(value). In metrics.go make FillMetricDate call
+FillText(html, "data-metric-date", date) and delete metricDateRe if unused.
+
+ghrender_test.go: table tests for Beta (v0.30.4 true, v1.2.0 false, prerelease v1.0.0-rc1 true, "" true),
+LicenseLabel, ToolCards (escaping of "<b>", Visit link presence/absence, status text), VersionList (Current only
+on first, href), ReplaceRegion (both markers kept, missing marker -> false), FillText. Existing metrics tests must
+still pass.
+"""
+validate = "grep -q 'func ToolCards' tools/nxsite/ghrender.go && grep -q 'func ReplaceRegion' tools/nxsite/ghrender.go && {validate_all}"
+
+[[chunk]]
+id = "B1"
+title = "Blog appears only when it has posts"
+file = "tools/nxsite/main.go, tools/nxsite/headers.go, tools/nxsite/*_test.go"
+do = """
+1. main.go Build: add the Blog nav/footer links (AddLinkAfter calls), the "/blog/" route, the blog index page and
+   its sitemap entry only when len(s.Posts) > 0. Everything else unchanged.
+2. headers.go 404 page text: "Try the home page, the tools or the blog." -> "Try the home page, the tools or the
+   about page." with the third link pointing to /about/.
+3. Update or add tests: a build with zero posts has no "/blog" link in any output HTML and no blog/index.html;
+   a build with one post still has both. Use the existing build test fixtures/helpers.
+"""
+validate = "{validate_all}"
+
+# ---------- wave C ----------
+
+[[chunk]]
+id = "G3"
+title = "Wire GitHub data into the build"
+file = "tools/nxsite/main.go (+ a test)"
+model = "sonnet"
+do = """
+In Build, after the Blog handling and before the page loop:
+- const toolTopic = "nex-ovia-tool"; var toolOwners = []string{"srivastava-ami", "nex-ovia"}; const nxsRepo =
+  "nex-ovia/NXS" (package-level).
+- online := os.Getenv("NXSITE_OFFLINE") != "1"; gh := GitHub{Token: os.Getenv("GITHUB_TOKEN")}. Allow tests to
+  point at a fake server: if os.Getenv("NXSITE_GITHUB_API") != "" use it as gh.API.
+- Lazily fetch (at most once per build, only if some page needs it): repos via gh.ToolRepos(toolOwners,
+  toolTopic), versions via gh.Versions(nxsRepo).
+In the page loop, when online:
+- if the page contains "<!-- github:tools -->": repos fetched without error and len > 0 -> ReplaceRegion(...,
+  "tools", ToolCards(repos)); otherwise keep the fallback and print one warning line to stderr.
+- if the page contains "<!-- github:nxs-versions -->": same with VersionList(versions, nxsRepo).
+- if the page contains "data-nxs-version" and versions are available: FillText(html, "data-nxs-version",
+  versions[0].Tag).
+A GitHub failure never fails the build (static fallback stays).
+Test: run Build against a temp root whose page has both regions and a data-nxs-version span, with
+NXSITE_GITHUB_API pointing at an httptest server (reuse canned data style from github_test.go); assert the output
+contains the fake repo's card, the fake version, and that with NXSITE_OFFLINE=1 the fallback stays.
+"""
+validate = "grep -q 'nex-ovia-tool' tools/nxsite/main.go && {validate_all}"

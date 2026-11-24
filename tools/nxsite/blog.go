@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"strings"
 
+	"github.com/nex-ovia/infraflow-nex-ovia-site/tools/content"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
@@ -26,18 +27,8 @@ func RenderMarkdown(src string) (template.HTML, error) {
 	return template.HTML(b.String()), nil // goldmark escapes raw HTML by default
 }
 
-// Teaser returns the summary, or the first paragraph of the body when summary is empty.
-func Teaser(p Post) string {
-	if p.Summary != "" {
-		return p.Summary
-	}
-	para := strings.SplitN(strings.TrimSpace(p.Body), "\n\n", 2)[0]
-	para = strings.NewReplacer("**", "", "__", "", "`", "", "#", "").Replace(para)
-	if len(para) > 200 {
-		para = strings.TrimSpace(para[:197]) + "…"
-	}
-	return strings.TrimSpace(para)
-}
+// Teaser delegates to the shared content package.
+func Teaser(p Post) string { return content.Teaser(p) }
 
 const shellTop = `<!DOCTYPE html>
 <html lang="{{.Lang}}">

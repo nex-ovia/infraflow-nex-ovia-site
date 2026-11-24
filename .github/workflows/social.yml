@@ -1,0 +1,107 @@
+name: social
+
+# New post pushed to dev → drafts for LinkedIn, X and Instagram (always, as an artifact).
+# Platforms a post sets to "auto" are published once the post URL is live, using the
+# "social" environment's secrets. Manual runs can redo one slug.
+on:
+  push:
+    branches: [dev]
+    paths: ["content/blog/*.md"]
+  schedule:
+    - cron: "23 6 1,15 * *"
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Post slug (content/blog/<slug>.md)"
+        required: true
+      publish:
+        description: "Publish platforms set to auto"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social
+  cancel-in-progress: false
+
+jobs:
+  syndicate:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    environment: social
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        with:
+          go-version-file: tools/go.mod
+          cache-dependency-path: tools/go.sum
+      - name: Find new posts
+        id: posts
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_SLUG: ${{ inputs.slug }}
+          INPUT_PUBLISH: ${{ inputs.publish }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          if [[ "$EVENT" == "workflow_dispatch" ]]; then
+            [[ "$INPUT_SLUG" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { echo "invalid slug"; exit 1; }
+            slugs="$INPUT_SLUG"; publish="$INPUT_PUBLISH"
+          else
+            # Only posts ADDED in this push, so editing an old post never re-posts it.
+            slugs=$(git diff --name-only --diff-filter=A "$BEFORE" "$AFTER" -- 'content/blog/*.md' \
+              | xargs -r -n1 basename | sed 's/\.md$//' | grep -v '^_' | paste -sd, -)
+            publish=true
+          fi
+          echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
+          echo "posts: ${slugs:-none} · publish: $publish"
+      - name: Drafts and opt-in publishing
+        if: steps.posts.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.posts.outputs.slugs }}
+          PUBLISH: ${{ steps.posts.outputs.publish }}
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          flags=(-root . -base https://www.nex-ovia.com -slugs "$SLUGS" -out drafts)
+          [[ "$PUBLISH" == "true" ]] && flags+=(-publish)
+          (cd tools && go build -o ../.nxsocial ./nxsocial)
+          ./.nxsocial "${flags[@]}" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always() && steps.posts.outputs.slugs != ''
+        with:
+          name: social-drafts
+          path: drafts
+          retention-days: 30
+
+  linkedin-token-reminder:
+    # LinkedIn member tokens last 60 days. Twice a month, open an issue when expiry is <= 10 days away.
+    if: github.event_name == 'schedule' && vars.LINKEDIN_TOKEN_EXPIRES != ''
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check expiry
+        env:
+          EXPIRES: ${{ vars.LINKEDIN_TOKEN_EXPIRES }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          days=$(( ( $(date -d "$EXPIRES" +%s) - $(date +%s) ) / 86400 ))
+          echo "LinkedIn token expires in $days days"
+          if (( days <= 10 )); then
+            gh issue create --repo "$REPO" --title "Renew LinkedIn token (expires $EXPIRES)" \
+              --body "Re-authorise the LinkedIn app, update secret LINKEDIN_TOKEN in the social environment and variable LINKEDIN_TOKEN_EXPIRES. See docs/social.md."
+          fi

@@ -183,8 +183,10 @@
       margin-top: 2rem;
     }
 
+    .about-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
     @media (max-width: 720px) {
-      .about-grid--3 { grid-template-columns: 1fr; }
+      .about-grid--3, .about-grid--2 { grid-template-columns: 1fr; }
       .about-block { margin-bottom: 3.5rem; }
     }
   </style>
@@ -197,7 +199,7 @@
     <div class="container">
       <p class="section-label animate-hero">About</p>
       <h1 class="animate-hero delay-1">I'm the person who makes it work after the demo.</h1>
-      <p class="page-hero-sub animate-hero delay-2">I'm Amit Srivastava. I live in Sacramento, California, and I've spent 13 years in the part of software most people never see: getting it running, keeping it running, and making sure the customer actually gets what they paid for.</p>
+      <p class="page-hero-sub animate-hero delay-2">I'm Amit Srivastava, an implementation leader and technical strategist in Sacramento, California. I've spent 13 years in the part of software most people never see: getting it running, keeping it running, and making sure the people who paid for it actually get what they needed.</p>
     </div>
   </div>
 
@@ -215,6 +217,28 @@
           </div>
           <div class="about-card reveal">
             <p class="about-trust-title">Non-technical leaders trust me to make it visible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">What I do</h2>
+        <div class="about-grid about-grid--2">
+          <div class="about-card reveal">
+            <h3 class="about-card-name">Set the implementation strategy</h3>
+            <p class="about-card-body">I decide how a solution gets delivered: the phases, the risks, the trade-offs between business goals and technical reality, and how we'll know it worked.</p>
+          </div>
+          <div class="about-card reveal">
+            <h3 class="about-card-name">Lead technical teams</h3>
+            <p class="about-card-body">I build and mentor engineering teams across continents, and I stay close enough to the work to review it, unblock it and own it.</p>
+          </div>
+          <div class="about-card reveal">
+            <h3 class="about-card-name">Bridge business and engineering</h3>
+            <p class="about-card-body">I turn what customers and executives need into technical plans engineers can build, and turn progress back into terms leaders can act on.</p>
+          </div>
+          <div class="about-card reveal">
+            <h3 class="about-card-name">Turn delivery into standards</h3>
+            <p class="about-card-body">What works once becomes a practice others can repeat. NXS is the open version of that habit.</p>
           </div>
         </div>
       </div>
@@ -256,6 +280,14 @@
           <p>AI makes that worse. When code is cheap to write, understanding becomes the scarce thing. NXS is four rules that keep any solution understood and owned, whoever or whatever built it.</p>
           <p>My foundation is hands-on: Linux, open-source infrastructure, real systems. So the standard is built on how systems actually behave, not on how they look on a slide.</p>
           <p><a href="/standard" class="about-card-link">Read the standard →</a></p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">What I'm working toward</h2>
+        <div class="about-prose reveal">
+          <p>Making AI-assisted software implementation reliable, accountable and understandable for the organizations that depend on it, through an open standard, open-source tools and practical guidance anyone can use for free.</p>
+          <p><a href="/impact" class="about-card-link">See the record →</a></p>
         </div>
       </div>
 

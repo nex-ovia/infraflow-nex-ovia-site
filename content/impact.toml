@@ -1,0 +1,84 @@
+[page]
+id          = "impact"
+title       = "Impact — Nexovia"
+route       = "/impact"
+description = "A dated, verifiable record of Amit Srivastava's open standard, open-source releases and implementation work."
+
+[hero]
+label    = "Impact"
+headline = "The record, with dates and links."
+lead     = "Everything here is public and verifiable. If a number is small, it's still the real number."
+
+[[section]]
+id    = "open-standard"
+title = "Open standard"
+lead  = "NXS, the Nexovia Standard. An open standard for keeping AI-built software understood, changeable and portable."
+timeline = [
+  "2026-05-10 · v0.1.0 first published",
+  "2026-09-02 · v2.0 released",
+]
+link_text = "github.com/nex-ovia/NXS"
+link_href = "https://github.com/nex-ovia/NXS"
+
+[[section]]
+id    = "open-source-releases"
+title = "Open-source releases"
+note  = "Downloads = GitHub release asset downloads. Figures as of 2026-11-24."
+
+[[section.row]]
+project       = "coderev"
+first_release = "2026-06-27 (v0.1.0)"
+latest        = "v0.30.4 · 2026-11-23"
+releases      = 57
+downloads     = 400
+href          = "https://github.com/srivastava-ami/coderev"
+metric_repo   = "srivastava-ami/coderev"
+
+[[section.row]]
+project       = "genome"
+first_release = "2026-06-18 (v0.1.0-alpha.1)"
+latest        = "v0.1.0-alpha.1 · 2026-06-18"
+releases      = 1
+downloads     = 3
+href          = "https://github.com/nex-ovia/genome"
+metric_repo   = "nex-ovia/genome"
+
+[[section.row]]
+project       = "pr-watch"
+first_release = "2026-07-08 (v0.1.0)"
+latest        = "v0.1.0 · 2026-07-08"
+releases      = 1
+downloads     = 0
+href          = "https://github.com/srivastava-ami/pr-watch"
+metric_repo   = "srivastava-ami/pr-watch"
+
+[[section]]
+id    = "live-and-in-use"
+title = "Live and in use"
+
+[[section.item]]
+link_text = "genome.nex-ovia.com, the genome tool's public site and installers"
+link_href = "https://genome.nex-ovia.com"
+
+[[section.item]]
+link_text = "nex-ovia.com, this site, built and deployed through the process described on /ai"
+link_href = "/ai"
+
+[[section]]
+id        = "writing"
+title     = "Writing"
+lead      = "Posts on implementation strategy and AI-built software."
+link_text = "Read the blog"
+link_href = "/blog"
+
+[[section]]
+id        = "career-results"
+title     = "Career results"
+lead      = "Results from implementation work I've led are on the About page."
+link_text = "See results"
+link_href = "/about"
+
+[strip]
+headline     = "Invite me to speak, or build on the work."
+button_text  = "Connect"
+button_href  = "/connect"

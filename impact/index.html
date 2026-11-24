@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impact — Nexovia</title>
+  <meta name="description" content="A dated, verifiable record of Amit Srivastava's open standard, open-source releases and implementation work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .impact-block {
+      margin-bottom: 5rem;
+    }
+
+    .impact-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .impact-text {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .impact-text a,
+    .impact-list a {
+      color: var(--accent-2);
+    }
+
+    .impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .impact-list li {
+      color: var(--text-2);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .impact-date {
+      font-family: var(--font-mono);
+      color: var(--accent-2);
+    }
+
+    .impact-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+
+    .impact-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      font-weight: 300;
+    }
+
+    .impact-table th,
+    .impact-table td {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .impact-table th {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .impact-note {
+      color: var(--text-2);
+      font-size: 0.875rem;
+      font-weight: 300;
+    }
+
+    .impact-strip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .impact-strip-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <p class="section-label animate-hero">Impact</p>
+      <h1 class="animate-hero delay-1">The record, with dates and links.</h1>
+      <p class="page-hero-sub animate-hero delay-2">Everything here is public and verifiable. If a number is small, it's still the real number.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+
+      <div class="impact-block">
+        <h2 class="impact-h2 reveal">Open standard</h2>
+        <p class="impact-text reveal">NXS, the Nexovia Standard. An open standard for keeping AI-built software understood, changeable and portable.</p>
+        <ul class="impact-list reveal">
+          <li><span class="impact-date">2026-05-10</span> · v0.1.0 first published</li>
+          <li><span class="impact-date">2026-09-02</span> · v2.0 released</li>
+        </ul>
+        <p class="impact-text reveal"><a href="https://github.com/nex-ovia/NXS" rel="noopener noreferrer" target="_blank">github.com/nex-ovia/NXS</a></p>
+      </div>
+
+      <div class="impact-block">
+        <h2 class="impact-h2 reveal">Open-source releases</h2>
+        <div class="impact-table-wrap reveal">
+          <table class="impact-table">
+            <thead>
+              <tr>
+                <th scope="col">Project</th>
+                <th scope="col">First release</th>
+                <th scope="col">Latest</th>
+                <th scope="col">Releases</th>
+                <th scope="col">Downloads</th>
+                <th scope="col">Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>coderev</td>
+                <td>2026-06-27 (v0.1.0)</td>
+                <td data-metric="srivastava-ami/coderev:latest">v0.30.4 · 2026-11-23</td>
+                <td data-metric="srivastava-ami/coderev:releases">57</td>
+                <td data-metric="srivastava-ami/coderev:downloads">400</td>
+                <td><a href="https://github.com/srivastava-ami/coderev" rel="noopener noreferrer" target="_blank">github.com/srivastava-ami/coderev</a></td>
+              </tr>
+              <tr>
+                <td>genome</td>
+                <td>2026-06-18 (v0.1.0-alpha.1)</td>
+                <td data-metric="nex-ovia/genome:latest">v0.1.0-alpha.1 · 2026-06-18</td>
+                <td data-metric="nex-ovia/genome:releases">1</td>
+                <td data-metric="nex-ovia/genome:downloads">3</td>
+                <td><a href="https://github.com/nex-ovia/genome" rel="noopener noreferrer" target="_blank">github.com/nex-ovia/genome</a></td>
+              </tr>
+              <tr>
+                <td>pr-watch</td>
+                <td>2026-07-08 (v0.1.0)</td>
+                <td data-metric="srivastava-ami/pr-watch:latest">v0.1.0 · 2026-07-08</td>
+                <td data-metric="srivastava-ami/pr-watch:releases">1</td>
+                <td data-metric="srivastava-ami/pr-watch:downloads">0</td>
+                <td><a href="https://github.com/srivastava-ami/pr-watch" rel="noopener noreferrer" target="_blank">github.com/srivastava-ami/pr-watch</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="impact-note reveal">Downloads = GitHub release asset downloads. Figures as of 2026-11-24.</p>
+      </div>
+
+      <div class="impact-block">
+        <h2 class="impact-h2 reveal">Live and in use</h2>
+        <ul class="impact-list reveal">
+          <li><a href="https://genome.nex-ovia.com">genome.nex-ovia.com, the genome tool's public site and installers</a></li>
+          <li><a href="/ai">nex-ovia.com, this site, built and deployed through the process described on /ai</a></li>
+        </ul>
+      </div>
+
+      <div class="impact-block">
+        <h2 class="impact-h2 reveal">Writing</h2>
+        <p class="impact-text reveal">Posts on implementation strategy and AI-built software.</p>
+        <p class="reveal"><a href="/blog" class="btn btn-secondary">Read the blog</a></p>
+      </div>
+
+      <div class="impact-block">
+        <h2 class="impact-h2 reveal">Career results</h2>
+        <p class="impact-text reveal">Results from implementation work I've led are on the About page.</p>
+        <p class="reveal"><a href="/about" class="btn btn-secondary">See results</a></p>
+      </div>
+
+      <div class="impact-block reveal">
+        <div class="impact-strip">
+          <h2 class="impact-strip-title">Invite me to speak, or build on the work.</h2>
+          <a href="/connect" class="btn btn-primary">Connect</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

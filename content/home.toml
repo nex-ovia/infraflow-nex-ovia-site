@@ -15,7 +15,7 @@ cta_secondary_label = "Try the free tools"
 cta_secondary_href  = "/tools"
 
 [proposition]
-label = "Amit Srivastava · Global implementation manager · Author of NXS"
+label = "Amit Srivastava · Implementation leader and technical strategist · Author of NXS"
 tags  = ["13 years in enterprise delivery", "$1M+ ARR from automation", "100% open source", "Built with AI, reviewed by a human"]
 
 [what_you_get]
@@ -112,10 +112,12 @@ title = "This site was built the way I teach."
 body  = "Every page here was planned, built by AI agents in small checked steps, and approved by me before it went live. The graph below is generated from the project's own manifest. Click any node to see what it does."
 
 [work_strip]
-label           = "Connect"
-title           = "Bring this to your team or your audience."
-body            = "Podcasts, interviews, talks and open-source collaboration for teams using AI without losing control."
-primary_label   = "Connect"
-primary_href    = "/connect"
-secondary_label = "About Amit"
-secondary_href  = "/about"
+label           = "Follow the work"
+title           = "Follow the work as it happens."
+body            = "I publish what I build and learn: releases, lessons, and the occasional failure. Follow along where you already are."
+primary_label   = "Follow on LinkedIn"
+primary_href    = "https://www.linkedin.com/in/srivastava-ami"
+secondary_label = "Follow on X"
+secondary_href  = "https://x.com/amit4srivastava"
+tertiary_label  = "See the record"
+tertiary_href   = "/impact"

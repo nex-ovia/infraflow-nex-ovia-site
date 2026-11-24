@@ -117,3 +117,76 @@ content/site.toml: add "https://x.com/amit4srivastava" to author same_as.
 partials/footer.html: add "X" link -> https://x.com/amit4srivastava after LinkedIn.
 """
 validate = "grep -q 'amit4srivastava' content/site.toml partials/footer.html work-with-me/index.html && grep -q 'the way I.d lead a team' ai/index.html && {validate_all}"
+
+[[chunk]]
+id = "L1"
+title = "Home footer styles"
+do = """
+index.html does not load /site.css, so the shared footer (injected at <div id="footer-placeholder">) renders unstyled:
+a bulleted list of blue links. Copy the footer rules from site.css into index.html's <style> block, adapted only if
+a CSS variable name differs there (check index.html's :root): `footer`, `.footer-inner`, `.footer-logo`,
+`.footer-logo span`, `.footer-links`, `.footer-links a`, `.footer-links a:hover`, `.footer-copy`, and the mobile rule
+for `.footer-links` from site.css's @media block. Wrap the footer content width like the other sections (if the
+shared footer markup uses .container, make sure index.html's .container rule applies). Change nothing else.
+"""
+validate = "grep -q 'footer-links' index.html && {validate_all}"
+
+[[chunk]]
+id = "L2"
+title = "Landing page that sells the value"
+do = """
+Rewrite index.html's content top to bottom using the EXISTING section styles and card classes (hero, proposition,
+the audience card grid, rules-section, tools strip, sovereignty-section, graph-section, work-strip). No inline styles,
+no new external assets. Update content/home.toml to mirror the text. Sections in order:
+
+1 HERO (keep markup/classes)
+  badge (the small pill above the headline): "Free playbook + open-source tools"
+  headline line 1: "Use AI to ship faster."  headline line 2 (the accented line): "Keep control of what it builds."
+  subheadline: "AI can write most of your code now. The hard part is still understanding it, changing it safely and
+  owning it a year from now. Here you'll find the exact playbook, free tools and open standard I use to do that,
+  from 13 years of making enterprise software work after the demo."
+  primary CTA "Get the playbook" -> /ai ; secondary CTA "Try the free tools" -> /tools
+
+2 PROPOSITION strip (the line under the hero + its pills)
+  label: "Amit Srivastava · Global implementation manager · Author of NXS"
+  pills: "13 years in enterprise delivery", "$1M+ ARR from automation", "100% open source", "Built with AI, reviewed by a human"
+
+3 WHAT YOU GET (reuse the audience section markup: label, h2, 4 cards; make the grid 2x2 on desktop, 1 column on
+  mobile). label "What's here for you"; h2 "Take what you need. It's all free."
+  Each card: title, body, and a text link at the bottom.
+  a "A playbook you can copy today" / "Plan, chunk, dispatch, validate, approve. The five-step way I lead delivery
+    with AI agents, with the guardrails that stop bad code from shipping." / "Read the playbook" -> /ai
+  b "Tools that save you hours" / "genome turns any project into a map your whole team can read. coderev scans and
+    AI-reviews your code in one command. Both free and open source." / "See the tools" -> /tools
+  c "A standard your team can adopt" / "NXS is four rules that keep any solution, human- or AI-built, understood,
+    changeable and portable. Use it as a review checklist tomorrow." / "Read the standard" -> /standard
+  d "Lessons from the field" / "Short, honest posts on what works and what breaks when AI writes the code, from
+    someone who's been on the hook for delivery for 13 years." / "Read the blog" -> /blog
+
+4 THE PROBLEM (reuse the sovereignty-section layout: quote on one side, text on the other), placed right after
+  WHAT YOU GET. label "Why this matters"; quote "AI made code cheap. Understanding is now the expensive part.";
+  body "Most teams hit the same wall: the person who built it moved on, the AI-generated module nobody can explain,
+  the small change that breaks three other things. NXS and the tools here exist to stop that before it starts.";
+  CTA "See the four rules" -> /standard
+
+5 RULES section: keep as is (label "The four rules"), but h2 becomes "Four rules. Every project. No exceptions."
+
+6 TOOLS strip: keep; h2 "Free tools, built in the open"; card lines:
+  genome "See any system without reading its code.", coderev "Static checks first, AI review second, one command.",
+  NXS "The standard behind everything here."; keep the "★ Star" links and "All tools" link.
+
+7 PROOF (graph-section): label "Proof, not promises"; h2 "This site was built the way I teach."; body "Every page
+  here was planned, built by AI agents in small checked steps, and approved by me before it went live. The graph
+  below is generated from the project's own manifest. Click any node to see what it does." Keep the visualiser.
+
+8 WORK strip: label "Work with me"; h2 "Bring this to your team or your audience."; body "Podcasts, interviews,
+  talks and hands-on advisory for teams using AI without losing control."; primary "Work with me" -> /work-with-me;
+  secondary "About Amit" -> /about
+
+Remove the old "Who this is for" audience copy (replaced by WHAT YOU GET).
+<title>: "Use AI to ship faster, keep control | Amit Srivastava · nex-ovia"
+meta description: "Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing
+control of what it builds. From 13 years of enterprise delivery."
+Must not overflow at 390px.
+"""
+validate = "grep -q 'Keep control of what it builds' index.html && grep -q 'Take what you need' index.html && grep -q 'This site was built the way I teach' index.html && ! grep -q 'Who this is for' index.html && {validate_all}"

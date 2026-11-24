@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="nex-ovia">
+  <defs>
+    <clipPath id="t"><rect x="0" y="0" width="400" height="123"/></clipPath>
+    <clipPath id="b"><rect x="0" y="137" width="400" height="123"/></clipPath>
+    <mask id="m"><rect width="400" height="260" fill="#fff"/></mask>
+  </defs>
+  <ellipse cx="200" cy="130" rx="184" ry="118" fill="#6c63ff" clip-path="url(#t)" mask="url(#m)"/>
+  <ellipse cx="200" cy="130" rx="169.0" ry="103.0" fill="none" stroke="#00d4aa" stroke-width="30" clip-path="url(#b)"/>
+  
+</svg>

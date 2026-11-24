@@ -41,7 +41,7 @@ id          = "standard"
 title       = "A standard your team can adopt"
 body        = "NXS is four rules that keep any solution, human- or AI-built, understood, changeable and portable. Use it as a review checklist tomorrow."
 link_label  = "Read the standard"
-link_href   = "/standard"
+link_href   = "/nxs"
 
 [[what_you_get.card]]
 id          = "blog"
@@ -55,14 +55,14 @@ label     = "Why this matters"
 quote     = "AI made code cheap. Understanding is now the expensive part."
 body      = "Most teams hit the same wall: the person who built it moved on, the AI-generated module nobody can explain, the small change that breaks three other things. NXS and the tools here exist to stop that before it starts."
 cta_label = "See the four rules"
-cta_href  = "/standard"
+cta_href  = "/nxs"
 
 [rules_preview]
 label   = "The Four Rules"
 title   = "Four rules. Every project. No exceptions."
 intro   = "Every NXS solution follows four rules. Each one exists because it directly protects delivery sovereignty — the principle that what you build belongs to you, not to the tool that built it."
 cta_label = "Read the full standard →"
-cta_href  = "/standard"
+cta_href  = "/nxs"
 
 [[rules_preview.rule]]
 number  = "01"

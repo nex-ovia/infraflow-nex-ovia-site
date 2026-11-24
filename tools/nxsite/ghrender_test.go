@@ -65,16 +65,6 @@ func TestToolCards(t *testing.T) {
 	}
 }
 
-func TestVersionList(t *testing.T) {
-	out := VersionList([]Version{{Tag: "v2", Date: "d2", Title: "<t>"}, {Tag: "v1 x", Date: "d1"}}, "o/r")
-	if strings.Count(out, "Current") != 1 || strings.Index(out, "Current") > strings.Index(out, "v1 x") {
-		t.Errorf("Current: %s", out)
-	}
-	if !strings.Contains(out, `href="https://github.com/o/r/releases/tag/v1%20x"`) || !strings.Contains(out, "&lt;t&gt;") {
-		t.Errorf("href/escape: %s", out)
-	}
-}
-
 func TestReplaceRegion(t *testing.T) {
 	in := "a<!-- github:tools -->old<!-- /github:tools -->b"
 	out, ok := ReplaceRegion(in, "tools", "NEW")

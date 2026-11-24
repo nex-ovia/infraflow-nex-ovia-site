@@ -3,10 +3,12 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"html"
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -91,7 +93,35 @@ func RedirectsFile() string {
 		"/sponsor/*  /connect/  301",
 		"/work-with-me    /connect/  301",
 		"/work-with-me/*  /connect/  301",
+		"/standard    /nxs/  301",
+		"/standard/*  /nxs/  301",
+		"/principles    /nxs/#principles  301",
+		"/principles/*  /nxs/#principles  301",
+		"/changelog    /nxs/  301",
+		"/changelog/*  /nxs/  301",
 	}, "\n") + "\n"
+}
+
+// StaticWebAppConfig renders RedirectsFile as Azure Static Web Apps routes (SWA ignores _redirects).
+func StaticWebAppConfig() ([]byte, error) {
+	type route struct {
+		Route      string `json:"route"`
+		Redirect   string `json:"redirect"`
+		StatusCode int    `json:"statusCode"`
+	}
+	var routes []route
+	for _, line := range strings.Split(strings.TrimSpace(RedirectsFile()), "\n") {
+		f := strings.Fields(line)
+		if len(f) != 3 {
+			return nil, fmt.Errorf("bad redirect line %q", line)
+		}
+		code, err := strconv.Atoi(f[2])
+		if err != nil {
+			return nil, fmt.Errorf("bad redirect code in %q: %w", line, err)
+		}
+		routes = append(routes, route{f[0], f[1], code})
+	}
+	return json.MarshalIndent(map[string][]route{"routes": routes}, "", "  ")
 }
 
 // NotFoundPage is a branded 404 using the blog shell (layout and head are filled in by the build).

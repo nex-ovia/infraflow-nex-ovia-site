@@ -123,13 +123,6 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 				fmt.Fprintf(os.Stderr, "nxsite: warning: %s: GitHub tools unavailable (err=%v, repos=%d), keeping fallback\n", p.Route, err, len(rs))
 			}
 		}
-		if online && strings.Contains(p.HTML, "<!-- github:nxs-versions -->") {
-			if vs, err := nxsVersions(); err == nil && len(vs) > 0 {
-				p.HTML, _ = ReplaceRegion(p.HTML, "nxs-versions", VersionList(vs, nxsRepo))
-			} else {
-				fmt.Fprintf(os.Stderr, "nxsite: warning: %s: NXS versions unavailable (err=%v, versions=%d), keeping fallback\n", p.Route, err, len(vs))
-			}
-		}
 		if online && strings.Contains(p.HTML, "data-nxs-version") {
 			if vs, err := nxsVersions(); err == nil && len(vs) > 0 {
 				p.HTML = FillText(p.HTML, "data-nxs-version", vs[0].Tag)
@@ -200,6 +193,11 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 	w.file("llms.txt", []byte(LLMSTxt(c, s.Pages, s.Posts)))
 	w.file("_headers", []byte(HeadersFile(InlineScriptHashes(htmlOut))))
 	w.file("_redirects", []byte(RedirectsFile()))
+	swa, err := StaticWebAppConfig()
+	if err != nil {
+		return err
+	}
+	w.file("staticwebapp.config.json", swa)
 	for _, f := range staticFiles {
 		w.copy(filepath.Join(root, f), f)
 	}

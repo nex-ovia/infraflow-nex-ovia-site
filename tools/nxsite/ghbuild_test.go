@@ -26,7 +26,6 @@ func TestBuildFillsGitHubRegions(t *testing.T) {
 	page := `<!DOCTYPE html><html><head><title>Tools</title><meta name="description" content="Tools desc"></head>
 <body><div id="nav-placeholder"></div><h1>Tools</h1><span data-nxs-version>vX</span>
 <!-- github:tools -->FALLBACK-TOOLS<!-- /github:tools -->
-<!-- github:nxs-versions -->FALLBACK-VERSIONS<!-- /github:nxs-versions -->
 <div id="footer-placeholder"></div></body></html>`
 	mutate := func(root string) {
 		if err := os.WriteFile(filepath.Join(root, "tools", "index.html"), []byte(page), 0o644); err != nil {
@@ -37,7 +36,7 @@ func TestBuildFillsGitHubRegions(t *testing.T) {
 	t.Setenv("NXSITE_OFFLINE", "0")
 	_, out := buildFixtureWith(t, mutate)
 	got := read(t, filepath.Join(out, "tools/index.html"))
-	for _, want := range []string{"fakegenome", "Fake graph", "<span data-nxs-version>v9.8.7</span>", "fake release"} {
+	for _, want := range []string{"fakegenome", "Fake graph", "<span data-nxs-version>v9.8.7</span>"} {
 		if !strings.Contains(got, want) {
 			t.Errorf("online build missing %q", want)
 		}
@@ -49,7 +48,7 @@ func TestBuildFillsGitHubRegions(t *testing.T) {
 	t.Setenv("NXSITE_OFFLINE", "1")
 	_, out = buildFixtureWith(t, mutate)
 	got = read(t, filepath.Join(out, "tools/index.html"))
-	for _, want := range []string{"FALLBACK-TOOLS", "FALLBACK-VERSIONS", "<span data-nxs-version>vX</span>"} {
+	for _, want := range []string{"FALLBACK-TOOLS","<span data-nxs-version>vX</span>"} {
 		if !strings.Contains(got, want) {
 			t.Errorf("offline build missing fallback %q", want)
 		}

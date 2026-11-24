@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"strings"
 	"testing"
 )
@@ -35,6 +36,31 @@ func TestHeadersFileHasCSP(t *testing.T) {
 	scriptSrc := strings.Split(strings.Split(csp, "script-src ")[1], ";")[0]
 	if strings.Contains(scriptSrc, "unsafe") {
 		t.Fatalf("script-src must not allow unsafe-*: %s", scriptSrc)
+	}
+}
+
+func TestStaticWebAppConfig(t *testing.T) {
+	b, err := StaticWebAppConfig()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var cfg struct {
+		Routes []struct {
+			Route, Redirect string
+			StatusCode      int
+		}
+	}
+	if err := json.Unmarshal(b, &cfg); err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]string{"/standard": "/nxs/", "/work-with-me/*": "/connect/"}
+	for _, r := range cfg.Routes {
+		if to, ok := want[r.Route]; ok && to == r.Redirect && r.StatusCode == 301 {
+			delete(want, r.Route)
+		}
+	}
+	if len(want) > 0 {
+		t.Fatalf("missing routes %v in:\n%s", want, b)
 	}
 }
 

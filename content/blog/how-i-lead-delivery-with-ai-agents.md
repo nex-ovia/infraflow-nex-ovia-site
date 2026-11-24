@@ -13,7 +13,7 @@ instagram = "off"
 
 AI can write the code now. That part is settled. What isn't settled is who owns the result: who understands it, who can change it safely next quarter, and who can move it when the vendor or the model changes.
 
-That's the problem I wrote the [Nexovia Standard](/standard) to solve, and it's how I run my own delivery work every day.
+That's the problem I wrote the [Nexovia Standard](/nxs) to solve, and it's how I run my own delivery work every day.
 
 ## The operating model
 

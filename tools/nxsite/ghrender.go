@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"html"
-	"net/url"
 	"regexp"
 	"strings"
 )
@@ -72,29 +71,6 @@ func ToolCards(repos []Repo) string {
 		b.WriteString(`    </div>
   </div>
 </div>
-`)
-	}
-	return b.String()
-}
-
-// VersionList renders one release card per version; the first is marked Current.
-func VersionList(vs []Version, repo string) string {
-	e := html.EscapeString
-	var b strings.Builder
-	for i, v := range vs {
-		b.WriteString(`<article class="release-card reveal">
-  <div class="release-meta">
-    <div class="release-version">` + e(v.Tag) + `</div>
-    <div class="release-date">` + e(v.Date) + `</div>
-`)
-		if i == 0 {
-			b.WriteString(`    <span class="status status-available">Current</span>
-`)
-		}
-		b.WriteString(`  </div>
-  <p class="release-summary">` + e(v.Title) + `</p>
-  <p><a href="` + e("https://github.com/"+repo+"/releases/tag/"+url.PathEscape(v.Tag)) + `" rel="noopener noreferrer" target="_blank">View on GitHub</a></p>
-</article>
 `)
 	}
 	return b.String()

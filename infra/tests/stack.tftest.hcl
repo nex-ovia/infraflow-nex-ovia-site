@@ -9,8 +9,12 @@ variables {
 run "pre_cutover_leaves_live_site_alone" {
   command = plan
   assert {
-    condition     = length(cloudflare_dns_record.www) == 0 && length(cloudflare_dns_record.apex) == 0
-    error_message = "www/apex DNS must not be managed before cutover"
+    condition     = length(cloudflare_dns_record.www) == 0
+    error_message = "www DNS must not be managed before cutover"
+  }
+  assert {
+    condition     = cloudflare_dns_record.apex.proxied && cloudflare_dns_record.apex.content == "100::"
+    error_message = "apex must always exist as a proxied placeholder so the apex->www redirect works"
   }
   assert {
     condition     = length(cloudflare_pages_domain.www) == 0
@@ -28,7 +32,7 @@ run "cutover_points_www_to_pages" {
     error_message = "www must be a proxied CNAME to the Pages project"
   }
   assert {
-    condition     = cloudflare_dns_record.apex[0].proxied
+    condition     = cloudflare_dns_record.apex.proxied
     error_message = "apex must be proxied so the redirect rule applies"
   }
 }

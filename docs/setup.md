@@ -24,17 +24,16 @@ Cloudflare dashboard → nex-ovia.com → **Overview** → right column "API":
 
 Cloudflare → My Profile → **API Tokens** → Create Token → *Custom token*:
 
-- **Permissions**
-  - Account · Cloudflare Pages · Edit
-  - Account · Account Analytics · Read
-  - Account · Account Rulesets · Read
+- **Permissions** (first dropdown = Account or Zone; zone groups only appear under "Zone")
+  - Account · Cloudflare Pages · Edit (Pages project + custom domain)
+  - Account · Account Settings · Edit (Web Analytics site; the API has no separate "Web Analytics" permission)
+  - Zone · Zone · Read (zone lookup)
+  - Zone · DNS · Edit (DNS records, DNSSEC)
   - Zone · Zone Settings · Edit
-  - Zone · DNS · Edit
-  - Zone · Zone WAF · Edit
-  - Zone · Single Redirect · Edit
+  - Zone · Zone WAF · Edit (custom firewall + rate-limit rulesets)
+  - Zone · Single Redirect · Edit (apex → www redirect ruleset)
   - Zone · Bot Management · Edit
-  - Zone · Zone · Read
-  - Account · Web Analytics · Edit (in some dashboards it's listed as "RUM")
+- **Account resources:** Include → your account
 - **Zone resources:** Include → Specific zone → `nex-ovia.com`
 - **TTL:** 1 year (set a calendar reminder to rotate it)
 

@@ -51,7 +51,7 @@ SA=$(gh variable get AZURE_TFSTATE_ACCOUNT --repo "$REPO" 2>/dev/null || true)
 if ! az storage account show -n "$SA" -g "$RG" -o none 2>/dev/null; then
   az storage account create -n "$SA" -g "$RG" -l "$LOCATION" --sku Standard_LRS --kind StorageV2 \
     --min-tls-version TLS1_2 --https-only true --allow-blob-public-access false \
-    --allow-shared-key-access false --default-to-oauth-authentication true -o none
+    --allow-shared-key-access false -o none
 fi
 az storage account blob-service-properties update --account-name "$SA" -g "$RG" \
   --enable-versioning true --enable-delete-retention true --delete-retention-days 30 \

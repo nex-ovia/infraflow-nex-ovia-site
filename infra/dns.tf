@@ -14,7 +14,6 @@ resource "cloudflare_dns_record" "www" {
 
 # Apex only needs to exist and be proxied; the redirect rule sends it to www.
 resource "cloudflare_dns_record" "apex" {
-  count   = var.cutover ? 1 : 0
   zone_id = var.zone_id
   name    = var.apex
   type    = "AAAA"

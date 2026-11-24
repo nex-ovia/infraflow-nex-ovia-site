@@ -70,6 +70,7 @@ func TestCollectBeforeCutoverLeavesWWWAlone(t *testing.T) {
 		"cloudflare_ruleset.ratelimit":                "zones/" + zone + "/r3",
 		"cloudflare_web_analytics_site.site":          acct + "/s1",
 		`cloudflare_dns_record.caa_issue["pki.goog"]`: zone + "/d4",
+		"cloudflare_dns_record.apex":                  zone + "/d2",
 	}
 	for k, v := range want {
 		if got[k] != v {
@@ -87,7 +88,7 @@ func TestCollectAtCutoverAdoptsWWWAndApexOnly(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := addrs(imps)
-	if got["cloudflare_dns_record.www[0]"] != zone+"/d1" || got["cloudflare_dns_record.apex[0]"] != zone+"/d2" {
+	if got["cloudflare_dns_record.www[0]"] != zone+"/d1" || got["cloudflare_dns_record.apex"] != zone+"/d2" {
 		t.Fatalf("www/apex not adopted: %v", got)
 	}
 	for k, v := range got {

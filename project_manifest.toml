@@ -7,7 +7,7 @@ branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Clo
 live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"
 build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ../.nxsite build -root .. -out ../dist && ../.nxsite check -out ../dist"
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
-active   = "planned.nexovia-site: next step U3 (run scripts/azure-state.sh), then first plan/apply, then C01–C04"
+active   = "planned.apex-always-on (approved 2026-11-24), then planned.nexovia-site C01–C04"
 handoff  = "docs/HANDOFF.md: read first when resuming"
 
 [rules]
@@ -51,10 +51,21 @@ next = [
   "U3  user: LOCATION=eastus bash scripts/azure-state.sh, then re-run latest infra run",
   "C00 review first terraform plan (expect creates only; planguard must pass) → user approves apply",
   "C01 site workflow deploys dist → verify https://nexovia-site.pages.dev (Playwright 390/1280, headers, robots, sitemap, feed, links)",
-  "C02 cutover: cutover = true in infra/env/prod.tfvars → plan (www/apex replace allowed) → approve",
+  "C02 cutover: cutover = true in infra/env/prod.tfvars → plan (only www[0] replace allowed; apex is always managed) → approve",
   "C03 Search Console + Bing verification TXT via Terraform; user submits sitemap",
   "C04 after 7 clean days: delete Azure SWA resource + azure-static-web-apps.yml",
   "W05 add coderev card to tools/index.html + content/site.toml [[tool]] (already in JSON-LD)",
+]
+
+[planned.apex-always-on]
+status   = "A1–A3 done (Haiku via agent-dispatcher, validated: terraform test 8/8, go test cfimport); committing to dev; next A4 plan → user approval → verify apex 301"
+why      = "bare nex-ovia.com had no DNS record (apex gated on cutover) so the live apex->www 301 rule (infra/rules.tf) never fired; apex must redirect to www before and after cutover, and all metadata URLs (canonical/og/sitemap = https://www.nex-ovia.com) must resolve"
+done_pre = "U3 azure-state.sh run (az 2.86 lacks --default-to-oauth-authentication: flag dropped); token perms fixed; first apply ran (1 import, 22 add, 0 destroy); production env now requires srivastava-ami approval (it had none)"
+chunks = [
+  "A1 infra/dns.tf: drop count on cloudflare_dns_record.apex (always proxied AAAA 100::); infra/tests/stack.tftest.hcl: pre-cutover asserts apex exists+proxied, www unmanaged; cutover asserts apex.proxied. validate: terraform test",
+  "A2 tools/cfimport/main.go dnsTarget: adopt apex A/AAAA/CNAME regardless of cutover as cloudflare_dns_record.apex; main_test.go updated. validate: go test ./cfimport/",
+  "A3 infra/scripts/plan.sh: replace allow-list = www[0] only. validate: grep",
+  "A4 (Claude) push to dev, review plan (expect 1 add: apex), user approves; verify apex 301 for /, /robots.txt, /sitemap.xml, /feed.xml, /llms.txt, query string preserved",
 ]
 
 [planned.nexovia-coderev-page]

@@ -14,7 +14,7 @@ allow=""
 if [[ "$cutover" == "true" ]]; then
   flags+=(-cutover)
   # www/apex change record type at cutover, so a replace is expected for exactly these two.
-  allow="cloudflare_dns_record.www[0],cloudflare_dns_record.apex[0]"
+  allow="cloudflare_dns_record.www[0]"
 fi
 
 (cd ../tools && go run ./cfimport -account "$TF_VAR_account_id" -zone "$TF_VAR_zone_id" "${flags[@]}") > import.tf

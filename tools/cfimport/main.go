@@ -193,12 +193,12 @@ func dnsTarget(r dnsRecord, c Config, issuers map[string]bool) string {
 		return fmt.Sprintf("cloudflare_dns_record.caa_issue[%q]", r.Data.Value)
 	case r.Type == "CAA" && name == c.Apex && r.Data.Tag == "iodef":
 		return "cloudflare_dns_record.caa_iodef"
+	case name == c.Apex && (r.Type == "CNAME" || r.Type == "A" || r.Type == "AAAA"):
+		return "cloudflare_dns_record.apex"
 	case !c.Cutover:
 		return ""
 	case name == c.Host && (r.Type == "CNAME" || r.Type == "A" || r.Type == "AAAA"):
 		return "cloudflare_dns_record.www[0]"
-	case name == c.Apex && (r.Type == "CNAME" || r.Type == "A" || r.Type == "AAAA"):
-		return "cloudflare_dns_record.apex[0]"
 	}
 	return ""
 }

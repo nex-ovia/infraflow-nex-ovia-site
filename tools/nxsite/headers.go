@@ -101,7 +101,7 @@ func NotFoundPage(c Config) string {
     <section class="container">
       <p class="section-label">404</p>
       <h1 class="blog-title">This page doesn't exist.</h1>
-      <p class="section-body">It may have moved. Try the <a href="/">home page</a>, the <a href="/tools/">tools</a> or the <a href="/blog/">blog</a>.</p>
+      <p class="section-body">It may have moved. Try the <a href="/">home page</a>, the <a href="/tools/">tools</a> or the <a href="/about/">about page</a>.</p>
     </section>
   </main>
 `)

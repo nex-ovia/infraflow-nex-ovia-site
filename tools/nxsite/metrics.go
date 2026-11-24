@@ -17,7 +17,6 @@ type RepoStats struct {
 }
 
 var metricRe = regexp.MustCompile(`(<[a-zA-Z0-9]+[^>]*\sdata-metric="([^"]+)"[^>]*>)([^<]*)(</)`)
-var metricDateRe = regexp.MustCompile(`(<[a-zA-Z0-9]+[^>]*\sdata-metric-date[^>]*>)([^<]*)(</)`)
 
 // FillMetrics replaces the text of each data-metric="<repo>:<field>" element with the fetched value.
 // On a fetch error or unknown field the existing text stays (static fallback).
@@ -49,7 +48,7 @@ func FillMetrics(html string, fetch func(repo string) (RepoStats, error)) string
 
 // FillMetricDate sets the text of the data-metric-date element to date.
 func FillMetricDate(html, date string) string {
-	return metricDateRe.ReplaceAllString(html, "${1}"+date+"${3}")
+	return FillText(html, "data-metric-date", date)
 }
 
 // GitHubStats returns a fetcher that reads release stats from the GitHub API, once per repo per build.

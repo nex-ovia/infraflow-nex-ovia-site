@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -10,7 +11,25 @@ import (
 
 func buildFixture(t *testing.T) (root, out string) {
 	t.Helper()
+	return buildFixtureWith(t, nil)
+}
+
+// buildFixtureWith builds the standard fixture after mutate (if set) has changed the source tree.
+func buildFixtureWith(t *testing.T, mutate func(root string)) (root, out string) {
+	t.Helper()
 	root = writeFixture(t)
+	// The 404 page links to /about/, so the fixture needs that page for Check to pass.
+	about := filepath.Join(root, "about", "index.html")
+	if err := os.MkdirAll(filepath.Dir(about), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(about, []byte(`<!DOCTYPE html><html><head><title>About</title><meta name="description" content="About desc"></head>
+<body><div id="nav-placeholder"></div><h1>About</h1><div id="footer-placeholder"></div></body></html>`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if mutate != nil {
+		mutate(root)
+	}
 	for _, f := range staticFiles {
 		p := filepath.Join(root, f)
 		if _, err := os.Stat(p); err == nil {
@@ -79,6 +98,52 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 	}
 	if sm := read(t, filepath.Join(out, "sitemap.xml")); !strings.Contains(sm, "https://www.example.com/blog/first-post/") || strings.Contains(sm, "hidden") {
 		t.Error("sitemap should list published post only")
+	}
+}
+
+func TestBuildWithoutPostsHasNoBlog(t *testing.T) {
+	_, out := buildFixtureWith(t, func(root string) {
+		if err := os.RemoveAll(filepath.Join(root, "content", "blog")); err != nil {
+			t.Fatal(err)
+		}
+		nav := `<nav id="nav"><a href="/" class="nav-logo">x</a><ul class="nav-links"><li><a href="/tools">Tools</a></li></ul></nav>`
+		if err := os.WriteFile(filepath.Join(root, "partials", "nav.html"), []byte(nav), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	})
+	if _, err := os.Stat(filepath.Join(out, "blog", "index.html")); !os.IsNotExist(err) {
+		t.Error("blog/index.html must not exist without posts")
+	}
+	err := filepath.WalkDir(out, func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+		if filepath.Ext(p) != ".html" {
+			return nil
+		}
+		if s := read(t, p); strings.Contains(s, `href="/blog/`) || strings.Contains(s, `href="/blog"`) {
+			t.Errorf("%s links to /blog without posts", p)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sm := read(t, filepath.Join(out, "sitemap.xml")); strings.Contains(sm, "/blog") {
+		t.Error("sitemap lists blog without posts")
+	}
+	if nf := read(t, filepath.Join(out, "404.html")); !strings.Contains(nf, `href="/about/"`) {
+		t.Error("404 page should link to the about page")
+	}
+}
+
+func TestBuildWithPostHasBlogLinks(t *testing.T) {
+	_, out := buildFixture(t)
+	if _, err := os.Stat(filepath.Join(out, "blog", "index.html")); err != nil {
+		t.Error("blog/index.html missing with a post")
+	}
+	if home := read(t, filepath.Join(out, "index.html")); !strings.Contains(home, `href="/blog`) {
+		t.Error("nav/footer blog link missing with a post")
 	}
 }
 

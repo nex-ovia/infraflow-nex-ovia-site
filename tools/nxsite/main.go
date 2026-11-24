@@ -32,12 +32,19 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 		return err
 	}
 	w := writer{out: out}
-	s.Nav = AddLinkAfter(s.Nav, "/tools", "/blog", "Blog")
-	s.Footer = AddLinkAfter(s.Footer, "/tools", "/blog", "Blog")
+	// The blog exists only when there are posts: no nav/footer link, route, index or sitemap entry without them.
+	hasBlog := len(s.Posts) > 0
+	if hasBlog {
+		s.Nav = AddLinkAfter(s.Nav, "/tools", "/blog", "Blog")
+		s.Footer = AddLinkAfter(s.Footer, "/tools", "/blog", "Blog")
+	}
 	c := s.Config
 	base := c.Site.BaseURL
 
-	routes := map[string]bool{"/blog/": true}
+	routes := map[string]bool{}
+	if hasBlog {
+		routes["/blog/"] = true
+	}
 	for _, p := range s.Pages {
 		routes[p.Route] = true
 	}
@@ -93,13 +100,15 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 		}
 	}
 
-	idx, err := BlogIndexPage(c, s.Posts)
-	if err != nil {
-		return err
+	if hasBlog {
+		idx, err := BlogIndexPage(c, s.Posts)
+		if err != nil {
+			return err
+		}
+		htmlOut = append(htmlOut, render("blog/index.html", idx, "/blog/", HeadInput{Title: "Blog — " + c.Site.Name,
+			Description: "Writing on the Nexovia Standard, delivery sovereignty and the tools built on it.", Image: defaultImg, Type: "website"}))
+		sitemap = append(sitemap, SitemapURL{Loc: base + "/blog/"})
 	}
-	htmlOut = append(htmlOut, render("blog/index.html", idx, "/blog/", HeadInput{Title: "Blog — " + c.Site.Name,
-		Description: "Writing on the Nexovia Standard, delivery sovereignty and the tools built on it.", Image: defaultImg, Type: "website"}))
-	sitemap = append(sitemap, SitemapURL{Loc: base + "/blog/"})
 
 	for _, p := range s.Posts {
 		page, err := BlogPostPage(c, p)

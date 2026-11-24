@@ -24,11 +24,15 @@ type HeadInput struct {
 // staleHeadRe matches tags HeadTags owns, so existing hand-written copies are replaced, not duplicated.
 var staleHeadRe = regexp.MustCompile(`(?i)\s*<(?:meta\s+(?:property|name)="(?:og:[^"]*|twitter:[^"]*)"[^>]*|link\s+rel="canonical"[^>]*|link\s+rel="alternate"\s+type="application/atom\+xml"[^>]*)>`)
 
-// HeadTags renders canonical, Open Graph, Twitter card, feed link and JSON-LD tags.
+// faviconLink is the SVG icon every page carries (favicon.svg is copied to the output root).
+const faviconLink = `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`
+
+// HeadTags renders the icon, canonical, Open Graph, Twitter card, feed link and JSON-LD tags.
 func HeadTags(in HeadInput) (string, error) {
 	esc := html.EscapeString
 	var b strings.Builder
 	line := func(format string, a ...any) { fmt.Fprintf(&b, "  "+format+"\n", a...) }
+	line(faviconLink)
 	line(`<link rel="canonical" href="%s">`, esc(in.URL))
 	line(`<link rel="alternate" type="application/atom+xml" title="%s" href="/feed.xml">`, esc(in.SiteName))
 	line(`<meta property="og:site_name" content="%s">`, esc(in.SiteName))

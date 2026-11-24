@@ -43,7 +43,7 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 	_, out := buildFixture(t)
 	for _, f := range []string{"index.html", "tools/index.html", "blog/index.html",
 		"blog/first-post/index.html", "404.html", "sitemap.xml", "robots.txt", "feed.xml", "llms.txt",
-		"_headers", "_redirects", "og/default.png", "og/first-post.png", "og/first-post-ig.png", "site.css"} {
+		"_headers", "_redirects", "og/default.png", "og/first-post.png", "og/first-post-ig.png", "site.css", "favicon.svg"} {
 		if _, err := os.Stat(filepath.Join(out, f)); err != nil {
 			t.Errorf("missing %s", f)
 		}
@@ -54,6 +54,12 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 	}
 	if !strings.Contains(home, `<link rel="canonical" href="https://www.example.com/">`) || strings.Contains(home, `content="https://example.com"`) {
 		t.Error("home canonical/og:url wrong")
+	}
+	icon := `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`
+	for _, f := range []string{"index.html", "tools/index.html", "blog/index.html", "blog/first-post/index.html", "404.html"} {
+		if !strings.Contains(read(t, filepath.Join(out, f)), icon) {
+			t.Errorf("%s missing favicon link", f)
+		}
 	}
 	tools := read(t, filepath.Join(out, "tools/index.html"))
 	if !strings.Contains(tools, `"SoftwareApplication"`) || !strings.Contains(tools, `<li class="active"><a href="/tools/">`) {

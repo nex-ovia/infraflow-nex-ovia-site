@@ -18,7 +18,7 @@ import (
 
 // staticFiles are copied verbatim from the repo root.
 var staticFiles = []string{"site.css", "blog.css", "shared.js", "project-graph.js", "project.toml",
-	"partials/nav.html", "partials/footer.html"}
+	"favicon.svg", "partials/nav.html", "partials/footer.html"}
 
 // Build renders the whole site into out. now stamps the feed when there are no posts.
 func Build(root, out, aiPolicy string, now time.Time) error {
@@ -91,7 +91,8 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 		w.card(fmt.Sprintf("og/%s-ig.png", p.Slug), CardIG, p.Title, strings.TrimPrefix(base, "https://"))
 	}
 
-	notFound := RenderLayout(NotFoundPage(c), s.Nav, s.Footer, "/404", routes)
+	// The 404 bypasses render (no SEO head), so it gets only the icon.
+	notFound := InjectHead(RenderLayout(NotFoundPage(c), s.Nav, s.Footer, "/404", routes), "  "+faviconLink+"\n")
 	htmlOut = append(htmlOut, notFound)
 	w.file("404.html", []byte(notFound))
 	w.card("og/default.png", CardOG, c.Site.Tagline, strings.TrimPrefix(base, "https://"))

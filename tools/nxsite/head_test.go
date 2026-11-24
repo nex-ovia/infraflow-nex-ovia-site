@@ -39,6 +39,7 @@ func TestHeadTagsAndJSONLDValid(t *testing.T) {
 		`<meta property="og:title" content="A &#34;quoted&#34; title">`,
 		`<meta name="twitter:card" content="summary_large_image">`,
 		`<meta property="og:image:width" content="1200">`,
+		`<link rel="icon" href="/favicon.svg" type="image/svg+xml">`,
 	} {
 		if !strings.Contains(tags, want) {
 			t.Errorf("missing %s", want)

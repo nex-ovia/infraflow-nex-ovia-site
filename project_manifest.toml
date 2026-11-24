@@ -10,7 +10,7 @@ build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ..
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
 active   = "none; open: default branch is main so the daily cron in azure-static-web-apps.yml on dev will not fire until default becomes dev"
 handoff  = "docs/HANDOFF.md: read first when resuming"
-last_commit = "b06cd5d site: one NXS page; /standard, /principles, /changelog 301 to /nxs/ (staticwebapp.config.json for Azure); nav item NXS (2026-11-24)"
+last_commit = "1f4c36a content: career timeline newest first; NXS leaders wording; /impact NXS list newest first, no beta/open-source mislabels (2026-11-24)"
 
 [rules]
 plan_first      = "write [planned.<name>] + an HTML review page; build only after an explicit 'yes'"

@@ -303,3 +303,13 @@ do = """
    generated blog pages and 404.html, gets it. Update head_test.go / build_test.go to assert both.
 """
 validate = "test -f favicon.svg && {validate_all} && test -f dist/site/favicon.svg && grep -q 'favicon.svg' dist/site/about/index.html"
+
+[[chunk]]
+id = "B10b"
+title = "Mobile: Work with me first"
+do = """
+site.css, inside the existing mobile media query (<= 720px) that styles .nav-links: give .nav-links .highlight
+order: -1 so the highlighted "Work with me" item is the first, always-visible link on phones. Desktop unchanged.
+Nothing else changes.
+"""
+validate = "grep -qE 'highlight[^}]*order: *-1' site.css && {validate_all}"

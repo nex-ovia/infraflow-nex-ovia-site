@@ -76,6 +76,7 @@ facts   = "only from user-authored public sources: github.com/srivastava-ami pro
 spec    = "docs/plans/brand-site.chunks.toml"
 workers = "agent-dispatcher, Claude Haiku"
 done    = ["B1 sponsor removed", "B1b /sponser+/sponsor 301 -> /work-with-me (Cloudflare rule + Pages _redirects)", "B2 /about", "B3 /ai", "B4 /work-with-me", "B5 /tools (genome, coderev, NXS, pr-watch, site; star CTAs)", "B6 home repositioned", "B7 nav/footer + LinkedIn sameAs", "B8 draft post content/blog/how-i-lead-delivery-with-ai-agents.md (draft = true)", "B10/B10b mobile nav (was hidden <720px)", "B11 home shared footer", "B12 favicon"]
+review  = "https://claude.ai/artifact/MiMQr7nJGPHWq4yk1Hof9H (approval stack + screenshots)"
 approval_stack = [
   "A1 approve infra run 45343219194 (apex record; nex-ovia.com still has no A record until then)",
   "A2 review brand-site, then: git switch dev && git merge --ff-only brand-site && git push origin dev  (dev push = live on Azure SWA + infra plan for the sponsor redirect, which needs approval)",

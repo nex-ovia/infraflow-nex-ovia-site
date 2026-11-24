@@ -1,0 +1,7 @@
+.tmp/
+dist/
+infra/.terraform/
+infra/.terraform.lock.hcl.bak
+infra/tfplan*
+infra/import.tf
+*.tfstate*

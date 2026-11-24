@@ -1,0 +1,73 @@
+# brand-a11y: WCAG AA fixes from reports/Nexovia website independent review.md (P1). Approved by owner 2026-11-24.
+# Measured: --text-muted #5a5a72 on #0a0a0f = 2.95:1 (fail); white on .btn-primary #6c63ff = 4.32:1 (fail).
+# Chosen: --text-muted #8585a0 (5.51 on bg, 5.25 on surface, 4.81 on surface-raised); .btn-primary bg #5b52f0
+# (white 5.37:1), hover #4f46e0. --accent itself stays (accent text on bg is 4.58:1, passes).
+
+[shared]
+voice = "No inline style attributes, no inline scripts (strict CSP). Keep existing classes and structure."
+validate_all = "cd tools && GOTOOLCHAIN=local NXSITE_OFFLINE=1 go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && NXSITE_OFFLINE=1 dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+[[chunk]]
+id = "A1"
+title = "Layout: main landmark, skip link, aria-current"
+file = "tools/nxsite/layout.go, partials/nav.html, tools/nxsite/layout_test.go"
+model = "sonnet"
+do = """
+1. partials/nav.html: add `<a class="skip-link" href="#main">Skip to content</a>` as the very first line, before
+   <nav id="nav">.
+2. layout.go RenderLayout: after the placeholders are replaced, ensure every page has exactly one main landmark
+   with id "main":
+   - if the page has no "<main" tag: put "<main id=\\"main\\">" immediately after the injected nav fragment and
+     "</main>" immediately before the injected footer fragment (do it at placeholder replacement time so the main
+     wraps exactly the content between them). If the page has no footer placeholder, close </main> before </body>.
+   - if the page has a "<main" tag without an id attribute: add id="main" to it. If it has another id, leave it
+     and change the skip link href in that page to "#" + that id.
+3. markActive: the active nav <a> also gets aria-current="page".
+4. Tests in layout_test.go: page without <main> gets wrapped (main opens after nav, closes before footer);
+   page with <main class="x"> gets id="main" and is not double-wrapped; active link has aria-current="page".
+Also check tools/nxsite/blog.go and headers.go (404) templates: after this change each rendered page must
+contain exactly one "<main". Fix the templates if not.
+"""
+validate = "grep -q 'skip-link' partials/nav.html && {validate_all} && for f in $(find dist/site -name '*.html'); do n=$(grep -o '<main' $f | wc -l | tr -d ' '); [ \"$n\" = 1 ] || { echo \"$f has $n main\"; exit 1; }; grep -q 'id=\"main\"' $f || { echo \"$f no id main\"; exit 1; }; done"
+
+[[chunk]]
+id = "A2"
+title = "Contrast, skip-link style, focus and reduced motion"
+file = "site.css, index.html (its inline <style>), blog.css"
+do = """
+Apply to site.css AND to the inline <style> in index.html (the home page does not load site.css), and to blog.css
+if it defines the same tokens:
+1. --text-muted: #5a5a72 -> #8585a0.
+2. .btn-primary background -> #5b52f0 (text stays #fff); .btn-primary:hover background -> #4f46e0.
+   .nav-links .highlight a:hover background #7d75ff stays (its text is dark).
+3. Add skip link styles:
+   .skip-link { position: absolute; left: 1rem; top: -3rem; z-index: 1000; padding: 0.5rem 1rem;
+     background: var(--accent-2); color: #0a0a0f; font-weight: 600; border-radius: var(--radius-sm);
+     text-decoration: none; }
+   .skip-link:focus { top: 1rem; }
+4. If there is no :focus-visible rule, add:
+   a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent-2);
+     outline-offset: 3px; }
+5. Add at the end:
+   @media (prefers-reduced-motion: reduce) {
+     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+       transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+     .reveal, .animate-hero { opacity: 1 !important; transform: none !important; }
+   }
+   (Use the class names this file actually uses for reveal/hero animations.)
+6. Any other hard-coded text colour equal to #5a5a72 in these files -> #8585a0.
+"""
+validate = "! grep -qi '5a5a72' site.css index.html blog.css && grep -q 'prefers-reduced-motion' site.css && grep -q 'prefers-reduced-motion' index.html && grep -q 'skip-link' site.css && grep -q 'skip-link' index.html && {validate_all}"
+
+[[chunk]]
+id = "A3"
+title = "Project graph cards work from the keyboard"
+file = "project-graph.js"
+do = """
+The two click handlers (graph-node wrapper around line 91, graph-explorer-node card around line 311) are
+mouse-only divs. For both elements: set tabIndex = 0, setAttribute('role', 'button'), setAttribute('aria-label',
+node name), and add a keydown listener that runs the same action as click on Enter or Space (preventDefault on
+Space). Extract the click body into a small named function per element so click and keydown share it.
+Do not change anything else.
+"""
+validate = "grep -c 'keydown' project-graph.js | grep -q '[2-9]' && {validate_all}"

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Amit Srivastava — Nexovia</title>
+  <meta name="description" content="Amit Srivastava: CX engineering leader, author of the Nexovia Standard (NXS), building AI-driven delivery systems and open-source tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .about-prose {
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .about-prose p {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .about-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-note {
+      color: var(--text-2);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-block {
+      margin-bottom: 5rem;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .about-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .about-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      transition: border-color 0.3s, transform 0.3s var(--ease);
+    }
+
+    .about-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 212, 170, 0.5);
+    }
+
+    .about-stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      letter-spacing: -0.03em;
+      color: var(--accent-2);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .about-stat-label {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .about-card-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .about-card-sub {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .about-card-body {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .about-card-link {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+
+    .about-card-link:hover { text-decoration: underline; }
+
+    .about-skill-group {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .about-skill-items {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .about-certs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 720px;
+    }
+
+    .about-certs li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      color: var(--text);
+      font-size: 0.9375rem;
+      font-weight: 400;
+    }
+
+    .about-cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 720px) {
+      .about-grid--3,
+      .about-grid--2 { grid-template-columns: 1fr; }
+      .about-block { margin-bottom: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <p class="section-label animate-hero">About</p>
+      <h1 class="animate-hero delay-1">I build the systems and teams that make software delivery actually work.</h1>
+      <p class="page-hero-sub animate-hero delay-2">I'm Amit Srivastava, a CX engineering leader based in Sacramento, California, and the author of the Nexovia Standard (NXS). For 13 years I've worked across implementation, solutions engineering and customer success at global SaaS companies, building and mentoring technical teams across continents.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+
+      <div class="about-block reveal">
+        <h2 class="about-h2">Why I wrote NXS</h2>
+        <div class="about-prose">
+          <p>Most enterprise implementations fail the same way. Something gets built, the person who built it moves on, and nobody left can explain, maintain or extend what was delivered.</p>
+          <p>AI makes this worse, not better. When code is cheap to generate, the scarce thing is understanding. NXS is my answer: four rules that keep any solution owned, understood and portable, whoever or whatever built it.</p>
+          <p>I use it on everything I ship, including this website.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">Impact</h2>
+        <p class="about-note reveal">Results from delivery and automation work I've led.</p>
+        <div class="about-grid about-grid--3">
+          <div class="about-card reveal">
+            <div class="about-stat-number">$1M+</div>
+            <p class="about-stat-label">recurring revenue protected and grown through AI automation and delivery engineering</p>
+          </div>
+          <div class="about-card reveal">
+            <div class="about-stat-number">40%</div>
+            <p class="about-stat-label">faster escalation response</p>
+          </div>
+          <div class="about-card reveal">
+            <div class="about-stat-number">35%</div>
+            <p class="about-stat-label">lower customer service costs</p>
+          </div>
+          <div class="about-card reveal">
+            <div class="about-stat-number">30%</div>
+            <p class="about-stat-label">fewer manual support interventions</p>
+          </div>
+          <div class="about-card reveal">
+            <div class="about-stat-number">18%</div>
+            <p class="about-stat-label">faster enterprise onboarding</p>
+          </div>
+          <div class="about-card reveal">
+            <div class="about-stat-number">95%</div>
+            <p class="about-stat-label">of the software release process automated</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">Frameworks I built</h2>
+        <div class="about-grid about-grid--3">
+          <div class="about-card reveal">
+            <h3 class="about-card-name">NXS</h3>
+            <p class="about-card-sub">Delivery sovereignty standard</p>
+            <p class="about-card-body">Four rules: logic separate from tools, configuration externalised, every dependency visible, runs anywhere for anyone.</p>
+            <a href="/standard" class="about-card-link">Read the standard →</a>
+          </div>
+          <div class="about-card reveal">
+            <h3 class="about-card-name">LISP</h3>
+            <p class="about-card-sub">Delivery operating model</p>
+            <p class="about-card-body">Lightweight automation, insight delivery, solution reuse, practical integration: how CX engineering teams deliver impact.</p>
+          </div>
+          <div class="about-card reveal">
+            <h3 class="about-card-name">SPARK</h3>
+            <p class="about-card-sub">Stretched-scope governance</p>
+            <p class="about-card-body">Scalability, prototyping, advanced innovation, reuse and knowledge sharing: managing technical work that goes beyond standard implementation scope.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">What I work with</h2>
+        <div class="about-grid about-grid--2">
+          <div class="about-card reveal">
+            <p class="about-skill-group">Leadership</p>
+            <p class="about-skill-items">Team building and mentoring, delivery governance, cross-functional leadership, enterprise digital transformation</p>
+          </div>
+          <div class="about-card reveal">
+            <p class="about-skill-group">AI and automation</p>
+            <p class="about-skill-items">Agentic AI, LLM deployment, AI-driven process optimisation, workflow automation</p>
+          </div>
+          <div class="about-card reveal">
+            <p class="about-skill-group">Cloud and DevOps</p>
+            <p class="about-skill-items">AWS, Azure, Cloudflare, Terraform, Docker, Kubernetes, GitHub Actions, Linux</p>
+          </div>
+          <div class="about-card reveal">
+            <p class="about-skill-group">Languages</p>
+            <p class="about-skill-items">Go, Rust, Python, JavaScript, shell</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <h2 class="about-h2 reveal">Certifications</h2>
+        <ul class="about-certs reveal">
+          <li>AWS Certified Solutions Architect – Associate</li>
+          <li>Microsoft Azure Fundamentals</li>
+          <li>Oracle Database SQL Certified Expert</li>
+          <li>Red Hat Certified Engineer (RHCE)</li>
+          <li>ITIL Foundation</li>
+        </ul>
+      </div>
+
+      <div class="about-block reveal">
+        <h2 class="about-h2">Let's talk</h2>
+        <p class="about-note">Interviews, podcasts, speaking, advisory, or help adopting the tools.</p>
+        <div class="about-cta-actions">
+          <a href="/work-with-me" class="btn btn-primary">Work with me</a>
+          <a href="https://www.linkedin.com/in/srivastava-ami" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Connect on LinkedIn →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

@@ -80,7 +80,7 @@ review  = "https://claude.ai/artifact/MiMQr7nJGPHWq4yk1Hof9H (approval stack + s
 approval_stack = [
   "A3 sign off on publishing: 13 years, Sacramento, impact numbers ($1M+, 40/35/30/18/95%), certifications (from your public resume.toml); employer names intentionally omitted",
   "A4 contact: site uses LinkedIn only. Choose: keep, add a public email (which?), or add a booking link (Cal.com free)",
-  "A10 pick a logo direction on the concept canvas (1 Waypoint, 2 Blueprint, 3 Strata, 4 Handover, 5 Open loop); then build its kit",
+  "A10 upload brand/avatar-1080.png and the LinkedIn/X/YouTube banners to your profiles (logo = loop + waypoint, chosen 2026-11-24; source docs/brand/)",
   "A5 headshot: none on the site; add a photo for /about + /work-with-me (biggest trust gap for media inbound)",
   "A6 publish the blog draft: set draft = false (LinkedIn + X social drafts generated)",
   "A7 GitHub discoverability (outward, needs OK): descriptions/topics/homepage on coderev, pr-watch, agent-config; pin NXS, genome, coderev; update nex-ovia/.github profile README (still advertises unshipped CLI/Visualiser)",

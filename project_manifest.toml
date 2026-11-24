@@ -8,7 +8,7 @@ branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Clo
 live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"
 build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ../.nxsite build -root .. -out ../dist && ../.nxsite check -out ../dist"
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
-active   = "planned.brand-fix: review P0 fixes + GitHub-driven tools/versions (docs/plans/brand-fix.chunks.toml)"
+active   = "none; open: default branch is main so the daily cron in azure-static-web-apps.yml on dev will not fire until default becomes dev"
 handoff  = "docs/HANDOFF.md: read first when resuming"
 last_commit = "076ae97 content: humanized home, about (real career timeline), work-with-me, /ai; X profile in sameAs and footer (2026-11-23)"
 
@@ -95,7 +95,7 @@ goal   = "coderev product page at coderev.nex-ovia.com via nex-ovia/pages-templa
 open   = "repo stays srivastava-ami/coderev (CNAME → srivastava-ami.github.io) or moves to nex-ovia/coderev (→ nex-ovia.github.io)?"
 
 [planned.brand-fix]
-status   = "approved by owner 2026-11-24 ('go ahead and fix it'); executing via dispatcher"
+status   = "DONE 2026-11-24: all chunks merged to dev; live build verified (3 tools via topic, NXS v2.0/v0.1.0 from tags)"
 spec     = "docs/plans/brand-fix.chunks.toml"
 source   = "reports/Nexovia website independent review.md (P0) + owner: tools beta not site; NXS a living framework; versions/stars/licenses from GitHub"
 mechanism = "repos with GitHub topic 'nex-ovia-tool' (owners srivastava-ami, nex-ovia) render on /tools at build; NXS versions = annotated tags of nex-ovia/NXS; site rebuilds daily (cron) so GitHub changes reach the site"

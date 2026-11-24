@@ -20,13 +20,17 @@ jobs:
         with:
           submodules: true
 
-      - name: Prepare distribution folder
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        with:
+          go-version-file: tools/go.mod
+          cache-dependency-path: tools/go.sum
+
+      - name: Build and check nxsite distribution
         run: |
-          rm -rf dist
-          mkdir -p dist
-          cp index.html site.css shared.js project.toml project-graph.js dist/
-          mkdir -p dist/partials
-          cp -R principles standard tools changelog partials dist/
+          ai=$(sed -n 's/^ai_crawlers *= *"\(.*\)".*/\1/p' infra/env/prod.tfvars)
+          (cd tools && go build -o ../.nxsite ./nxsite)
+          ./.nxsite build -root . -out dist -ai "${ai:-allow_all}"
+          ./.nxsite check -out dist
 
       - name: Build And Deploy
         id: builddeploy

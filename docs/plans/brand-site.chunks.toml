@@ -247,3 +247,20 @@ concat("https://${var.site_host}", "/work-with-me/"). Follow the existing rule's
 Add an assertion in infra/tests/stack.tftest.hcl only if existing tests already assert individual redirect rules.
 """
 validate = "cd infra && terraform fmt -check && grep -q sponser_to_work rules.tf"
+
+[[chunk]]
+id = "B1b"
+title = "Old sponsor paths all land on /work-with-me"
+do = """
+1. infra/rules.tf ruleset "redirects": change rule sponser_to_work's expression so it matches BOTH spellings:
+   '(http.host eq "${var.site_host}" and (starts_with(http.request.uri.path, "/sponser") or starts_with(http.request.uri.path, "/sponsor")))'
+   and description "Removed sponsor paths -> work-with-me". Delete the rule with ref "sponser_typo" entirely.
+2. tools/nxsite/headers.go: where the _redirects lines are produced (the "/sponser /sponsor/ 301" lines were removed
+   earlier), add these four lines in the same format:
+     /sponser    /work-with-me/  301
+     /sponser/*  /work-with-me/  301
+     /sponsor    /work-with-me/  301
+     /sponsor/*  /work-with-me/  301
+   and assert one of them in tools/nxsite/headers_test.go following the existing test style.
+"""
+validate = "cd infra && terraform fmt -check && ! grep -q sponser_typo rules.tf && cd .. && grep -q 'work-with-me/  301' tools/nxsite/headers.go && {validate_all}"

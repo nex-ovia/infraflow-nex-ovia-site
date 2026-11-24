@@ -45,6 +45,9 @@ func TestRedirectsAndNotFound(t *testing.T) {
 	if !strings.Contains(nf, "<title>Page not found — Ex &lt;b&gt;</title>") || strings.Count(nf, "<h1") != 1 {
 		t.Fatalf("404 page wrong:\n%s", nf)
 	}
+	if !strings.Contains(RedirectsFile(), "/sponsor/*  /work-with-me/  301") {
+		t.Fatalf("sponsor redirect missing:\n%s", RedirectsFile())
+	}
 }
 
 func contains(xs []string, s string) bool {

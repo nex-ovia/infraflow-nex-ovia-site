@@ -10,7 +10,7 @@ build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ..
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
 active   = "none; open: default branch is main so the daily cron in azure-static-web-apps.yml on dev will not fire until default becomes dev"
 handoff  = "docs/HANDOFF.md: read first when resuming"
-last_commit = "4865d57 nxsite: fill /tools, /changelog and NXS version from GitHub at build time (static fallback offline) (2026-11-24)"
+last_commit = "4794232 a11y: WCAG AA contrast (muted #8585a0, accent #7870ff, button #5b52f0), main landmark, skip link, aria-current, keyboard graph cards, reduced motion (2026-11-24)"
 
 [rules]
 plan_first      = "write [planned.<name>] + an HTML review page; build only after an explicit 'yes'"

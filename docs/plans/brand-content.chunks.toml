@@ -1,0 +1,119 @@
+# brand-content: humanized copy, built on Amit's real career (LinkedIn profile, 2026-11-12 snapshot) and projects.
+# Voice: first person, plain words, short sentences, concrete moments. No buzzword stacks.
+# Facts allowed: only what is in this file. Client names (from LinkedIn) are deliberately NOT used.
+
+[shared]
+voice = """
+Write like Amit talking to a peer over coffee: first person, plain words, short sentences, one idea per sentence.
+Concrete over abstract (say "mail servers", "SDKs", "game studios", not "solutions" and "synergies").
+Never use: leverage, synergy, cutting-edge, seamless, robust, unlock, empower, journey, delve, game-changer.
+No em-dash asides. Sentence case headings.
+"""
+validate_all = "cd tools && GOTOOLCHAIN=local go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+[[chunk]]
+id = "C1"
+title = "Home: human hero and proof"
+file = "index.html"
+do = """
+Change only text content (and content/home.toml to match); keep all markup structure, classes and CSS.
+- hero subheadline: "I'm Amit. For 13 years I've made enterprise software work after the demo is over: Linux
+  servers, mail platforms, mobile SDKs, and support stacks for some of the biggest game studios in the world. Today I
+  lead delivery with AI agents, and I wrote NXS so what they build stays understandable and yours."
+- proposition label: "13 years in enterprise delivery · Global implementation manager · Author of NXS"
+- the three audience cards, replace titles/descriptions:
+  1 "If you lead the project" / "You shouldn't need to read code to know what was built, why, and what it depends on.
+     NXS gives you that view, in plain language, at any scale."
+  2 "If you write the code" / "The structural decisions are made upfront, so you spend your time on the interesting
+     parts. And the next developer can pick up your work without calling you."
+  3 "If you run the team" / "One shared way of building means fewer surprises at handover, faster onboarding, and
+     work that gets more valuable over time instead of turning into debt."
+- section heading above those cards (currently "Built for everyone who builds things."): "Who this is for"
+- work strip h2: "Want to talk about AI and delivery?" body: "I do podcasts, interviews, talks and hands-on advisory
+  for teams figuring out how to use AI without losing control of what gets built."
+"""
+validate = "grep -q 'after the demo is over' index.html && grep -q 'If you lead the project' index.html && {validate_all}"
+
+[[chunk]]
+id = "C2"
+title = "About: the real story"
+file = "about/index.html"
+do = """
+Rewrite the page body (keep the head pattern, nav/footer placeholders, page-local CSS approach, no inline styles).
+Sections in order:
+
+1 hero: label "About", h1 "I'm the person who makes it work after the demo.", lead:
+  "I'm Amit Srivastava. I live in Sacramento, California, and I've spent 13 years in the part of software most people
+  never see: getting it running, keeping it running, and making sure the customer actually gets what they paid for."
+
+2 h2 "What people trust me for" as three short statements (cards or a simple list):
+  "Engineers trust me to understand the work." /
+  "Customers trust me to own the outcome." /
+  "Non-technical leaders trust me to make it visible."
+
+3 h2 "How I got here" as a vertical timeline (year range, role and company, one or two plain sentences). Exactly:
+  - "2013 – 2015 · Linux engineer, Tetra Information Services" — "Open-source infrastructure for clients: Zimbra mail,
+    OpenLDAP, MySQL, OpenStack. I led a small support team and sat in on pre-sales calls to design what we'd build."
+  - "2015 – 2018 · Technical support engineer, Zimbra (Synacor)" — "Mail servers at scale. I wrote the daily automation
+    our NOC ran on, handled escalations for high-profile customers, and wrote knowledge-base articles used worldwide."
+  - "2018 – 2019 · Software engineer, Synacor" — "Core infrastructure team. I built and released the product packages
+    for every supported OS and wrote tooling that made the product easier to run."
+  - "2019 – 2021 · Senior technical support engineer, Helpshift" — "I built an engineering practice inside support
+    from scratch, mentored four engineers, and wrote Python tools and sample apps that made iOS and Android SDK
+    integrations much smoother."
+  - "2021 – 2023 · Solutions architect, Helpshift (Keywords Studios)" — "Enterprise delivery for top-tier gaming and
+    consumer tech companies. My team grew recurring revenue by $1M and cut onboarding time by 18%."
+  - "2024 – now · Global implementation manager, Keywords Studios" — "I lead the team that builds in-product solutions:
+    bots, automations, AI intents and integrations with Salesforce, Zendesk, Jira, Slack and generative AI."
+
+4 h2 "Why I wrote NXS", paragraphs:
+  "I kept watching the same failure. Something gets built, the person who built it moves on, and nobody left can
+  explain it, change it or move it."
+  "AI makes that worse. When code is cheap to write, understanding becomes the scarce thing. NXS is four rules that
+  keep any solution understood and owned, whoever or whatever built it."
+  "My foundation is hands-on: Linux, open-source infrastructure, real systems. So the standard is built on how
+  systems actually behave, not on how they look on a slide."
+  link "Read the standard" -> /standard
+
+5 h2 "Results I've led" with the impact grid (keep the existing six figures and labels exactly as they are now).
+
+6 h2 "Frameworks I use" — keep the three existing NXS / LISP / SPARK cards as they are.
+
+7 h2 "Certifications" — keep the existing list.
+
+8 CTA: h2 "Let's talk", body "Podcasts, interviews, talks, advisory, or help adopting the tools.", primary
+  "Work with me" -> /work-with-me, secondary "Connect on LinkedIn" -> https://www.linkedin.com/in/srivastava-ami
+
+Remove the old "What I work with" skills section.
+Timeline must stack cleanly at 390px (no horizontal overflow).
+"""
+validate = "grep -q 'How I got here' about/index.html && grep -q 'Tetra Information Services' about/index.html && ! grep -q 'What I work with' about/index.html && {validate_all}"
+
+[[chunk]]
+id = "C3"
+title = "Work with me + /ai: plainer language, X handle"
+do = """
+work-with-me/index.html (text only, keep structure):
+- hero lead: "If you're working out how to lead with AI without losing control of what gets built, I'd like to hear
+  from you. LinkedIn is the fastest way to reach me."
+- offer bodies:
+  Interviews and podcasts: "What really changes when AI writes most of the code, how to lead technical work you
+    don't write yourself, and what 13 years of enterprise delivery taught me."
+  Talks and workshops: "NXS and the way I run delivery with AI agents, shown live on real repositories."
+  Advisory: "I'll help your team set up AI-assisted delivery with the guardrails that keep it safe: shared context,
+    small reviewable changes, and a human approval before anything ships."
+  Tool adoption: "Try genome or coderev on your own codebase. I'll help you get running and your feedback shapes
+    what comes next."
+- topics list: "Leading AI agents like a team", "Owning what AI builds", "Approval gates for AI-generated code",
+  "From support engineer to delivery leader", "Open standards vs. vendor lock-in"
+- short bio: "Amit Srivastava is a global implementation manager with 13 years in enterprise software delivery, from
+  Linux and mail infrastructure to solutions architecture for top-tier gaming and consumer tech companies. He wrote
+  the Nexovia Standard (NXS), an open standard for keeping AI-built software understood and owned, and builds
+  open-source tools including genome and coderev. He lives in Sacramento, California."
+- in the final CTA add a third secondary link "X (@amit4srivastava)" -> https://x.com/amit4srivastava
+ai/index.html: hero lead becomes "I use AI agents every day, the way I'd lead a team: I decide what gets built,
+  they do the typing, and nothing ships until it passes checks and I've reviewed it. Here's exactly how that works."
+content/site.toml: add "https://x.com/amit4srivastava" to author same_as.
+partials/footer.html: add "X" link -> https://x.com/amit4srivastava after LinkedIn.
+"""
+validate = "grep -q 'amit4srivastava' content/site.toml partials/footer.html work-with-me/index.html && grep -q 'the way I.d lead a team' ai/index.html && {validate_all}"

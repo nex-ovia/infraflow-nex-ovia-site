@@ -7,7 +7,7 @@ branch   = "dev: the working and deploy branch (Azure SWA deploys dev today; Clo
 live     = "www.nex-ovia.com = Azure SWA (azure-static-web-apps.yml) behind Cloudflare DNS (proxied) until cutover (chunk C02)"
 build    = "cd tools && go test ./...  ·  go build -o ../.nxsite ./nxsite && ../.nxsite build -root .. -out ../dist && ../.nxsite check -out ../dist"
 infra    = "cd infra && terraform init -backend=false && terraform validate && terraform test   (8 offline tests)"
-active   = "planned.brand-site (overnight, local branch brand-site, needs approval to push); planned.apex-always-on apply awaiting approval"
+active   = "planned.brand-site BUILT on local branch brand-site; see its approval_stack (A1–A9)"
 handoff  = "docs/HANDOFF.md: read first when resuming"
 last_commit = "9674ba7 infra: always keep the proxied apex record so nex-ovia.com redirects to www before and after cutover (2026-11-24)"
 
@@ -70,12 +70,23 @@ chunks = [
 ]
 
 [planned.brand-site]
-status  = "authorised 2026-11-24 overnight: build locally on branch brand-site; push to dev (= live on Azure SWA) only after user approval"
+status  = "BUILT 2026-11-24 on local branch brand-site (18 commits over dev, not pushed). Validated: go test, nxsite build+check 0 problems, terraform test 8/8, 18 renders (9 pages x 390/1280) no overflow, no console errors. Waiting on user approval stack below."
 goal    = "personal brand hub: Amit Srivastava + NXS + AI-driven leadership; showcase how he uses AI; drive GitHub stars on open-source tools; inbound for interviews, speaking, advisory and tool adoption. Sponsor removed entirely."
-facts   = "only from user-authored public sources: github.com/srivastava-ami profile README + srivastava-ami.github.io/resume.toml + nex-ovia repos; no invented testimonials, logos, star counts or client names; employer names left out pending approval"
-spec    = "docs/plans/brand-site.chunks.toml (copy + per-chunk validate)"
-workers = "agent-dispatcher, Claude Haiku (user OK 2026-11-24)"
-chunks  = ["B1 remove sponsor", "B2 /about", "B3 /ai", "B4 /work-with-me", "B5 /tools rewrite", "B6 home", "B7 nav/footer/sameAs", "B8 draft post", "B9 /sponser 301"]
+facts   = "only from user-authored public sources: github.com/srivastava-ami profile README + srivastava-ami.github.io/resume.toml + repo READMEs"
+spec    = "docs/plans/brand-site.chunks.toml"
+workers = "agent-dispatcher, Claude Haiku"
+done    = ["B1 sponsor removed", "B1b /sponser+/sponsor 301 -> /work-with-me (Cloudflare rule + Pages _redirects)", "B2 /about", "B3 /ai", "B4 /work-with-me", "B5 /tools (genome, coderev, NXS, pr-watch, site; star CTAs)", "B6 home repositioned", "B7 nav/footer + LinkedIn sameAs", "B8 draft post content/blog/how-i-lead-delivery-with-ai-agents.md (draft = true)", "B10/B10b mobile nav (was hidden <720px)", "B11 home shared footer", "B12 favicon"]
+approval_stack = [
+  "A1 approve infra run 45343219194 (apex record; nex-ovia.com still has no A record until then)",
+  "A2 review brand-site, then: git switch dev && git merge --ff-only brand-site && git push origin dev  (dev push = live on Azure SWA + infra plan for the sponsor redirect, which needs approval)",
+  "A3 sign off on publishing: 13 years, Sacramento, impact numbers ($1M+, 40/35/30/18/95%), certifications (from your public resume.toml); employer names intentionally omitted",
+  "A4 contact: site uses LinkedIn only. Choose: keep, add a public email (which?), or add a booking link (Cal.com free)",
+  "A5 headshot: none on the site; add a photo for /about + /work-with-me (biggest trust gap for media inbound)",
+  "A6 publish the blog draft: set draft = false (LinkedIn + X social drafts generated)",
+  "A7 GitHub discoverability (outward, needs OK): descriptions/topics/homepage on coderev, pr-watch, agent-config; pin NXS, genome, coderev; update nex-ovia/.github profile README (still advertises unshipped CLI/Visualiser)",
+  "A8 DNSSEC: add the DS record at your registrar (plan shows perpetual in-place update until then)",
+  "A9 optional: commit darwin_arm64 hashes to infra/.terraform.lock.hcl so terraform runs locally",
+]
 
 [planned.nexovia-coderev-page]
 status = "not started (after nexovia-site cutover)"

@@ -125,3 +125,25 @@ data below. Add "Impact" (/impact) to partials/nav.html between About and Connec
 releases and implementation work."
 """
 validate = "test -f impact/index.html && test -f content/impact.toml && grep -q 'href=\"/impact' partials/nav.html && grep -q 'data-metric=\"srivastava-ami/coderev:downloads\"' impact/index.html && {validate_all}"
+
+[[chunk]]
+id = "S4b"
+title = "Live GitHub metrics on /impact at build time"
+do = """
+In tools/nxsite, add one small file metrics.go (+ metrics_test.go) and wire it into the build:
+- func FillMetrics(html string, fetch func(repo string) (RepoStats, error)) string: finds every element carrying
+  data-metric="<owner>/<repo>:<field>" (fields: releases, downloads, latest) and replaces that element's text with the
+  fetched value. If fetch returns an error for a repo, leave that element's existing text untouched (static fallback).
+- RepoStats{Releases int; Downloads int; Latest string} where Latest is "<tag> · <YYYY-MM-DD>" of the newest release.
+- func GitHubStats(client *http.Client, token string) func(string) (RepoStats, error): GETs
+  https://api.github.com/repos/<repo>/releases?per_page=100 (Authorization: Bearer <token> only when token != ""),
+  sums assets[].download_count, counts releases, newest = first item. 10s client timeout. Cache per repo within one
+  build so each repo is fetched once.
+- Build: apply FillMetrics only to the page whose route is /impact/, using GitHubStats with token from env
+  GITHUB_TOKEN. When env NXSITE_OFFLINE=1 is set, skip fetching entirely (keep static values).
+- Also replace the text of the element with data-metric-date (add that attribute to the "Figures as of 2026-11-24"
+  note's date span in impact/index.html) with the build date (YYYY-MM-DD) whenever any fetch succeeded.
+- Tests: FillMetrics with a fake fetch (success, and error keeps fallback); GitHubStats against an httptest server.
+  No real network in tests.
+"""
+validate = "cd tools && GOTOOLCHAIN=local go test ./nxsite/ && cd .. && NXSITE_OFFLINE=1 bash -c '{validate_all}' && grep -q 'data-metric-date' impact/index.html"

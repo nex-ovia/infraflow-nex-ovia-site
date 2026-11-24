@@ -1,20 +1,51 @@
 [page]
 id          = "home"
-title       = "Nexovia"
+title       = "Amit Srivastava · NXS & AI-driven delivery — Nexovia"
 route       = "/"
-description = "Build it once. Reuse it. Extend it. Own it for the long term."
+description = "Amit Srivastava leads software delivery with AI agents and wrote the Nexovia Standard (NXS). Open-source tools, the operating model, and how to work with him."
 
 [hero]
-headline    = "Build it once."
-headline_2  = "Own it forever."
-subheadline = "The Nexovia Standard is a delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden."
-cta_primary_label = "Read the Standard"
-cta_primary_href  = "/standard"
-cta_secondary_label = "View on GitHub"
+headline    = "AI writes the code."
+headline_2  = "You still own it."
+subheadline = "I'm Amit Srivastava. I lead software delivery with AI agents and wrote the Nexovia Standard (NXS) so the teams who commission software keep full understanding, control and portability of it, whoever or whatever built it."
+cta_primary_label = "How I lead with AI"
+cta_primary_href  = "/ai"
+cta_secondary_label = "Star NXS on GitHub"
 cta_secondary_href  = "https://github.com/nex-ovia/NXS"
 
 [proposition]
-label = "One standard. Any language. Any platform. Any team."
+label = "13 years in enterprise delivery · Author of NXS · Building open-source tools"
+
+[tools_strip]
+label      = "Open source"
+title      = "Tools I build and use"
+all_label  = "All tools →"
+all_href   = "/tools"
+star_label = "★ Star"
+
+[[tools_strip.tool]]
+name        = "genome"
+href        = "https://github.com/nex-ovia/genome"
+description = "Understand any system without reading its code."
+
+[[tools_strip.tool]]
+name        = "coderev"
+href        = "https://github.com/srivastava-ami/coderev"
+description = "Scan, map and AI-review your code in one command."
+
+[[tools_strip.tool]]
+name        = "NXS"
+href        = "https://github.com/nex-ovia/NXS"
+description = "Four rules for solutions that last."
+
+[work_strip]
+label           = "Work with me"
+title           = "Interviews, talks, advisory, pilots."
+body            = "If your team or audience is working out how to lead with AI without losing control of what gets built, let's talk."
+primary_label   = "Work with me"
+primary_href    = "/work-with-me"
+secondary_label = "About me"
+secondary_href  = "/about"
 
 [[audience]]
 id          = "leader"

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- [read_theme node] → meta -->
-  <title>Nexovia — The Nexovia Standard</title>
-  <meta name="description" content="Build it once. Reuse it. Extend it. Own it for the long term.">
+  <title>Amit Srivastava · NXS & AI-driven delivery — Nexovia</title>
+  <meta name="description" content="Amit Srivastava leads software delivery with AI agents and wrote the Nexovia Standard (NXS). Open-source tools, the operating model, and how to work with him.">
   <meta property="og:title" content="The Nexovia Standard">
   <meta property="og:description" content="A delivery standard for building solutions that last.">
   <meta property="og:url" content="https://nex-ovia.com">
@@ -747,6 +747,40 @@
       color: var(--text);
     }
 
+    /* ── Open source tools strip ── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .tool-mini {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tool-mini .card-title { margin-bottom: 0; }
+
+    .tool-mini-links { margin-top: auto; padding-top: 0.5rem; }
+
+    .tool-mini-links .btn { padding: 0.5rem 1rem; font-size: 0.8125rem; }
+
+    .tools-all { margin-top: 2rem; text-align: center; }
+
+    /* ── Work with me strip ── */
+    .work-strip {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.08) 0%, transparent 50%);
+      border-top: 1px solid var(--border);
+    }
+
+    .work-actions { margin-top: 2.5rem; }
+
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -819,6 +853,7 @@
       .rules-grid { grid-template-columns: 1fr; }
       .sovereignty-inner { grid-template-columns: 1fr; gap: 3rem; }
       .graph-explorer { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -835,15 +870,15 @@
       <div class="hero-inner">
         <div class="hero-eyebrow">NXS v1.0 — Now Available</div>
         <h1>
-          Build it once.<br>
-          <span class="line2">Own it <span class="italic">forever.</span></span>
+          AI writes the code.<br>
+          <span class="line2">You still <span class="italic">own it.</span></span>
         </h1>
         <p class="hero-sub">
-          The Nexovia Standard is a delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden.
+          I'm Amit Srivastava. I lead software delivery with AI agents and wrote the Nexovia Standard (NXS) so the teams who commission software keep full understanding, control and portability of it, whoever or whatever built it.
         </p>
         <div class="hero-actions">
-          <a href="/standard" class="btn btn-primary">Read the Standard →</a>
-          <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">View on GitHub</a>
+          <a href="/ai" class="btn btn-primary">How I lead with AI</a>
+          <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">Star NXS on GitHub</a>
         </div>
       </div>
     </div>
@@ -857,7 +892,7 @@
   <div class="proposition">
     <div class="container">
       <div class="proposition-inner">
-        <p class="proposition-text">One standard. Any language. Any platform. Any team.</p>
+        <p class="proposition-text">13 years in enterprise delivery · Author of NXS · Building open-source tools</p>
         <div class="proposition-tags">
           <span class="tag">Language Agnostic</span>
           <span class="tag">Platform Neutral</span>
@@ -933,6 +968,42 @@
     </div>
   </section>
 
+  <!-- [build_pages node] → tools strip — source: content/home.toml [tools_strip] -->
+  <section>
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Open source</p>
+        <h2 class="section-title">Tools I build and use</h2>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-mini reveal">
+          <h3 class="card-title">genome</h3>
+          <p class="card-body">Understand any system without reading its code.</p>
+          <div class="tool-mini-links">
+            <a href="https://github.com/nex-ovia/genome" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
+          </div>
+        </div>
+        <div class="tool-mini reveal">
+          <h3 class="card-title">coderev</h3>
+          <p class="card-body">Scan, map and AI-review your code in one command.</p>
+          <div class="tool-mini-links">
+            <a href="https://github.com/srivastava-ami/coderev" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
+          </div>
+        </div>
+        <div class="tool-mini reveal">
+          <h3 class="card-title">NXS</h3>
+          <p class="card-body">Four rules for solutions that last.</p>
+          <div class="tool-mini-links">
+            <a href="https://github.com/nex-ovia/NXS" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">★ Star</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal tools-all">
+        <a href="/tools" class="btn btn-secondary">All tools →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- [build_pages node] → sovereignty — source: content/home.toml [sovereignty] -->
   <section class="sovereignty-section">
     <div class="container">
@@ -965,6 +1036,21 @@
       <div id="project-graph-details" class="graph-details reveal">
         <h3 class="graph-detail-title">Interactive project graph</h3>
         <p class="graph-detail-body">This graph is generated from <code>project.toml</code>. Click any node to see its role, the file it maps to, and where to make changes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [build_pages node] → work strip — source: content/home.toml [work_strip] -->
+  <section class="work-strip">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Work with me</p>
+        <h2 class="section-title">Interviews, talks, advisory, pilots.</h2>
+        <p class="section-body">If your team or audience is working out how to lead with AI without losing control of what gets built, let's talk.</p>
+      </div>
+      <div class="hero-actions reveal work-actions">
+        <a href="/work-with-me" class="btn btn-primary">Work with me</a>
+        <a href="/about" class="btn btn-secondary">About me</a>
       </div>
     </div>
   </section>

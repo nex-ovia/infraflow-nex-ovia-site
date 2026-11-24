@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 # Plan the Cloudflare stack: adopt existing objects (cfimport), plan, then fail if any protected
 # resource would be deleted (planguard). Writes infra/tfplan and infra/plan-summary.txt.
-# Needs: CLOUDFLARE_API_TOKEN, AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY (R2), TF_VAR_account_id, TF_VAR_zone_id.
+# Needs: CLOUDFLARE_API_TOKEN and TF_VAR_account_id. Zone ID and R2 state credentials are derived (cf-env.sh).
 set -euo pipefail
 cd "$(dirname "$0")/.."
-
-: "${TF_VAR_account_id:?set repository variable CF_ACCOUNT_ID}"
-: "${TF_VAR_zone_id:?set repository variable CF_ZONE_ID}"
-: "${CLOUDFLARE_API_TOKEN:?set secret CLOUDFLARE_API_TOKEN}"
+# shellcheck source=infra/scripts/cf-env.sh
+. scripts/cf-env.sh
 
 cutover=$(sed -n 's/^cutover *= *\(true\|false\).*/\1/p' env/prod.tfvars)
 flags=()

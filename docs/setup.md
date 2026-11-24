@@ -7,7 +7,7 @@ git clone https://github.com/nex-ovia/infraflow-nex-ovia-site && cd infraflow-ne
 bash scripts/bootstrap.sh
 ```
 
-The script does steps 1–5 below. It prompts (hidden) for the two things only you can create, the Cloudflare API token and the R2 keys, and starts the first run. The manual steps are kept below for reference.
+The script does steps 1–5 below. It prompts (hidden) for the one thing only you can create, the Cloudflare API token, and starts the first run. The manual steps are kept below for reference.
 
 Everything else is automated. Do these once, in order. Nothing here costs money.
 
@@ -18,7 +18,7 @@ Cloudflare dashboard → nex-ovia.com → **Overview** → right column "API":
 | GitHub → Settings → Secrets and variables → Actions → **Variables** | Value |
 |---|---|
 | `CF_ACCOUNT_ID` | Account ID |
-| `CF_ZONE_ID` | Zone ID |
+| `CF_ZONE_ID` | Zone ID (optional; CI looks it up from the token) |
 
 ## 2. Cloudflare API token (secret)
 
@@ -41,11 +41,9 @@ Cloudflare → My Profile → **API Tokens** → Create Token → *Custom token*
 
 Save it as repository **secret** `CLOUDFLARE_API_TOKEN`.
 
-## 3. Terraform state bucket on R2 (free 10 GB)
+## 3. Terraform state (nothing to do)
 
-1. Cloudflare → **R2** → Create bucket `nexovia-tfstate` (location: Automatic). Enabling R2 asks for a payment method even on the free tier. You stay within free usage; state is a few KB.
-2. R2 → **Manage API tokens** → Create → *Object Read & Write*, **Apply to specific bucket only:** `nexovia-tfstate`.
-3. Save as repository secrets `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY`.
+State lives in the R2 bucket `nexovia-tfstate`. CI creates it if it's missing, and derives its S3 credentials from the Cloudflare token (Access Key ID = token id, Secret = SHA-256 of the token; see Cloudflare's R2 docs, "Get S3 API credentials from an API token"). You only need R2 enabled on the account once (R2 → Get started; free tier, asks for a card) and the token permission **Account · Workers R2 Storage · Edit**.
 
 ## 4. GitHub environments
 

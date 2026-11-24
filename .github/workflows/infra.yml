@@ -19,7 +19,7 @@ env:
   TF_IN_AUTOMATION: "1"
   CHECKPOINT_DISABLE: "1"
   TF_VAR_account_id: ${{ vars.CF_ACCOUNT_ID }}
-  TF_VAR_zone_id: ${{ vars.CF_ZONE_ID }}
+  TF_VAR_zone_id: ${{ vars.CF_ZONE_ID }} # optional; derived from the token when empty
 
 jobs:
   checks:
@@ -84,6 +84,7 @@ jobs:
         id: plan
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # optional: R2 keys are derived from the Cloudflare token when these secrets are absent
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: ./infra/scripts/plan.sh
@@ -117,6 +118,7 @@ jobs:
       - name: Re-plan, guard, apply
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # optional: R2 keys are derived from the Cloudflare token when these secrets are absent
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: ./infra/scripts/plan.sh && terraform -chdir=infra apply -input=false tfplan

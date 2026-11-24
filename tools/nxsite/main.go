@@ -124,11 +124,16 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 }
 
 // copyBrand copies brand/ to /brand/ in the output, skipping the generator script.
+// A missing brand/ directory is not an error.
 func (w *writer) copyBrand(root string) {
 	if w.err != nil {
 		return
 	}
-	w.err = filepath.WalkDir(filepath.Join(root, "brand"), func(p string, d fs.DirEntry, err error) error {
+	dir := filepath.Join(root, "brand")
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		return
+	}
+	w.err = filepath.WalkDir(dir, func(p string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() || d.Name() == "generate-mark.py" {
 			return err
 		}

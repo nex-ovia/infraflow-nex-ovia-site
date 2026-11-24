@@ -23,7 +23,7 @@ func buildFixture(t *testing.T) (root, out string) {
 			t.Fatal(err)
 		}
 	}
-	for _, f := range []string{"brand/nex-ovia-mark.svg", "brand/generate-mark.py"} {
+	for _, f := range []string{"brand/sample.svg", "brand/generate-mark.py"} {
 		p := filepath.Join(root, f)
 		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
 			t.Fatal(err)
@@ -84,11 +84,37 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 
 func TestBuildCopiesBrandExceptGenerator(t *testing.T) {
 	_, out := buildFixture(t)
-	if _, err := os.Stat(filepath.Join(out, "brand", "nex-ovia-mark.svg")); err != nil {
-		t.Error("brand/nex-ovia-mark.svg not copied")
+	if _, err := os.Stat(filepath.Join(out, "brand", "sample.svg")); err != nil {
+		t.Error("brand/sample.svg not copied")
 	}
 	if _, err := os.Stat(filepath.Join(out, "brand", "generate-mark.py")); !os.IsNotExist(err) {
 		t.Error("brand/generate-mark.py must not be copied")
+	}
+}
+
+func TestBuildWithoutBrandDirSucceeds(t *testing.T) {
+	root := writeFixture(t)
+	for _, f := range staticFiles {
+		p := filepath.Join(root, f)
+		if _, err := os.Stat(p); err == nil {
+			continue
+		}
+		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte("/* "+f+" */"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := os.Stat(filepath.Join(root, "brand")); !os.IsNotExist(err) {
+		t.Fatal("fixture must not contain brand/")
+	}
+	out := filepath.Join(t.TempDir(), "dist")
+	if err := Build(root, out, "allow_all", time.Date(2026, 11, 24, 0, 0, 0, 0, time.UTC)); err != nil {
+		t.Fatalf("build without brand/ failed: %v", err)
+	}
+	if _, err := os.Stat(filepath.Join(out, "brand")); !os.IsNotExist(err) {
+		t.Error("brand/ must not be created when source is absent")
 	}
 }
 

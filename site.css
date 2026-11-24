@@ -64,6 +64,8 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 .nav-links .highlight a { color: var(--bg); background: var(--accent); font-weight: 600; }
 .nav-links .highlight a:hover { background: #7d75ff; color: var(--bg); }
 .nav-links .active a { color: var(--accent); }
+.nav-links .highlight.active a { color: var(--bg); }
+.nav-logo .nav-word { color: inherit; }
 
 /* Page hero */
 .page-hero {

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"image"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -118,7 +119,26 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 	for _, f := range staticFiles {
 		w.copy(filepath.Join(root, f), f)
 	}
+	w.copyBrand(root)
 	return w.err
+}
+
+// copyBrand copies brand/ to /brand/ in the output, skipping the generator script.
+func (w *writer) copyBrand(root string) {
+	if w.err != nil {
+		return
+	}
+	w.err = filepath.WalkDir(filepath.Join(root, "brand"), func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || d.Name() == "generate-mark.py" {
+			return err
+		}
+		rel, err := filepath.Rel(root, p)
+		if err != nil {
+			return err
+		}
+		w.copy(p, filepath.ToSlash(rel))
+		return w.err
+	})
 }
 
 // writer collects the first error so Build reads top to bottom.

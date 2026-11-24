@@ -23,6 +23,15 @@ func buildFixture(t *testing.T) (root, out string) {
 			t.Fatal(err)
 		}
 	}
+	for _, f := range []string{"brand/nex-ovia-mark.svg", "brand/generate-mark.py"} {
+		p := filepath.Join(root, f)
+		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte("/* "+f+" */"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
 	out = filepath.Join(t.TempDir(), "dist")
 	if err := Build(root, out, "allow_all", time.Date(2026, 11, 24, 0, 0, 0, 0, time.UTC)); err != nil {
 		t.Fatal(err)
@@ -70,6 +79,16 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 	}
 	if sm := read(t, filepath.Join(out, "sitemap.xml")); !strings.Contains(sm, "https://www.example.com/blog/first-post/") || strings.Contains(sm, "hidden") {
 		t.Error("sitemap should list published post only")
+	}
+}
+
+func TestBuildCopiesBrandExceptGenerator(t *testing.T) {
+	_, out := buildFixture(t)
+	if _, err := os.Stat(filepath.Join(out, "brand", "nex-ovia-mark.svg")); err != nil {
+		t.Error("brand/nex-ovia-mark.svg not copied")
+	}
+	if _, err := os.Stat(filepath.Join(out, "brand", "generate-mark.py")); !os.IsNotExist(err) {
+		t.Error("brand/generate-mark.py must not be copied")
 	}
 }
 

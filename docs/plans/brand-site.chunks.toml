@@ -354,3 +354,17 @@ Change the build so the deployed folder is the nxsite build output:
 Do not change any other workflow.
 """
 validate = "! grep -q 'cp -R principles' .github/workflows/azure-static-web-apps.yml && grep -q 'setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5' .github/workflows/azure-static-web-apps.yml && grep -q 'nxsite' .github/workflows/azure-static-web-apps.yml"
+
+[[chunk]]
+id = "B15"
+title = "Nav fixes: active highlight text, logo text spacing"
+do = """
+1. site.css: when the highlighted nav item is also the active page (li.highlight.active), its link text is
+   currently var(--accent) on an accent background (invisible). Add a rule after the existing .nav-links .active a
+   rule: .nav-links .highlight.active a { color: var(--bg); } so the button keeps its normal highlighted look.
+2. partials/nav.html (and partials/footer.html if it has the same logo markup): the .nav-logo is now a flex
+   container, so its text pieces ("nex", the · span, "ovia") are separated by the flex gap. Wrap the existing text
+   pieces (everything after the <img class="nav-mark">) in a single <span class="nav-word">…</span> so the text
+   renders as "nex·ovia" again. Keep the img and href unchanged.
+"""
+validate = "grep -q 'highlight.active a' site.css && grep -q 'nav-word' partials/nav.html && {validate_all}"

@@ -8,8 +8,8 @@ description = "Version history of the Nexovia Standard."
 version     = "1.0"
 date        = "May 2026"
 status      = "current"
-summary     = "Initial publication of the Nexovia Standard."
-description = "NXS v1.0 establishes delivery sovereignty as the core principle and defines the four rules every compliant solution must follow. This version also defines the Definition of Done checklist and the four commercial metrics for measuring delivery quality."
+summary     = "First public beta of the Nexovia Standard."
+description = "The first NXS beta establishes delivery sovereignty as the core principle and defines the four rules every compliant solution must follow. This version also defines the Definition of Done checklist and the four commercial metrics for measuring delivery quality."
 
 [[release.change]]
 type    = "added"
@@ -36,7 +36,7 @@ version     = "1.1"
 date        = "Coming soon"
 status      = "planned"
 summary     = "Project declaration specification."
-description = "NXS v1.1 will introduce a formal specification for project declarations — a structured way to describe a project's components, connections, and dependencies in a machine-readable format that tooling can act on."
+description = "The next beta will introduce a formal specification for project declarations — a structured way to describe a project's components, connections, and dependencies in a machine-readable format that tooling can act on."
 
 [[release.change]]
 type    = "planned"

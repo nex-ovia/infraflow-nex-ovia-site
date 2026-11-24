@@ -1,11 +1,11 @@
 [page]
 id          = "standard"
-title       = "The Nexovia Standard (NXS v1.0)"
+title       = "The Nexovia Standard (NXS beta)"
 route       = "/standard"
 description = "The full Nexovia Standard — a delivery standard for building solutions that last."
 
 [hero]
-eyebrow     = "NXS v1.0 — Apache 2.0"
+eyebrow     = "NXS beta · Apache 2.0"
 headline    = "The Nexovia Standard"
 subheadline = "A delivery standard grounded in the belief that good solutions are built once, reused many times, extended without friction, and maintained without becoming a burden."
 github_href = "https://github.com/nex-ovia/NXS"

@@ -42,4 +42,4 @@ Nothing went live until I approved it.
 - **Speed doesn't turn into debt.** Every change is small, tested and reversible.
 - **It's readable by non-developers.** The plan says what was built and why, in plain language. That's NXS rule four: it runs anywhere, for anyone.
 
-The full model, with the guardrails, is on [How I lead with AI](/ai). The tools I build this way are on [Tools](/tools). If you want to talk about it on a podcast, in an interview or with your team, [get in touch](/work-with-me).
+The full model, with the guardrails, is on [How I lead with AI](/ai). The tools I build this way are on [Tools](/tools). If you want to talk about it on a podcast, in an interview or with your team, [get in touch](/connect).

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect — Nexovia</title>
+  <meta name="description" content="Invite Amit Srivastava to speak or be interviewed about implementation strategy and AI-built software, or collaborate on NXS and the open-source tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .offer-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 2.5rem;
+      transition: border-color 0.3s, transform 0.3s var(--ease);
+    }
+
+    .offer-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 212, 170, 0.5);
+    }
+
+    .offer-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .offer-body {
+      color: var(--text-2);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .topics-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .topics-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      margin-top: 1.25rem;
+    }
+
+    .topics-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      font-weight: 300;
+    }
+
+    .topics-list li::before {
+      content: '→';
+      color: var(--accent-2);
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+
+    .bio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .bio-note {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+
+    .bio-text {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .cta-block {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .cta-body {
+      color: var(--text-2);
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0.75rem auto 1.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .stack-gap {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    @media (max-width: 720px) {
+      .offers-grid { grid-template-columns: 1fr; }
+      .offer-card, .topics-card, .bio-card, .cta-block { padding: 1.75rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <p class="section-label">Connect</p>
+      <h1 class="animate-hero">Let's talk about building with AI, responsibly.</h1>
+      <p class="page-hero-sub animate-hero delay-1">I share what I learn in the open. If you host a podcast, run an event, write about AI and software delivery, or want to collaborate on NXS and the tools, I'd like to hear from you.</p>
+      <div class="animate-hero delay-2">
+        <a href="https://www.linkedin.com/in/srivastava-ami" class="btn btn-primary" rel="noopener noreferrer" target="_blank">Message me on LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container stack-gap">
+
+      <div class="offers-grid">
+
+        <div class="offer-card reveal">
+          <h2 class="offer-name">Speaking and interviews</h2>
+          <p class="offer-body">Podcasts, interviews, meetups and conference talks on implementation strategy, leading technical teams through AI adoption, and keeping AI-built software understandable.</p>
+        </div>
+
+        <div class="offer-card reveal">
+          <h2 class="offer-name">Open-source collaboration</h2>
+          <p class="offer-body">NXS, genome and coderev are open. Issues, pull requests, feedback and write-ups of real use are all welcome.</p>
+        </div>
+
+        <div class="offer-card reveal">
+          <h2 class="offer-name">Use the tools, free</h2>
+          <p class="offer-body">Everything here is free to use. If it helps your team, tell me how. Real-world feedback shapes what I build next.</p>
+        </div>
+
+      </div>
+
+      <div class="topics-card reveal">
+        <h2 class="section-heading">Topics I speak on</h2>
+        <ul class="topics-list">
+          <li>Implementation strategy in the AI era</li>
+          <li>Leading technical teams through AI adoption</li>
+          <li>Owning what AI builds</li>
+          <li>Approval gates for AI-generated code</li>
+          <li>From support engineer to implementation leader</li>
+        </ul>
+      </div>
+
+      <div class="bio-card reveal">
+        <h2 class="section-heading">Short bio</h2>
+        <p class="bio-note">For hosts and event pages; copy freely.</p>
+        <p class="bio-text">Amit Srivastava is an implementation leader and technical strategist with 13 years in enterprise software delivery, from Linux and mail infrastructure to solutions architecture for top-tier gaming and consumer tech companies. As Global Implementation Manager at Keywords Studios he sets implementation strategy and leads technical teams. He wrote the Nexovia Standard (NXS), an open standard for keeping AI-built software understood and owned, and builds open-source tools including genome and coderev. He lives in Sacramento, California.</p>
+      </div>
+
+      <div class="cta-block reveal">
+        <h2 class="section-heading">Get in touch</h2>
+        <p class="cta-body">LinkedIn is the fastest way to reach me.</p>
+        <div class="cta-actions">
+          <a href="https://www.linkedin.com/in/srivastava-ami" class="btn btn-primary" rel="noopener noreferrer" target="_blank">Message me on LinkedIn</a>
+          <a href="https://x.com/amit4srivastava" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">X (@amit4srivastava)</a>
+          <a href="https://github.com/srivastava-ami" class="btn btn-secondary" rel="noopener noreferrer" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/shared.js"></script>
+</body>
+</html>

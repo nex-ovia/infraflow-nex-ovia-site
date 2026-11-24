@@ -47,7 +47,10 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 	defaultImg := base + "/og/default.png"
 	render := func(outPath, page, route string, in HeadInput) string {
 		page = RenderLayout(page, s.Nav, s.Footer, route, routes)
-		in.URL, in.SiteName = base+route, c.Site.Name
+		in.SiteName = c.Site.Name
+			if in.URL == "" {
+				in.URL = base + route
+			}
 		in.JSONLD = append([]any{SiteGraph(c)}, in.JSONLD...)
 		tags, err := HeadTags(in)
 		if err != nil {
@@ -62,11 +65,19 @@ func Build(root, out, aiPolicy string, now time.Time) error {
 	var sitemap []SitemapURL
 	for _, p := range s.Pages {
 		in := HeadInput{Title: p.Title, Description: p.Description, Image: defaultImg, Type: "website"}
+		// A page that declares its own canonical (e.g. a redirect page) keeps it.
+		if _, rest, ok := strings.Cut(p.HTML, `<link rel="canonical" href="`); ok {
+			if url, _, ok := strings.Cut(rest, `"`); ok {
+				in.URL = url
+			}
+		}
 		if p.Route == "/tools/" {
 			in.JSONLD = []any{ToolsLD(c)}
 		}
 		htmlOut = append(htmlOut, render(p.Out, p.HTML, p.Route, in))
-		sitemap = append(sitemap, SitemapURL{Loc: base + p.Route})
+		if !strings.Contains(p.HTML, `name="robots" content="noindex"`) {
+			sitemap = append(sitemap, SitemapURL{Loc: base + p.Route})
+		}
 	}
 
 	idx, err := BlogIndexPage(c, s.Posts)

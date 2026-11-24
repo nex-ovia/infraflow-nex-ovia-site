@@ -85,10 +85,12 @@ func RedirectsFile() string {
 	return strings.Join([]string{
 		"/rss.xml    /feed.xml  301",
 		"/rss        /feed.xml  301",
-		"/sponser    /work-with-me/  301",
-		"/sponser/*  /work-with-me/  301",
-		"/sponsor    /work-with-me/  301",
-		"/sponsor/*  /work-with-me/  301",
+		"/sponser    /connect/  301",
+		"/sponser/*  /connect/  301",
+		"/sponsor    /connect/  301",
+		"/sponsor/*  /connect/  301",
+		"/work-with-me    /connect/  301",
+		"/work-with-me/*  /connect/  301",
 	}, "\n") + "\n"
 }
 

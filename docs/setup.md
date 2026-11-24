@@ -1,5 +1,14 @@
 # One-time setup (free tiers only)
 
+**Fast path:** on your own machine, with `gh` logged in:
+
+```bash
+git clone https://github.com/nex-ovia/infraflow-nex-ovia-site && cd infraflow-nex-ovia-site && git checkout dev
+bash scripts/bootstrap.sh
+```
+
+The script does steps 1–5 below. It prompts (hidden) for the two things only you can create, the Cloudflare API token and the R2 keys, and starts the first run. The manual steps are kept below for reference.
+
 Everything else is automated. Do these once, in order. Nothing here costs money.
 
 ## 1. Cloudflare IDs (repository variables, not secret)
@@ -25,6 +34,7 @@ Cloudflare → My Profile → **API Tokens** → Create Token → *Custom token*
   - Zone · Single Redirect · Edit
   - Zone · Bot Management · Edit
   - Zone · Zone · Read
+  - Account · Workers R2 Storage · Edit (lets the bootstrap create the state bucket)
   - Account · Web Analytics · Edit (in some dashboards it's listed as "RUM")
 - **Zone resources:** Include → Specific zone → `nex-ovia.com`
 - **TTL:** 1 year (set a calendar reminder to rotate it)

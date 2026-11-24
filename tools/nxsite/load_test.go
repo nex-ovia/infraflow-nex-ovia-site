@@ -24,15 +24,13 @@ name = "t1"
 url = "https://t1.example.com"
 description = "Tool one"
 `,
-		"partials/nav.html":    `<nav id="nav"><a href="/" class="nav-logo">x</a><ul class="nav-links"><li><a href="/tools">Tools</a></li><li><a href="/sponser">S</a></li></ul></nav>`,
+		"partials/nav.html":    `<nav id="nav"><a href="/" class="nav-logo">x</a><ul class="nav-links"><li><a href="/tools">Tools</a></li><li><a href="/blog">B</a></li></ul></nav>`,
 		"partials/footer.html": `<footer><a href="/tools">Tools</a></footer>`,
 		"index.html": `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Home &amp; more</title>
 <meta name="description" content="Home desc"><meta property="og:url" content="https://example.com"></head>
 <body><div id="nav-placeholder"></div><h1>Home</h1><a href="/tools">t</a><script>console.log(1)</script></body></html>`,
 		"tools/index.html": `<!DOCTYPE html><html><head><title>Tools</title><meta name="description" content="Tools desc"></head>
 <body><div id="nav-placeholder"></div><h1>Tools</h1><div id="footer-placeholder"></div></body></html>`,
-		"sponser/index.html": `<!DOCTYPE html><html><head><title>Sponsor</title><meta name="description" content="Sponsor desc"></head>
-<body><div id="nav-placeholder"></div><h1>Sponsor</h1></body></html>`,
 		"content/blog/first-post.md": "+++\ntitle = \"First\"\ndate = 2026-11-20\nsummary = \"Hello\"\ntags = [\"a\"]\n[social]\nx = \"auto\"\n+++\n\nBody **bold**.\n",
 		"content/blog/hidden.md":     "+++\ntitle = \"Hidden\"\ndate = 2026-11-21\ndraft = true\n+++\nx\n",
 		"content/blog/_example.md":   "not parsed",
@@ -49,7 +47,7 @@ description = "Tool one"
 	return root
 }
 
-func TestLoadPagesRoutesAndRename(t *testing.T) {
+func TestLoadPagesRoutes(t *testing.T) {
 	s, err := Load(writeFixture(t))
 	if err != nil {
 		t.Fatal(err)
@@ -64,11 +62,8 @@ func TestLoadPagesRoutesAndRename(t *testing.T) {
 	if got["/"].Title != "Home & more" || got["/"].Description != "Home desc" {
 		t.Errorf("home meta wrong: %+v", got["/"])
 	}
-	if got["/sponsor/"].Out != "sponsor/index.html" || got["/sponsor/"].Src != "sponser/index.html" {
-		t.Errorf("sponser not renamed: %+v", got["/sponsor/"])
-	}
-	if len(s.Pages) != 3 {
-		t.Errorf("want 3 pages, got %d", len(s.Pages))
+	if len(s.Pages) != 2 {
+		t.Errorf("want 2 pages, got %d", len(s.Pages))
 	}
 }
 

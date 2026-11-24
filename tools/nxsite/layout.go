@@ -22,12 +22,11 @@ func RenderLayout(page, nav, footer, route string, routes map[string]bool) strin
 	return normalizeLinks(out, routes)
 }
 
-// normalizeLinks rewrites href="/x" to "/x/" when /x/ is a known route, and the old /sponser path.
+// normalizeLinks rewrites href="/x" to "/x/" when /x/ is a known route.
 func normalizeLinks(s string, routes map[string]bool) string {
 	return internalHrefRe.ReplaceAllStringFunc(s, func(m string) string {
 		sub := internalHrefRe.FindStringSubmatch(m)
 		path, suffix := sub[1], sub[2]
-		path = strings.Replace(path, "/sponser", "/sponsor", 1)
 		if !strings.HasSuffix(path, "/") && routes[path+"/"] {
 			path += "/"
 		}

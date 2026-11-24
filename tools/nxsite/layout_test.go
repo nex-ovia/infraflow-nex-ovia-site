@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-var testRoutes = map[string]bool{"/": true, "/tools/": true, "/sponsor/": true, "/blog/": true}
+var testRoutes = map[string]bool{"/": true, "/tools/": true, "/blog/": true}
 
 func TestRenderLayoutPutsNavInRawHTML(t *testing.T) {
 	page := `<body><div id="nav-placeholder"></div><h1>x</h1><div id="footer-placeholder"></div></body>`
-	nav := `<nav><ul><li><a href="/tools">Tools</a></li><li class="highlight"><a href="/sponser">S</a></li></ul></nav>`
+	nav := `<nav><ul><li><a href="/tools">Tools</a></li><li><a href="/blog">B</a></li></ul></nav>`
 	out := RenderLayout(page, nav, `<footer><a href="/blog">B</a></footer>`, "/tools/", testRoutes)
 	for _, want := range []string{
 		`<li class="active"><a href="/tools/">Tools</a>`,
-		`<li class="highlight"><a href="/sponsor/">S</a>`,
+		`<li><a href="/blog/">B</a></li>`,
 		`<footer><a href="/blog/">B</a></footer>`,
 	} {
 		if !strings.Contains(out, want) {
@@ -32,7 +32,7 @@ func TestNormalizeLinksKeepsAnchorsAndUnknownPaths(t *testing.T) {
 }
 
 func TestMarkActiveAppendsToExistingClass(t *testing.T) {
-	out := markActive(`<li class="highlight"><a href="/sponsor/">S</a></li>`, "/sponsor/")
+	out := markActive(`<li class="highlight"><a href="/blog/">B</a></li>`, "/blog/")
 	if !strings.Contains(out, `class="highlight active"`) {
 		t.Fatal(out)
 	}

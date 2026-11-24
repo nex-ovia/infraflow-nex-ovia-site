@@ -56,9 +56,6 @@ type Page struct {
 // Post is one Markdown blog post (shared with nxsocial).
 type Post = content.Post
 
-// renamedDirs maps a source directory to its published name (fixes the old /sponser typo).
-var renamedDirs = map[string]string{"sponser": "sponsor"}
-
 var (
 	titleRe = regexp.MustCompile(`(?is)<title>(.*?)</title>`)
 	descRe  = regexp.MustCompile(`(?is)<meta\s+name="description"\s+content="([^"]*)"`)
@@ -128,9 +125,6 @@ func loadPage(path, rel string) (Page, error) {
 	}
 	dir := strings.TrimSuffix(rel, "index.html")
 	dir = strings.TrimSuffix(dir, "/")
-	if n, ok := renamedDirs[dir]; ok {
-		dir = n
-	}
 	p := Page{Src: rel, HTML: src, Route: "/", Out: "index.html"}
 	if dir != "" {
 		p.Route = "/" + dir + "/"

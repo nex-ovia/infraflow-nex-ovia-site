@@ -26,7 +26,7 @@ jobs:
           mkdir -p dist
           cp index.html site.css shared.js project.toml project-graph.js dist/
           mkdir -p dist/partials
-          cp -R principles standard tools changelog sponser partials dist/
+          cp -R principles standard tools changelog partials dist/
 
       - name: Build And Deploy
         id: builddeploy

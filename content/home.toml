@@ -64,9 +64,3 @@ quote   = "A solution built once should work, grow, and last."
 body    = "Delivery sovereignty means the team that commissions a solution retains full understanding, full control, and full portability of what was built — regardless of what tool built it, what AI generated it, or who originally delivered it."
 cta_label = "Read the full principle"
 cta_href  = "/principles"
-
-[sponsor_strip]
-label   = "Support open delivery standards"
-body    = "NXS is free and open. If this work is useful to your team or organisation, consider sponsoring to help keep it moving forward."
-cta_label = "Become a Sponsor"
-cta_href  = "https://github.com/sponsors/nex-ovia"

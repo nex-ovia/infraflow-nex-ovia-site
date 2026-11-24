@@ -9,7 +9,7 @@ id = "index.html"
 type = "output"
 path = "index.html"
 role = "Root Homepage"
-description = "Primary homepage layout with hero, proposition, audience, rules, sovereignty, graph explorer, and sponsor strip."
+description = "Primary homepage layout with hero, proposition, audience, rules, sovereignty, graph explorer."
 
 [[node]]
 id = "home-content"
@@ -108,20 +108,6 @@ type = "source"
 path = "content/changelog.toml"
 role = "Changelog Content"
 description = "Release history for the Nexovia Standard."
-
-[[node]]
-id = "sponsor-page"
-type = "output"
-path = "sponser/index.html"
-role = "Sponsor Page"
-description = "Sponsorship page and support messaging."
-
-[[node]]
-id = "sponsor-content"
-type = "source"
-path = "content/sponser.toml"
-role = "Sponsor Content"
-description = "Sponsorship copy and acknowledgement."
 
 [[node]]
 id = "nav-partial"
@@ -301,36 +287,6 @@ label = "includes"
 
 [[edge]]
 from = "changelog-page"
-to = "footer-partial"
-type = "component"
-label = "includes"
-
-[[edge]]
-from = "sponsor-page"
-to = "sponsor-content"
-type = "content"
-label = "rendered from"
-
-[[edge]]
-from = "sponsor-page"
-to = "site-css"
-type = "style"
-label = "styled by"
-
-[[edge]]
-from = "sponsor-page"
-to = "shared-js"
-type = "behavior"
-label = "enhanced by"
-
-[[edge]]
-from = "sponsor-page"
-to = "nav-partial"
-type = "component"
-label = "includes"
-
-[[edge]]
-from = "sponsor-page"
 to = "footer-partial"
 type = "component"
 label = "includes"

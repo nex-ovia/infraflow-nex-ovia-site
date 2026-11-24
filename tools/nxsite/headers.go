@@ -83,8 +83,6 @@ func HeadersFile(scriptHashes []string) string {
 // RedirectsFile renders the Cloudflare Pages _redirects file.
 func RedirectsFile() string {
 	return strings.Join([]string{
-		"/sponser    /sponsor/  301",
-		"/sponser/*  /sponsor/  301",
 		"/rss.xml    /feed.xml  301",
 		"/rss        /feed.xml  301",
 	}, "\n") + "\n"

@@ -41,7 +41,7 @@ func read(t *testing.T, p string) string {
 
 func TestBuildProducesSEOReadySite(t *testing.T) {
 	_, out := buildFixture(t)
-	for _, f := range []string{"index.html", "tools/index.html", "sponsor/index.html", "blog/index.html",
+	for _, f := range []string{"index.html", "tools/index.html", "blog/index.html",
 		"blog/first-post/index.html", "404.html", "sitemap.xml", "robots.txt", "feed.xml", "llms.txt",
 		"_headers", "_redirects", "og/default.png", "og/first-post.png", "og/first-post-ig.png", "site.css"} {
 		if _, err := os.Stat(filepath.Join(out, f)); err != nil {

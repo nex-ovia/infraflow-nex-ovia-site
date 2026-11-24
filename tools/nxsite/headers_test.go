@@ -39,9 +39,6 @@ func TestHeadersFileHasCSP(t *testing.T) {
 }
 
 func TestRedirectsAndNotFound(t *testing.T) {
-	if !strings.Contains(RedirectsFile(), "/sponser/*  /sponsor/  301") {
-		t.Fatal("sponser redirect missing")
-	}
 	c := testConfig()
 	c.Site.Name = `Ex <b>`
 	nf := NotFoundPage(c)

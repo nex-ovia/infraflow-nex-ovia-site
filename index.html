@@ -747,71 +747,6 @@
       color: var(--text);
     }
 
-    /* ── Sponsor strip ── */
-    .sponsor-strip {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 3rem 3.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin: 0 0 var(--section);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .sponsor-strip::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .sponsor-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .sponsor-title {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
-    }
-
-    .sponsor-body {
-      color: var(--text-2);
-      font-size: 0.9375rem;
-      max-width: 480px;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .btn-sponsor {
-      background: transparent;
-      color: #ea4aaa;
-      border: 1px solid #ea4aaa;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .btn-sponsor:hover {
-      background: #ea4aaa;
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(234, 74, 170, 0.3);
-    }
-
-    .btn-sponsor::before { content: '♥ '; }
-
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -883,7 +818,6 @@
       .rules-header { grid-template-columns: 1fr; gap: 2rem; }
       .rules-grid { grid-template-columns: 1fr; }
       .sovereignty-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .sponsor-strip { padding: 2rem; }
       .graph-explorer { grid-template-columns: 1fr; }
     }
   </style>
@@ -1035,18 +969,6 @@
     </div>
   </section>
 
-  <!-- [build_pages node] → sponsor — source: content/home.toml [sponsor_strip] -->
-  <div class="container">
-    <div class="sponsor-strip reveal">
-      <div>
-        <p class="sponsor-label">Open and free</p>
-        <h3 class="sponsor-title">Support open delivery standards</h3>
-        <p class="sponsor-body">NXS and all tools built on it are free. If this work is useful to your team or organisation, consider sponsoring to help keep it moving forward.</p>
-      </div>
-      <a href="https://github.com/sponsors/nex-ovia" class="btn btn-sponsor" rel="noopener noreferrer" target="_blank">Become a Sponsor</a>
-    </div>
-  </div>
-
   <!-- [read_site node] → footer -->
   <footer>
     <div class="container">
@@ -1057,7 +979,6 @@
           <li><a href="/principles">Principles</a></li>
           <li><a href="/tools">Tools</a></li>
           <li><a href="https://github.com/nex-ovia" rel="noopener noreferrer" target="_blank">GitHub</a></li>
-          <li><a href="https://github.com/sponsors/nex-ovia" rel="noopener noreferrer" target="_blank">Sponsor</a></li>
         </ul>
         <p class="footer-copy">Apache 2.0 · NXS v1.0 · nex-ovia.com</p>
       </div>

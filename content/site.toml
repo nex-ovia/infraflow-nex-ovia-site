@@ -3,7 +3,7 @@
 base_url    = "https://www.nex-ovia.com"
 name        = "Nexovia"
 tagline     = "Build it once. Own it forever."
-description = "The Nexovia Standard and the open-source tools built on it."
+description = "Amit Srivastava on AI-driven delivery leadership, the Nexovia Standard (NXS) and the open-source tools built on it."
 language    = "en"
 repo        = "https://github.com/nex-ovia"
 
@@ -12,7 +12,7 @@ name    = "Amit Srivastava"
 url     = "https://www.nex-ovia.com"
 same_as = [
   "https://github.com/srivastava-ami",
-  # "https://www.linkedin.com/in/<handle>",
+  "https://www.linkedin.com/in/srivastava-ami",
   # "https://x.com/<handle>",
   # "https://www.instagram.com/<handle>",
 ]

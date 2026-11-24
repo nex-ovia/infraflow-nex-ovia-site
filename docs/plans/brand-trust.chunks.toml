@@ -147,3 +147,31 @@ In tools/nxsite, add one small file metrics.go (+ metrics_test.go) and wire it i
   No real network in tests.
 """
 validate = "cd tools && GOTOOLCHAIN=local go test ./nxsite/ && cd .. && NXSITE_OFFLINE=1 bash -c '{validate_all}' && grep -q 'data-metric-date' impact/index.html"
+
+[[chunk]]
+id = "Z1"
+title = "Everything is beta"
+do = """
+Owner decision 2026-11-24: the standard, the tools and the site are all presented as beta. Remove version/stability
+claims; keep factual git tags only where they are cited as tags.
+1. partials/nav.html: after the wordmark <img> inside .nav-logo add <span class="beta-tag">beta</span>.
+   CSS (add to site.css AND index.html's <style>): .beta-tag { font: 600 0.625rem/1 var(--font-mono, monospace);
+   letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2, #00d4aa); border: 1px solid currentColor;
+   border-radius: 999px; padding: 0.2rem 0.45rem; margin-left: 0.5rem; } (use the variable names that exist in each
+   file; check :root). .nav-logo must keep items vertically centered.
+2. partials/footer.html: "Apache 2.0 · NXS v1.0 · nex-ovia.com" -> "Apache 2.0 · NXS beta · nex-ovia.com".
+3. standard/index.html + content/standard.toml: title "The Nexovia Standard (NXS beta)"; eyebrow "NXS beta · Apache
+   2.0"; "A solution built to NXS v1.0 is complete when" -> "A solution built to NXS is complete when"; any other
+   "v1.0" on the page -> "beta". Keep the checklist item "Stable under load" unchanged.
+4. changelog/index.html + content/changelog.toml: the "1.0 / May 2026 / Current" entry becomes "Beta / May 2026 /
+   Current" with "Initial publication" -> "First public beta of the Nexovia Standard."; the "1.1 / Coming soon"
+   entry becomes "Next beta / Coming soon"; content/changelog.toml descriptions: "NXS v1.0" -> "The first NXS beta",
+   "NXS v1.1 will" -> "The next beta will".
+5. tools/index.html status labels: "available · experimental" -> "beta"; "available · v0.30" -> "beta · v0.30";
+   "v1.0 · open standard" -> "beta · open standard"; "available · v0.1" -> "beta · v0.1".
+6. impact/index.html: under the hero lead add one sentence: "Everything here is in beta: shared early, improved in
+   the open." NXS dated list: "2026-05-10 · first public beta (tag v0.1.0)" and "2026-09-02 · beta update (tag v2.0)".
+   Leave the releases table values and data-metric attributes unchanged.
+Change nothing else.
+"""
+validate = "! grep -rnE 'NXS v1|v1\\.0' partials standard changelog tools/index.html content/standard.toml content/changelog.toml && grep -q 'beta-tag' partials/nav.html site.css index.html && grep -q 'first public beta' impact/index.html && {validate_all}"

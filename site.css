@@ -64,7 +64,7 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 .nav-links .highlight a:hover { background: #7d75ff; color: var(--bg); }
 .nav-links .active a { color: var(--accent); }
 .nav-links .highlight.active a { color: var(--bg); }
-.nav-logo .nav-word { color: inherit; }
+.nav-wordmark { display: block; height: 25px; width: auto; }
 
 /* Page hero */
 .page-hero {
@@ -131,6 +131,7 @@ footer { border-top: 1px solid var(--border); padding: 3rem 0; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
 .footer-logo { font-family: var(--font-display); font-size: 1.125rem; color: var(--text); }
 .footer-logo span { color: var(--accent); }
+.footer-wordmark { display: block; height: 22px; width: auto; }
 .footer-links { display: flex; gap: 1.5rem; list-style: none; }
 .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text); }

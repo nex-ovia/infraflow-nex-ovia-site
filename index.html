@@ -781,48 +781,6 @@
 
     .work-actions { margin-top: 2.5rem; }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem 0;
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-logo {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      color: var(--text);
-    }
-
-    .footer-logo span { color: var(--accent); }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--text); }
-
-    .footer-copy {
-      color: var(--text-muted);
-      font-size: 0.8125rem;
-    }
-
     /* ── Animations ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -1055,21 +1013,7 @@
     </div>
   </section>
 
-  <!-- [read_site node] → footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">nex<span>·</span>ovia</div>
-        <ul class="footer-links">
-          <li><a href="/standard">Standard</a></li>
-          <li><a href="/principles">Principles</a></li>
-          <li><a href="/tools">Tools</a></li>
-          <li><a href="https://github.com/nex-ovia" rel="noopener noreferrer" target="_blank">GitHub</a></li>
-        </ul>
-        <p class="footer-copy">Apache 2.0 · NXS v1.0 · nex-ovia.com</p>
-      </div>
-    </div>
-  </footer>
+  <div id="footer-placeholder"></div>
 
   <script>
     // Nav scroll state

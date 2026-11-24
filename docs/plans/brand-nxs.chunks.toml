@@ -1,0 +1,66 @@
+# brand-nxs: merge /standard and /principles into one page /nxs/; drop /changelog (owner 2026-11-24: "changelog not
+# needed at all"). Old URLs 301 to /nxs/. Review basis: reports/Nexovia website independent review.md lines 31, 65.
+
+[shared]
+voice = """
+First person where the page speaks as Amit ("I wrote NXS because..."), plain words, short sentences, sentence-case
+headings. Never "project manager". No absolutes like "always/never/no exceptions" unless they are a rule's text.
+No inline style attributes, no inline scripts (strict CSP). Do not invent facts, numbers or links.
+"""
+validate_all = "cd tools && GOTOOLCHAIN=local NXSITE_OFFLINE=1 go test ./... && mkdir -p ../dist && go build -o ../dist/.nxsite ./nxsite && cd .. && NXSITE_OFFLINE=1 dist/.nxsite build -root . -out dist/site && dist/.nxsite check -out dist/site"
+
+[[chunk]]
+id = "N1"
+title = "New /nxs/ page from /standard and /principles"
+file = "nxs/index.html (new)"
+model = "sonnet"
+do = """
+Create nxs/index.html. Start from standard/index.html (head, CSS, nav/footer placeholders, scripts, classes) and
+move content in from principles/index.html. Read both pages fully first. Target about 1,500 words of body text
+(the two pages total about 2,100): cut repetition, keep every rule, checklist item and metric.
+
+<title> "NXS: the Nexovia Standard — Nexovia". meta description "NXS is a living framework for owning what gets
+built, by people or by AI: four questions, four rules and a definition of done."
+Page order, each section an <section> with the id given (for in-page links):
+1. id="what" — hero. Eyebrow: `NXS framework · <span data-nxs-version>v2.0</span> · Apache-2.0`.
+   H1 keeps the standard page's H1. Lead paragraph in first person: why I wrote it (use the existing words from
+   both pages). Then the four questions from /principles, verbatim: "What does this do and why?", "What does it
+   depend on?", "How do I change this part without breaking that part?", "How do I move this off this platform?"
+   as a short list. Then one line: `Current version: <a href="https://github.com/nex-ovia/NXS/tags"
+   rel="noopener noreferrer" target="_blank"><span data-nxs-version>v2.0</span> on GitHub</a>`.
+   A small in-page nav (ul of links) to #why, #rules, #done, #measure.
+2. id="principles" (h2 "Why it exists") — the five principles from /principles, each as h3 + one short paragraph
+   (max ~60 words each).
+3. id="rules" (h2 "The four rules") — the four rules section from /standard, kept.
+4. id="done" (h2 "Definition of done") — the seven-item checklist from /standard, kept.
+5. id="measure" (h2 "How to measure it") — the metrics table from /standard, kept.
+6. Closing CTA: "Read NXS on GitHub" (primary, https://github.com/nex-ovia/NXS) and "See the tools built on it"
+   (secondary, /tools).
+The #why link in the in-page nav must point to #principles (fix accordingly). Any other section of /standard that
+only repeats something above is dropped. Put the page's CSS in its own <style> block like the source pages do.
+"""
+validate = "test -f nxs/index.html && grep -q 'id=\"principles\"' nxs/index.html && grep -q 'id=\"rules\"' nxs/index.html && grep -q 'data-nxs-version' nxs/index.html && grep -q 'How do I move this off this platform' nxs/index.html && {validate_all}"
+
+[[chunk]]
+id = "N2"
+title = "Remove the three old pages, relink everything to /nxs/, real 301s on Azure"
+file = "standard/, principles/, changelog/ (delete); partials; pages; tools/nxsite/headers.go + main.go + tests"
+model = "sonnet"
+do = """
+1. git rm -r standard principles changelog (the page dirs only; leave content/*.toml alone).
+2. Every internal link to /standard, /principles or /changelog (any page, partials) -> /nxs (principles links ->
+   /nxs#principles). Nav: replace the two items Standard and Principles with one item "NXS" -> /nxs, placed first.
+   Footer the same. tools/index.html NXS card: button "Read the standard →" becomes "Read NXS →" (/nxs); delete
+   the "Version history" button. Other visible link labels "the standard" may stay as prose.
+3. headers.go RedirectsFile: add
+   "/standard    /nxs/  301", "/standard/*  /nxs/  301", "/principles    /nxs/#principles  301",
+   "/principles/*  /nxs/#principles  301", "/changelog    /nxs/  301", "/changelog/*  /nxs/  301".
+4. Azure Static Web Apps ignores _redirects, so also write dist/staticwebapp.config.json from the same list: add a
+   func StaticWebAppConfig() ([]byte, error) in headers.go that parses RedirectsFile() lines (from, to, code) into
+   {"routes":[{"route": from, "redirect": to, "statusCode": code}, ...]} (encoding/json, indented), and in main.go
+   Build write it as "staticwebapp.config.json" next to _redirects. Test: the JSON has a route "/standard" ->
+   "/nxs/" 301 and "/work-with-me/*" -> "/connect/" 301.
+5. Delete the now-unused VersionList function and the "<!-- github:nxs-versions -->" handling in main.go, and
+   their tests. Keep Versions() and the data-nxs-version fill (used by /nxs/ and /tools/).
+"""
+validate = "test ! -d standard && test ! -d principles && test ! -d changelog && ! grep -rqE 'href=\"/(standard|principles|changelog)' index.html */index.html partials && grep -q 'href=\"/nxs' partials/nav.html && {validate_all} && grep -q '\"/standard\"' dist/site/staticwebapp.config.json"

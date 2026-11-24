@@ -32,7 +32,7 @@ say "2/4 Cloudflare API token"
 cat <<TXT
     Create it at https://dash.cloudflare.com/profile/api-tokens → Create Token → Custom token:
       Account · Cloudflare Pages · Edit         Zone · Zone Settings · Edit
-      Account · Workers R2 Storage · Edit       Zone · DNS · Edit
+      Zone · DNS · Edit
       Account · Account Rulesets · Read         Zone · Zone WAF · Edit
       Account · Web Analytics · Edit            Zone · Single Redirect · Edit
       Zone · Zone · Read                        Zone · Bot Management · Edit
@@ -52,7 +52,7 @@ ok "CF_ZONE_ID=$ZONE_ID"
 printf '%s' "$CF_TOKEN" | gh secret set CLOUDFLARE_API_TOKEN --repo "$REPO"
 ok "secret CLOUDFLARE_API_TOKEN set"
 
-# R2 state bucket and its S3 keys are derived from the token in CI (infra/scripts/cf-env.sh).
+# Terraform state lives in Azure Storage: run scripts/azure-state.sh (no secret; GitHub OIDC).
 unset CF_TOKEN
 
 say "3/4 GitHub environments"

@@ -1,19 +1,12 @@
-# Remote state on Cloudflare R2 (S3-compatible, free tier). Bucket and keys are created by hand (chunk U2);
-# credentials come from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY env vars in CI.
-# The endpoint (https://<account_id>.r2.cloudflarestorage.com) is passed at init:
-#   terraform init -backend-config="endpoints={s3=\"https://<account_id>.r2.cloudflarestorage.com\"}"
+# Remote state in Azure Blob Storage (container "tfstate"). Locking uses blob leases.
+# CI signs in with GitHub OIDC → Entra ID workload identity federation: no stored Azure secret.
+# Storage account / resource group come from GitHub variables at init (infra/scripts/plan.sh);
+# ARM_CLIENT_ID, ARM_TENANT_ID, ARM_SUBSCRIPTION_ID are set by the workflow. Created by scripts/azure-state.sh.
 terraform {
-  backend "s3" {
-    bucket = "nexovia-tfstate"
-    key    = "nex-ovia.com/prod.tfstate"
-    region = "auto"
-
-    use_lockfile                = true
-    skip_credentials_validation = true
-    skip_region_validation      = true
-    skip_requesting_account_id  = true
-    skip_metadata_api_check     = true
-    skip_s3_checksum            = true
-    use_path_style              = true
+  backend "azurerm" {
+    container_name   = "tfstate"
+    key              = "nex-ovia.com/prod.tfstate"
+    use_oidc         = true
+    use_azuread_auth = true
   }
 }

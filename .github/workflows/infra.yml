@@ -20,6 +20,13 @@ env:
   CHECKPOINT_DISABLE: "1"
   TF_VAR_account_id: ${{ vars.CF_ACCOUNT_ID }}
   TF_VAR_zone_id: ${{ vars.CF_ZONE_ID }} # optional; derived from the token when empty
+  # Azure state backend via GitHub OIDC (no secret). Values are non-secret IDs set by scripts/azure-state.sh.
+  ARM_USE_OIDC: "true"
+  ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+  TFSTATE_RG: ${{ vars.AZURE_TFSTATE_RG }}
+  TFSTATE_ACCOUNT: ${{ vars.AZURE_TFSTATE_ACCOUNT }}
 
 jobs:
   checks:
@@ -67,6 +74,7 @@ jobs:
     if: vars.CF_ACCOUNT_ID != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     permissions:
       contents: read
+      id-token: write # Azure OIDC sign-in for the state backend
       pull-requests: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -84,9 +92,6 @@ jobs:
         id: plan
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          # optional: R2 keys are derived from the Cloudflare token when these secrets are absent
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: ./infra/scripts/plan.sh
       - name: Comment plan summary on PR
         if: github.event_name == 'pull_request'
@@ -103,6 +108,9 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: read
+      id-token: write # Azure OIDC sign-in for the state backend
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -118,7 +126,4 @@ jobs:
       - name: Re-plan, guard, apply
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          # optional: R2 keys are derived from the Cloudflare token when these secrets are absent
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: ./infra/scripts/plan.sh && terraform -chdir=infra apply -input=false tfplan

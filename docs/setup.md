@@ -34,16 +34,19 @@ Cloudflare → My Profile → **API Tokens** → Create Token → *Custom token*
   - Zone · Single Redirect · Edit
   - Zone · Bot Management · Edit
   - Zone · Zone · Read
-  - Account · Workers R2 Storage · Edit (lets the bootstrap create the state bucket)
   - Account · Web Analytics · Edit (in some dashboards it's listed as "RUM")
 - **Zone resources:** Include → Specific zone → `nex-ovia.com`
 - **TTL:** 1 year (set a calendar reminder to rotate it)
 
 Save it as repository **secret** `CLOUDFLARE_API_TOKEN`.
 
-## 3. Terraform state (nothing to do)
+## 3. Terraform state in Azure (no secret)
 
-State lives in the R2 bucket `nexovia-tfstate`. CI creates it if it's missing, and derives its S3 credentials from the Cloudflare token (Access Key ID = token id, Secret = SHA-256 of the token; see Cloudflare's R2 docs, "Get S3 API credentials from an API token"). You only need R2 enabled on the account once (R2 → Get started; free tier, asks for a card) and the token permission **Account · Workers R2 Storage · Edit**.
+```bash
+az login && bash scripts/azure-state.sh      # optional: LOCATION=centralindia
+```
+
+This creates a locked-down storage account and private `tfstate` container. Shared keys are off, public access is off, and versioning plus 30-day soft delete are on. It also creates an Entra app that trusts **only** this repo's `dev` branch, its pull requests and the `production` environment via GitHub OIDC, and grants that app *Storage Blob Data Contributor* on the container alone. GitHub receives identifiers only (`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_TFSTATE_RG`, `AZURE_TFSTATE_ACCOUNT`); no Azure secret is stored anywhere. Blob leases provide state locking. Cost: a few KB of storage, well under $0.01/month.
 
 ## 4. GitHub environments
 

@@ -9,6 +9,7 @@
 | `bots.tf` | AI crawler policy (Cloudflare-managed robots.txt and AI-bot blocking off) |
 | `analytics.tf` | Cookieless Web Analytics |
 
+- **State:** Azure Blob Storage, reached via GitHub OIDC with no stored secret (`../scripts/azure-state.sh`).
 - **Run:** CI only (`.github/workflows/infra.yml`). Each PR gets checks and a guarded plan; `dev` applies after approval in the `production` environment.
 - **Local check:** `terraform init -backend=false && terraform validate && terraform test`.
 - **Safety:** `tools/cfimport` adopts existing objects, and `tools/planguard` fails any plan that deletes DNS records or the Pages project.

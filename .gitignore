@@ -5,3 +5,5 @@ infra/.terraform.lock.hcl.bak
 infra/tfplan*
 infra/import.tf
 *.tfstate*
+infra/plan-full.txt
+infra/plan-summary.txt

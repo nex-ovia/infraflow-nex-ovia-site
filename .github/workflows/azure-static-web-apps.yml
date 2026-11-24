@@ -9,10 +9,12 @@ on:
     branches:
       - dev
   workflow_dispatch: # Allows manual triggering of the workflow from the Actions tab
+  schedule:
+    - cron: "17 6 * * *" # daily rebuild so GitHub tool releases, stars and NXS versions reach the site
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -26,6 +28,8 @@ jobs:
           cache-dependency-path: tools/go.sum
 
       - name: Build and check nxsite distribution
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ai=$(sed -n 's/^ai_crawlers *= *"\(.*\)".*/\1/p' infra/env/prod.tfvars)
           (cd tools && go build -o ../.nxsite ./nxsite)

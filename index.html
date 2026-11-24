@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- [read_theme node] → meta -->
   <title>Use AI to ship faster, keep control | Amit Srivastava · nex-ovia</title>
-  <meta name="description" content="Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
+  <meta name="description" content="Free playbook, tools and the NXS framework for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
   <meta property="og:title" content="Use AI to ship faster, keep control | Amit Srivastava · nex-ovia">
-  <meta property="og:description" content="Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
+  <meta property="og:description" content="Free playbook, tools and the NXS framework for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery.">
   <meta property="og:url" content="https://nex-ovia.com">
   <!-- [read_theme node] → typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,8 +97,6 @@
     }
 
     .nav-logo span { color: var(--accent); }
-
-    .nav-logo .beta-tag { font: 600 0.625rem/1 var(--font-mono, monospace); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2, #00d4aa); border: 1px solid currentColor; border-radius: 999px; padding: 0.2rem 0.45rem; margin-left: 0.5rem; }
 
     .nav-links {
       display: flex;
@@ -803,13 +801,20 @@
     /* ── Responsive ── */
     @media (max-width: 768px) {
       :root { --section: 4rem; }
-      .nav-links { display: none; }
       .rules-header { grid-template-columns: 1fr; gap: 2rem; }
       .audience-grid { grid-template-columns: 1fr; }
       .rules-grid { grid-template-columns: 1fr; }
       .sovereignty-inner { grid-template-columns: 1fr; gap: 3rem; }
       .graph-explorer { grid-template-columns: 1fr; }
       .tools-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      nav .container { flex-wrap: wrap; }
+      .nav-links { width: 100%; min-width: 0; gap: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+      .nav-links::-webkit-scrollbar { display: none; }
+      .nav-links li { flex-shrink: 0; }
+      .nav-links .highlight { order: -1; }
+      .nav-links a { padding: 0.5rem 0.625rem; font-size: 0.8125rem; }
     }
 
     /* ── Footer (from site.css) ── */
@@ -836,7 +841,7 @@
     <div class="hero-glow-2"></div>
     <div class="container">
       <div class="hero-inner">
-        <div class="hero-eyebrow">Free playbook + open-source tools</div>
+        <div class="hero-eyebrow">Free playbook + tools on GitHub</div>
         <h1>
           Use AI to ship faster.<br>
           <span class="line2"><span class="italic">Keep control of what it builds.</span></span>
@@ -864,7 +869,7 @@
         <div class="proposition-tags">
           <span class="tag">13 years in enterprise delivery</span>
           <span class="tag">$1M+ ARR from automation</span>
-          <span class="tag">100% open source</span>
+          <span class="tag">Free to use</span>
           <span class="tag">Built with AI, reviewed by a human</span>
         </div>
       </div>
@@ -886,7 +891,7 @@
         </div>
         <div class="audience-card reveal">
           <h3 class="card-title">Tools that save you hours</h3>
-          <p class="card-body">genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free and open source.</p>
+          <p class="card-body">genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free to use, with source on GitHub.</p>
           <div class="tool-mini-links"><a href="/tools" class="btn btn-secondary">See the tools</a></div>
         </div>
         <div class="audience-card reveal">
@@ -897,7 +902,6 @@
         <div class="audience-card reveal">
           <h3 class="card-title">Lessons from the field</h3>
           <p class="card-body">Short, honest posts on what works and what breaks when AI writes the code, from someone who's been on the hook for delivery for 13 years.</p>
-          <div class="tool-mini-links"><a href="/blog" class="btn btn-secondary">Read the blog</a></div>
         </div>
       </div>
     </div>
@@ -963,7 +967,7 @@
   <section>
     <div class="container">
       <div class="reveal">
-        <p class="section-label">Open source</p>
+        <p class="section-label">Tools</p>
         <h2 class="section-title">Free tools, built in the open</h2>
       </div>
       <div class="tools-grid">

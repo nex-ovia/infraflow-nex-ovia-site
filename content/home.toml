@@ -2,10 +2,10 @@
 id          = "home"
 title       = "Use AI to ship faster, keep control | Amit Srivastava · nex-ovia"
 route       = "/"
-description = "Free playbook, open-source tools and the NXS standard for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery."
+description = "Free playbook, tools and the NXS framework for using AI to ship faster without losing control of what it builds. From 13 years of enterprise delivery."
 
 [hero]
-badge       = "Free playbook + open-source tools"
+badge       = "Free playbook + tools on GitHub"
 headline    = "Use AI to ship faster."
 headline_2  = "Keep control of what it builds."
 subheadline = "AI can write most of your code now. The hard part is still understanding it, changing it safely and owning it a year from now. Here you'll find the exact playbook, free tools and open standard I use to do that, from 13 years of making enterprise software work after the demo."
@@ -16,7 +16,7 @@ cta_secondary_href  = "/tools"
 
 [proposition]
 label = "Amit Srivastava · Implementation leader and technical strategist · Author of NXS"
-tags  = ["13 years in enterprise delivery", "$1M+ ARR from automation", "100% open source", "Built with AI, reviewed by a human"]
+tags  = ["13 years in enterprise delivery", "$1M+ ARR from automation", "Free to use", "Built with AI, reviewed by a human"]
 
 [what_you_get]
 label = "What's here for you"
@@ -32,7 +32,7 @@ link_href   = "/ai"
 [[what_you_get.card]]
 id          = "tools"
 title       = "Tools that save you hours"
-body        = "genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free and open source."
+body        = "genome turns any project into a map your whole team can read. coderev scans and AI-reviews your code in one command. Both free to use, with source on GitHub."
 link_label  = "See the tools"
 link_href   = "/tools"
 
@@ -85,7 +85,7 @@ title   = "Runs anywhere, for anyone"
 summary = "No tribal knowledge required. No original builder needed. Anyone can run it from what is written down."
 
 [tools_strip]
-label      = "Open source"
+label      = "Tools"
 title      = "Free tools, built in the open"
 all_label  = "All tools →"
 all_href   = "/tools"

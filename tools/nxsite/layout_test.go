@@ -12,7 +12,7 @@ func TestRenderLayoutPutsNavInRawHTML(t *testing.T) {
 	nav := `<nav><ul><li><a href="/tools">Tools</a></li><li><a href="/blog">B</a></li></ul></nav>`
 	out := RenderLayout(page, nav, `<footer><a href="/blog">B</a></footer>`, "/tools/", testRoutes)
 	for _, want := range []string{
-		`<li class="active"><a href="/tools/">Tools</a>`,
+		`<li class="active"><a href="/tools/" aria-current="page">Tools</a>`,
 		`<li><a href="/blog/">B</a></li>`,
 		`<footer><a href="/blog/">B</a></footer>`,
 	} {
@@ -52,5 +52,41 @@ func TestAddLinkAfter(t *testing.T) {
 	}
 	if AddLinkAfter(in, "/missing", "/blog", "Blog") != in {
 		t.Fatal("unknown anchor must leave fragment unchanged")
+	}
+}
+
+func TestRenderLayoutWrapsContentInMain(t *testing.T) {
+	page := `<body><div id="nav-placeholder"></div><h1>x</h1><div id="footer-placeholder"></div></body>`
+	out := RenderLayout(page, `<nav></nav>`, `<footer></footer>`, "/", testRoutes)
+	if !strings.Contains(out, "<nav></nav>\n<main id=\"main\"><h1>x</h1></main>\n<footer></footer>") {
+		t.Fatal(out)
+	}
+	out = RenderLayout(`<body><div id="nav-placeholder"></div><h1>x</h1></body>`, `<nav></nav>`, "", "/", testRoutes)
+	if !strings.Contains(out, "<main id=\"main\"><h1>x</h1></main>\n</body>") {
+		t.Fatal(out)
+	}
+	out = RenderLayout(`<body><nav>n</nav><h1>x</h1><div id="footer-placeholder"></div></body>`, "", `<footer></footer>`, "/", testRoutes)
+	if !strings.Contains(out, "<nav>n</nav>\n<main id=\"main\"><h1>x</h1></main>\n<footer></footer>") {
+		t.Fatal(out)
+	}
+}
+
+func TestRenderLayoutAddsIDToExistingMain(t *testing.T) {
+	page := `<body><div id="nav-placeholder"></div><main class="x">y</main><div id="footer-placeholder"></div></body>`
+	nav := `<a class="skip-link" href="#main">Skip to content</a><nav></nav>`
+	out := RenderLayout(page, nav, `<footer></footer>`, "/", testRoutes)
+	if !strings.Contains(out, `<main id="main" class="x">`) || strings.Count(out, "<main") != 1 {
+		t.Fatal(out)
+	}
+	out = RenderLayout(strings.Replace(page, `class="x"`, `id="c"`, 1), nav, `<footer></footer>`, "/", testRoutes)
+	if !strings.Contains(out, `href="#c"`) || strings.Count(out, "<main") != 1 {
+		t.Fatal(out)
+	}
+}
+
+func TestMarkActiveSetsAriaCurrent(t *testing.T) {
+	out := markActive(`<li><a href="/tools/">T</a></li><li><a href="/blog/">B</a></li>`, "/tools/")
+	if out != `<li class="active"><a href="/tools/" aria-current="page">T</a></li><li><a href="/blog/">B</a></li>` {
+		t.Fatal(out)
 	}
 }

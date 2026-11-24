@@ -19,12 +19,12 @@
       --surface:        #111118;
       --surface-raised: #1a1a24;
       --border:         #2a2a3a;
-      --accent:         #6c63ff;
+      --accent:         #7870ff;
       --accent-2:       #00d4aa;
       --accent-warm:    #ff6b6b;
       --text:           #f0f0f5;
       --text-2:         #9090a8;
-      --text-muted:     #5a5a72;
+      --text-muted:     #8585a0;
       --font-display:   'DM Serif Display', Georgia, serif;
       --font-body:      'DM Sans', system-ui, sans-serif;
       --font-mono:      'JetBrains Mono', monospace;
@@ -241,12 +241,12 @@
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: #5b52f0;
       color: #fff;
     }
 
     .btn-primary:hover {
-      background: #7d75ff;
+      background: #4f46e0;
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(108, 99, 255, 0.35);
     }
@@ -828,6 +828,36 @@
     .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--text); }
     .footer-copy { color: var(--text-muted); font-size: 0.8125rem; }
+
+    /* ── Skip link, focus, reduced motion (a11y) ── */
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -3rem;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      background: var(--accent-2);
+      color: #0a0a0f;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </head>
 <body>

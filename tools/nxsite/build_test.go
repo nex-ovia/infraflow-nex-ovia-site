@@ -90,7 +90,7 @@ func TestBuildProducesSEOReadySite(t *testing.T) {
 		}
 	}
 	tools := read(t, filepath.Join(out, "tools/index.html"))
-	if !strings.Contains(tools, `"SoftwareApplication"`) || !strings.Contains(tools, `<li class="active"><a href="/tools/">`) {
+	if !strings.Contains(tools, `"SoftwareApplication"`) || !strings.Contains(tools, `<li class="active"><a href="/tools/" aria-current="page">`) {
 		t.Error("tools page missing JSON-LD or active nav")
 	}
 	if h := read(t, filepath.Join(out, "_headers")); !strings.Contains(h, "'sha256-") {

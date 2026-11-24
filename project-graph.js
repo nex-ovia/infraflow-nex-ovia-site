@@ -88,10 +88,20 @@ function createNodeCard(node) {
 
   box.append(type, name, desc);
   wrapper.appendChild(box);
-  wrapper.addEventListener('click', () => {
+  const activateNode = () => {
     document.querySelectorAll('.node-box.active').forEach((el) => el.classList.remove('active'));
     box.classList.add('active');
     showNodeDetails(node);
+  };
+  wrapper.tabIndex = 0;
+  wrapper.setAttribute('role', 'button');
+  wrapper.setAttribute('aria-label', node.id || node.source || node.path || 'unknown');
+  wrapper.addEventListener('click', activateNode);
+  wrapper.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      activateNode();
+    }
   });
   return wrapper;
 }
@@ -308,12 +318,22 @@ function createExplorerNodeCard(node, isRoot, edgeLabel) {
   
   card.append(header, body);
   
-  card.addEventListener('click', () => {
+  const activateExplorerNode = () => {
     document.querySelectorAll('.graph-explorer-node.active').forEach((el) => {
       el.classList.remove('active');
     });
     card.classList.add('active');
     showNodeDetails(node);
+  };
+  card.tabIndex = 0;
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', node.id);
+  card.addEventListener('click', activateExplorerNode);
+  card.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      activateExplorerNode();
+    }
   });
 
   return card;
